@@ -62,11 +62,12 @@ end
 
 %% avg map per task
 
-story_types = ["approach_avoid", "social", "probability", "moral"];
+story_types = ["approach_avoid", "social", "probability", "moral","all"];
 data{1} = appr_avoid_combined_data;
 data{2} = social_combined_data;
 data{3} = probability_combined_data;
 data{4} = moral_combined_data;
+data{5} = [appr_avoid_combined_data;social_combined_data;probability_combined_data;moral_combined_data];
 path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\avg_maps";
 want_bdry = 0;
 want_scale = 1;
@@ -74,7 +75,7 @@ want_save = 1;
 
 avg_data = cell(1,4);
 
-for i = 1:4
+for i = 1:length(story_types)
     combined_data = data{i};
     story_type = story_types{i};
     tot_table = [];

@@ -30,9 +30,7 @@ max_activity = 3;
 [strio_incs,lh_incs,da_incs] = deal(linspace(0,max_activity,n_interp_inc));
 [baseline_strio, baseline_LH, baseline_DA] = deal(max_activity/2);
 
-% find the the advantages by space
-
-n = 2^2; % if 4D: 2^4
+n = 2^2;
 for j=1:n
     individual_space_advantage_coefs = zeros(n,1);
     % for this loop, only this space is valued

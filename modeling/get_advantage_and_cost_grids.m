@@ -6,8 +6,6 @@ function [advantages,costs,net_advantages] = ...
         deal(zeros(length(strio_incs),length(lh_incs),length(da_incs)));
     spaces = (dec2bin(0:2^2-1)' - '0')';
 
-%     spaces = (dec2bin(0:2^4-1)' - '0')';
-
     for i=1:length(strio_incs)
         for j=1:length(lh_incs)
             for k=1:length(da_incs)

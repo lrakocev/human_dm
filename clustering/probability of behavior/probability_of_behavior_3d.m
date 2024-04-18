@@ -1,5 +1,6 @@
 function probability_of_behavior_3d(all_psych_data, story_type, save_to)
 figure 
+
 %{
 max_x = round(max(all_psych_data.clusterX));
 min_x = round(min(all_psych_data.clusterX));
@@ -9,9 +10,9 @@ max_z = round(max(all_psych_data.clusterZ));
 min_z = round(min(all_psych_data.clusterZ));
 
 % setting up to show the space of all possible combinations
-for x = min_x:max_x
-    for y = min_y:max_y
-        for z = min_z:max_z
+for x = min_x:10:max_x
+    for y = min_y:10:max_y
+        for z = min_z:10:max_z
             scatter3(x,y,z,10,'b')
             hold on
         end
@@ -40,6 +41,7 @@ title('probability of cluster for ' + story_type)
 xlabel('log(abs(max))')
 ylabel('log(abs(shift))')
 zlabel('log(abs(slope))')
+set(gcf,'renderer','Painters')
 savefig(save_to + "\prob_of_behavior_" + story_type + ".fig")
 
 end

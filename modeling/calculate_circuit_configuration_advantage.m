@@ -4,7 +4,7 @@ function advantage = calculate_circuit_configuration_advantage(...
     % calculate the probability of specified state(s) occuring, given strio
     % excitability and fsi inputs to striosome
     
-    % assume 4 dimensions, so state_advantage is a vector of length 2^4
+    % assume 2 dimensions, so state_advantage is a vector of length 2^2
     
     prob_in_space = algorithmic_model(strio,fsi,.1,GPi,LH,...
         RMTg,1,DA);
