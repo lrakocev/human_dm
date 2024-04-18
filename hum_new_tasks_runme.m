@@ -27,6 +27,12 @@ social_sessions = sessions_by_tasktype(N_trial_data, "social");
 probability_sessions = sessions_by_tasktype(N_trial_data, "probability");
 moral_sessions = sessions_by_tasktype(N_trial_data, "moral");
 
+% separate trials by story for dec map
+appr_avoid_stories = combine_stories_for_map(N_trial_data, "approach_avoid");
+social_stories = combine_stories_for_map(N_trial_data, "social");
+probability_stories = combine_stories_for_map(N_trial_data, "probability");
+moral_stories = combine_stories_for_map(N_trial_data, "moral");
+
 
 %% normalization bar plots
 
@@ -37,6 +43,21 @@ for i = 1:4
     type = story_types(i);
     get_ratings_by_subject(r_ratings,c_ratings,type,save_to,same_scale)
 end
+
+%% dec making maps by story
+
+want_bdry = 0;
+want_scale = 0;
+want_save = 1;
+story_types = ["approach_avoid", "social", "probability", "moral"];
+data{1} = appr_avoid_stories;
+data{2} = social_stories;
+data{3} = probability_stories;
+data{4} = moral_stories;
+path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\dec_making_story_maps";
+
+run_dec_making_plot_loop(data,story_types,path_to_save,want_bdry,want_scale,want_save)
+
 
 %% dec making maps
 
@@ -49,16 +70,8 @@ data{2} = social_combined_data;
 data{3} = probability_combined_data;
 data{4} = moral_combined_data;
 path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\dec_making_maps";
-for i = 1:4
-    combined_data = data{i};
-    story_type = story_types{i};
-    for N = 1:length(combined_data)
-        curr_data = combined_data{N};
-        if ~isempty(curr_data)
-            make_dec_making_plots(curr_data, path_to_save, story_type,want_bdry,want_scale,want_save)
-        end
-    end
-end
+
+run_dec_making_plot_loop(data,story_types,path_to_save,want_bdry,want_scale,want_save)
 
 %% avg map per task
 
@@ -73,31 +86,7 @@ want_bdry = 0;
 want_scale = 1;
 want_save = 1;
 
-avg_data = cell(1,4);
-
-for i = 1:length(story_types)
-    combined_data = data{i};
-    story_type = story_types{i};
-    tot_table = [];
-    for N = 1:length(combined_data)
-        curr_data = combined_data{N};
-        if ~isempty(curr_data)
-            tot_table = [tot_table; curr_data];
-        end
-    end
-    avg_table = [];
-    for r = 1:4
-        for c = 1:4
-            all_r_c = tot_table(tot_table.rew == r & tot_table.cost == c, :);
-            r_c_row = all_r_c(1,:);
-            r_c_row.subjectidnumber = "scaled avg";
-            r_c_row.approach_rate = mean(all_r_c.approach_rate, 'omitnan');
-            avg_table = [avg_table; r_c_row];
-        end
-    end
-    avg_data{i} = avg_table;
-    make_dec_making_plots(avg_table, path_to_save, story_type,want_bdry,want_scale,want_save)
-end
+avg_data = make_avg_dec_making_plot(data, story_types, path_to_save,want_bdry,want_scale,want_save);
 
 %% plotting summary stats
 
