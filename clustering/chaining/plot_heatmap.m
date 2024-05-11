@@ -1,11 +1,5 @@
 function plot_heatmap(summary_table,save_to)
 
-all_vals = summary_table.sample_mean;
-total_mean = mean(all_vals);
-std_dev = std(all_vals);
-
-summary_table.dist_from_mean = (summary_table.sample_mean - total_mean) / std_dev;
-
 heatmap(summary_table,'t1c1','t2c2','ColorVariable','dist_from_mean')
 title('heatmap of std devs from mean of likelihood of y given x')
 xlabel("given task + cluster")

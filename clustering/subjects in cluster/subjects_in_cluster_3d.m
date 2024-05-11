@@ -2,12 +2,13 @@ function subjects_in_cluster_3d(all_psych_data, story_type, y_max, save_to)
 
 all_psych_data = all_psych_data(all_psych_data.story_type == story_type, :);
 
-num_clusters = length(unique(all_psych_data.idx));
+num_clusters = max(unique(all_psych_data.idx));
 unique_ids = unique(all_psych_data.subjectidnumber);
 cluster_stats = cell(1,num_clusters);
 for i = 1:length(unique_ids)
     id = unique_ids(i);
     curr_table = all_psych_data(all_psych_data.subjectidnumber == id, :);
+   
     clusters = curr_table.idx;
     [gc,gr] = groupcounts(clusters);
     sum_gc = sum(gc);
@@ -17,20 +18,21 @@ for i = 1:length(unique_ids)
         stat = gc(n);
         cluster_stats{cluster} = [cluster_stats{cluster} ; stat];
     end
-    
 end
 
 figure
 max_vals = 0;
 for i = 1:length(cluster_stats)
     cluster = cluster_stats{i};
-    num_vals = length(cluster);
-    avg_percent = mean(cluster);
-    scatter(i,avg_percent,num_vals*10,num_vals,'filled')
-    if max_vals < num_vals
-        max_vals = num_vals;
+    if ~isempty(cluster)
+        num_vals = length(cluster);
+        avg_percent = mean(cluster);
+        scatter(i,avg_percent,num_vals*10,num_vals,'filled')
+        if max_vals < num_vals
+            max_vals = num_vals;
+        end
+        hold on
     end
-    hold on
 end
 title(story_type)
 num_subjects = length(unique_ids);

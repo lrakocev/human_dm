@@ -40,8 +40,34 @@ for j=1:n
         individual_space_advantage_coefs,baseline_strio,baseline_LH,baseline_DA);
 end
 
- [example_advantage, strio_indxs, lh_indxs, da_indxs] = plotter(advantages,strio_incs,lh_incs,da_incs);
+[example_advantage, strio_indxs, lh_indxs, da_indxs] = plotter(advantages,strio_incs,lh_incs,da_incs);
 
+ save_to = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\ex_modeling";
+ triplets = [];
+ for i = 1:length(strio_indxs)
+     for j = 1:length(strio_indxs{i})
+         adv = example_advantage{i}(j);
+         s_indx= strio_indxs{i}(j);
+         lh_indx = lh_indxs{i}(j);
+         da_indx = da_indxs{i}(j);
+         if ~isnan(s_indx) && ~isnan(lh_indx) && ~isnan(da_indx)
+             strio = strio_incs(s_indx);
+             lh = lh_incs(lh_indx);
+             da = da_incs(da_indx);
+             row.strio = strio;
+             row.lh = lh;
+             row.da = da;
+             row.dim = i-1;
+             row.prob = adv;
+             triplets = [triplets; row];
+         end
+     end
+ end
+
+ triplets = struct2table(triplets);
+ activity_viz(triplets,max_activity,save_to)
+ save('C:\Users\lrako\OneDrive\Documents\human dm\test_run\ex_modeling\triplets','triplets')
+ save('C:\Users\lrako\OneDrive\Documents\human dm\test_run\ex_modeling\example_advantage','example_advantage')
 
 %% map dimensions (manually)
 
@@ -51,10 +77,11 @@ prob_dims = {0,1,2,0,2,1,0,2,1};
 social_dims = {0,1,1,0,1,2,2,0,1};
 
 %%
- 
-dim = 2; %btwn 0-2
-cond_probs = activity_given_dim(example_advantage, dim);
-plot_activity_from_dim(cond_probs, dim, strio_indxs, lh_indxs, da_indxs)
-savefig('prob_of_config_given_dim_' + string(dim) + '.fig')
 
+save_to = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\ex_modeling";
+for dim = 0:2
+    cond_probs = activity_given_dim(example_advantage, dim);
+    plot_activity_from_dim(cond_probs, dim, strio_indxs, lh_indxs, da_indxs)
+    savefig(save_to + '\prob_of_config_given_dim_' + string(dim) + '.fig')
+end
 

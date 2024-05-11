@@ -1,4 +1,4 @@
-function total_table = run_chain(tasks,sample_size)
+function total_table = run_chain(all_psych_data,tasks,sample_size,save_to,type)
 
 total_table = [];
 for t1 = 1:length(tasks)
@@ -8,9 +8,9 @@ for t1 = 1:length(tasks)
         if task1 == task2
             continue
         end
-        [general_table,~] = chain_behavior_across_tasks(all_psych_data, task1, task2, sample_size);
+        [general_table,~] = chain_behavior_across_tasks_pt2(all_psych_data, task1, task2, sample_size);
         total_table = [total_table;general_table];
     end
 end
-save("total_table.mat","total_table")
+save(save_to + "total_table_" + type +".mat", "total_table")
 end

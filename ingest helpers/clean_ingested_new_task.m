@@ -1,4 +1,4 @@
-function adj_approach_data = clean_ingested_new_task(adj_results)
+function [adj_approach_data,subject_prefs] = clean_ingested_new_task(adj_results)
 
 adj_results = removevars(adj_results,{'trial_start','reward_level','cost_level'});
 adj_results = renamevars(adj_results,["decision_made","tasktypedone","trial_elapsed","tired"]...
@@ -7,9 +7,11 @@ unique_ids = unique(adj_results.subjectidnumber);
 
 N = length(unique_ids);
 adj_approach_data = cell(1,N);
+subject_prefs = cell(1,N);
 for i = 1:N
     subid = unique_ids(i);
     sub_results = adj_results(adj_results.subjectidnumber == string(subid), :);
+    sub_prefs = get_story_prefs(sub_results);
     str_timing = string(sub_results.timing);
     timing = [];
     for j = 1:length(str_timing)
@@ -26,5 +28,6 @@ for i = 1:N
     sub_results.subjectidnumber = str2double(sub_results.subjectidnumber);
     sub_results.story_num = string(sub_results.story_num);
     
+    subject_prefs(i) = {sub_prefs};
     adj_approach_data(i) = {sub_results};
 end

@@ -1,0 +1,45 @@
+function plot_chain_validation(summary_table,all_psych_data,row_num,save_to)
+
+sorted_by_std_devs =  sortrows(summary_table,"std_devs_from_mean","desc");
+top_row = sorted_by_std_devs(row_num,:);
+t1 = top_row.t1;
+c1 = top_row.c1;
+t2 = top_row.t2;
+c2 = top_row.c2;
+
+t1c1_data = unique(all_psych_data(all_psych_data.story_type == t1 & all_psych_data.idx == c1, :));
+t2c2_data = unique(all_psych_data(all_psych_data.story_type == t2 & all_psych_data.idx == c2, :));
+
+figure 
+nexttile
+plot_target_cluster(t1c1_data, t2c2_data)
+nexttile
+plot_target_cluster(t2c2_data,t1c1_data)
+
+end
+
+function plot_target_cluster(t1, c1, t2t1c1_data, t2c2_data)
+
+
+t2c2_ids = unique(t2c2_data.subjectidnumber);
+
+tot_in = 0;
+tot_not = 0;
+for j = 1:height(t1c1_data)
+    row = t1c1_data(j,:);
+    id = row.subjectidnumber;
+    if ismember(id, t2c2_ids)
+        h1 = scatter3(row.clusterX, row.clusterY, row.clusterZ,50,"b",'filled');
+        tot_in = tot_in + 1;
+    else
+        h2 = scatter3(row.clusterX, row.clusterY, row.clusterZ,50,"r",'filled');
+        tot_not = tot_not + 1;
+    end
+    hold on
+end
+hold off 
+legend([h1; h2],["in"; "not in"])
+title("which pts in " + t1 + " cluster " + c1 + " are also in " + t2 + " cluster " + c2)
+subtitle("total in: " + tot_in + ", total not in: " + tot_not)
+
+end

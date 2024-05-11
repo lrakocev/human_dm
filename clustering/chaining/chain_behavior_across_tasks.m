@@ -8,7 +8,8 @@ task2_psych_data = all_psych_data(all_psych_data.story_type == task2, :);
 [~,samp_task2] = bootstrp(samp_size,[],task2_psych_data);
 
 general_table = [];
-for sample_i = 1:samp_size
+sample_i = 1;
+%for sample_i = 1:samp_size
     task1_sample_idx = samp_task1(:,sample_i);
     task2_sample_idx = samp_task2(:,sample_i);
 
@@ -142,4 +143,4 @@ for sample_i = 1:samp_size
 end
 
     
-end
+%end

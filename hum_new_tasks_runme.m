@@ -1,15 +1,23 @@
 %% Human New Tasks Run Me
 
+using_prefs = 0;
 datasource = 'PostgreSQL30'; %ENTER YOUR DATASOURCE NAME HERE, default should be "live_database"
 username = 'postgres'; %ENTER YOUR USERNAME HERE, default should be "postgres"
 password = '1234'; %ENTER YOUR PASSWORD HERE, default should be "1234"
 
 % ingest data
 [init_approach_data, r_ratings, c_ratings] = get_new_task(datasource,username,password);
-approach_data = clean_ingested_new_task(init_approach_data);
+[clean_approach_data, subject_prefs] = clean_ingested_new_task(init_approach_data);
 
-%add new column for story type 
-[approach_data] = add_story_column_loop(approach_data);
+% add new column for relevance
+thresh = 0;
+if using_prefs
+    thresh = 33;
+end
+[pref_approach_data] = add_pref_column(clean_approach_data, subject_prefs, thresh);
+
+% add new column for story type 
+[approach_data] = add_story_column_loop(pref_approach_data);
 
 % get data w enough trials 
 min_num_sessions = 2;
@@ -33,11 +41,35 @@ social_stories = combine_stories_for_map(N_trial_data, "social");
 probability_stories = combine_stories_for_map(N_trial_data, "probability");
 moral_stories = combine_stories_for_map(N_trial_data, "moral");
 
+%% get counts
+
+num_tot_subjects = length(N_trial_data);
+tot = [];
+for i = 1:length(N_trial_data)
+    tot = [tot; N_trial_data{1,i}];
+end
+
+num_all_subjects = length(unique(tot.subjectidnumber));
+
+story_types = ["approach_avoid", "social", "probability", "moral"];
+counts = [];
+for j = 1:length(story_types)
+    count = length(unique(tot(tot.story_type == story_types(j), :).subjectidnumber));
+    counts = [counts; count];
+end
+
+aa_sessions = length(appr_avoid_sessions);
+m_sessions = length(moral_sessions);
+s_sessions = length(social_sessions);
+p_sessions = length(probability_sessions);
+
+total_sessions = aa_sessions + m_sessions + s_sessions + p_sessions;
+
 
 %% normalization bar plots
 
 same_scale = 1;
-save_to = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\ratings\";
+save_to = "C:\Users\lrako\OneDrive\Documents\human dm\figs\all_session\ratings\";
 story_types = ["approach_avoid", "social", "probability", "moral"];
 for i = 1:4
     type = story_types(i);
@@ -98,10 +130,12 @@ data{2} = social_combined_data;
 data{3} = probability_combined_data;
 data{4} = moral_combined_data;
 
-path_to_save = 'C:\Users\lrako\OneDrive\Documents\human dm\test_run\psych_stats\';
+path_to_save = 'C:\Users\lrako\OneDrive\Documents\human dm\figs\all_session\psych_stats\';
 
 for s = 1:length(story_types)
     story_type = story_types(s);
+    story_dir = path_to_save + story_type;
+    mkdir(story_dir)
     combined_data = data{s};
     for c = 1:length(consts)
         constant = consts(c);

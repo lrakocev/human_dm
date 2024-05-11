@@ -1,7 +1,7 @@
 function [adj_results, r_ratings, c_ratings] = get_new_task(datasource,username,password)
 
 conn = database(datasource,username,password); %creates the database connection
-query = "select subjectidnumber,tasktypedone,reward_prefs,cost_prefs,reward_level,cost_level,decision_made,trial_start,hunger,tired,pain,sex,age,trial_elapsed from human_dec_making_table_utep;"; % group by subjectidnumber having count(distinct tasktypedone) > 2";
+query = "select subjectidnumber,tasktypedone,story_prefs,reward_prefs,cost_prefs,reward_level,cost_level,decision_made,trial_start,trial_end,hunger,tired,pain,sex,age,trial_elapsed from human_dec_making_table_utep;"; % group by subjectidnumber having count(distinct tasktypedone) > 2";
 results = fetch(conn,query);
 
 reload_python('ingest_helper');
