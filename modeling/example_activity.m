@@ -48,7 +48,7 @@ for r = 1:4
     title("LH activity lvl: " + string(lh_activity))
     sgtitle('example of triple configuration activity for ' + map_type + ' map w/ dim ' + string(dim))
     linkaxes([a1 a2 a3])
-    savefig(home_dir + map_type + ".fig")
+    %savefig(home_dir + map_type + ".fig")
 end
 
 function activity = lower_bound(activity)

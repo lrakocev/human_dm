@@ -1,29 +1,85 @@
-%% ai primitives runme
+save_to = 'C:\Users\lrako\OneDrive\Documents\human dm\ai primitives\train_by_section\';
+mkdir(save_to)
+h = height(possible_table);
+max_iter = round(h/4);
+min_iter = 1;
+num_iter = 5;
+num_models = 12;
+section_num = round(h/num_models);
+num_pts_to_train_on = 100;
 
-% what i need from the model -- given R, C, give a value A (approach rate)
-% train on human maps that are labeled 
+model_num = 1;
+model_data = [];
 
-%nss = idNeuralStateSpace(2,NumInputs=1);
-%dlnet = createMLPNetwork(nss, 'state', LayerSizes = [4 8 4], Activation="sigmoid");
+count = 0;
+for i = 1:num_models
 
-tot_appr = [];
-for i = 1:length(approach_data)
-    tot_appr = [tot_appr; approach_data{i}];
+    full_training_data = possible_table(((i-1)*section_num)+1:(i*section_num),:);
+    for m = 1:num_iter
+        train_idx = randperm(section_num, num_pts_to_train_on);
+        rows = full_training_data(train_idx, :);
+    
+        t = [];
+        rew = [];
+        for r = 1:num_pts_to_train_on
+            row = rows(r,:);
+            row_t = [row.lvl1 row.lvl2 row.lvl3 row.lvl4];
+            t = [t; row_t];
+            rew = [rew; 1 2 3 4];
+        end
+
+        net = feedforwardnet(10);
+        net = configure(net, {rew});
+        net = train(net, {rew}, t);
+    
+        ys = net(rew);
+            
+        for y = 1:height(ys)
+            all_appr = ys(y,:);
+            if all(~isnan(all_appr))
+                try
+                    [a,b,c] = fit_sigmoid_w_diff_methods([1 2 3 4], all_appr, [], 1, 1);
+                    row.a = a;
+                    row.b = b;
+                    row.c = c;
+                    row.appr_vals = all_appr;
+                    row.model = i;
+                    model_data = [model_data; row];
+                    
+                catch
+                    continue
+                end
+            end
+        end
+    end
 end
 
-tot_appr.r_c_label = "(" + string(tot_appr.rew) + ", " + string(tot_appr.cost) + ")";
+save('testing_model_bias.mat','model_data')
 
-tot_appr.r_c_label = categorical(tot_appr.r_c_label);
+%% simple plot
 
-n = height(tot_appr);
-all_idx = 1:n;
-num_train = round(n*.8);
-num_test = n - num_train;
-train_idx = randperm(n,num_train);
-test_idx = setdiff(all_idx,train_idx);
-train_table = tot_appr(train_idx,:);
-test_table = tot_appr(test_idx,:);
+figure
+load('testing_model_bias.mat')
+colors = distinguishable_colors(num_models);
+plot_n = height(model_data);
 
-Mdl = fitcnet(train_table,"r_c_label");
-testAccuracy = 1 - loss(Mdl,test_table,"r_c_label", "LossFun","classiferror")
+hs = [];
+prev_m = 0;
+for i = 1:plot_n
+    %rand_idx = randperm(height(model_data), 1);
+    rand_idx = i;
+    row = model_data(rand_idx,:);
+    a = log(abs(row.a));
+    b = log(abs(row.b));
+    c = log(abs(row.c));
+    m = row.model;
+
+    h = scatter3(a,b,c,[],colors(m,:));
+    if m > prev_m 
+        hs = [hs; h];
+    end
+    prev_m = m;
+    hold on    
+end
+legend(hs)
 

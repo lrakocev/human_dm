@@ -1,0 +1,19 @@
+function make_thresh_psych_folder(clean_approach_data, subject_prefs, existing_dir, story_types)
+
+filtered_files = filter_helper(clean_approach_data, subject_prefs, thresh);
+
+new_dir = "psych_dir_thresh" + string(thresh);
+for i = 1:length(story_types)
+    story = story_types(i);
+    mkdir(new_dir + "/" + story)
+end
+
+for i = 1:length(filtered_files)
+    file = filtered_files(i);
+    full_path = existing_dir + "/" + file;
+    copy(full_path)
+
+
+
+
+end

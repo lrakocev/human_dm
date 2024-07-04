@@ -1,8 +1,8 @@
-function call_spectral_clustering_combine_all_human_data(table_of_dir,directory_where_cluster_table_should_be_saved,epsilon,given_number_of_clusters,colors,method)
+function table_of_data = call_spectral_clustering_combine_all_human_data(table_of_dir,directory_where_cluster_table_should_be_saved,epsilon,given_number_of_clusters,colors,method,is_big)
 table_of_data = cell2table(cell(0,5),"VariableNames",["A","B","C","D","E"]);
 directory_where_cluster_table_should_be_saved = create_a_file_if_it_doesnt_exist_and_ret_abs_path(directory_where_cluster_table_should_be_saved);
 for i=1:height(table_of_dir)
-    current_table = getTable(table_of_dir{i,2});
+    current_table = getTableBig(table_of_dir{i,2},is_big);
     E = repelem(table_of_dir{i,1},height(current_table),1);
     E = table(E);
     current_table = [current_table,E];

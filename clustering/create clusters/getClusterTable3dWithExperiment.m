@@ -9,8 +9,12 @@ function cluster= getClusterTable3dWithExperiment(xVsYVsZ, labels,indexes,cluste
     clusterLabels = labels(indexes==cluster_id).';
     clusterLabels = clusterLabels.';
     cluster_number = repelem(cluster_id,length(clusterX)).';
-    experiment =experiment(indexes==cluster_id,1);
-    experiment = experiment;
+    if ~isempty(experiment)
+        experiment =experiment(indexes==cluster_id,1);
+        experiment = experiment;
+    else
+        experiment = repelem("n/a", length(clusterX))';
+    end
     cluster = table(clusterLabels,clusterX,clusterY,clusterZ,cluster_number,experiment);
 
 end

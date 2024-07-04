@@ -1,6 +1,6 @@
 %% clusters runme using spectral clustering table
 
-type = "all_session_cost";
+type = "all_cost_5_clusters";
 table_name = "C:\Users\lrako\OneDrive\Documents\human dm\" + type + ".xlsx";
 spectral_table = readtable(table_name);
 
@@ -29,10 +29,10 @@ all_psych_data = plot_avg_spec_cluster_psychs(spectral_table, all_data, same_sca
 all_psych_data = renamevars(all_psych_data,'experiment','story_type');
 
 %%
-story_types = ["approach_avoid", "social", "probability", "moral"];
+story_types = ["approach_avoid", "social", "probability", "moral", "all"];
 save_to = "C:\Users\lrako\OneDrive\Documents\human dm\figs\" + type + "\probability_of_behavior";
 mkdir(save_to)
-for i = 1:length(story_types)
+for i = 5 %1:length(story_types)
     story = story_types(i);
      probability_of_behavior_3d(all_psych_data, story, save_to)
 end

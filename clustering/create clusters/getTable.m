@@ -28,11 +28,17 @@ for k = 1:length(myFiles)
                 T = cell2table(C,'VariableNames',{'A','B', 'C', 'D'});
 %                 display([fitobject4.a,fitobject4.b,fitobject4.c, baseFileName])
             catch
-                disp("None Of them worked for some reason")
+               try
+                   C = {final_obj.a, final_obj.b, final_obj.c, baseFileName};
+                    T = cell2table(C,'VariableNames',{'A','B', 'C', 'D'});
+               catch
+                   continue
+               end
+
             end
         end
     end
     newTable = [newTable;T];
-    clear fitobject3 fitobject2 fitobject 4
+    clear fitobject3 fitobject2 fitobject4 final_obj
 end
 end

@@ -1,6 +1,6 @@
 %% clusters runme using spectral clustering table
 
-type = "all_session";
+type = "all_cost_5_clusters";
 table_name = "C:\Users\lrako\OneDrive\Documents\human dm\" + type + ".xlsx";
 spectral_table = readtable(table_name);
 
@@ -43,7 +43,7 @@ total_table = renamevars(total_table,"t2","task2");
 summary_table = create_summary_table(all_psych_data,total_table,tasks);
 plot_heatmap(summary_table,save_to)
 
-%% validation plot
+%% validation plots
 
 save_to = "C:\Users\lrako\OneDrive\Documents\human dm\figs\" + type +  "\chaining\";
 total_table_name = save_to + '/total_table_' + type + '.mat';
@@ -52,7 +52,8 @@ total_table = renamevars(total_table,"t1","task1");
 total_table = renamevars(total_table,"t2","task2");
 tasks = ["approach_avoid","social","moral","probability"];
 summary_table = create_summary_table(all_psych_data,total_table,tasks);
-plot_chain_validation(summary_table,all_psych_data,10,"desc",save_to);
+plot_chain_validation_both(summary_table,all_psych_data,1,"desc",save_to);
 
-plot_chain_validation(summary_table,all_psych_data,1,"asc",save_to);
+plot_chain_validation_both(summary_table,all_psych_data,1,"asc",save_to);
 
+plot_linkages(summary_table,1,"desc",save_to)

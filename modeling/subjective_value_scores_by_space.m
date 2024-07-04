@@ -6,10 +6,11 @@
 clear; close all
 rng('default')
 addpath(fileparts(pwd))
+%%
 
 % which space to use for the plotted examples
 example_spaces = {[1 1 0 0],[1 0 0 0],[0 0 0 0]};
-decision_making_grid_size = 8;
+decision_making_grid_size = 4;         
 
 %% first, a normal grid to highlight day-to-day variability
 

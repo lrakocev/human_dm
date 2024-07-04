@@ -1,5 +1,5 @@
 
-type = "all_session";
+type = "all_cost_5_clusters";
 table_name = "C:\Users\lrako\OneDrive\Documents\human dm\" + type + ".xlsx";
 spectral_table = readtable(table_name);
 
@@ -31,8 +31,8 @@ all_psych_data = renamevars(all_psych_data,'experiment','story_type');
 
 save_to = "C:\Users\lrako\OneDrive\Documents\human dm\figs\" + type + "\subjects_in_cluster\";
 mkdir(save_to)
-story_types =  ["approach_avoid", "social", "probability", "moral"];
-y_max = 0.5; 
+story_types =  ["approach_avoid", "social", "probability", "moral", "all"];
+y_max = 0.7; 
 for s = 1:length(story_types)
     story_type = story_types(s);
     subjects_in_cluster_3d(all_psych_data, story_type, y_max, save_to)

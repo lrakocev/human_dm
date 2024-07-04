@@ -1,19 +1,21 @@
-function plot_physio_feats_3d(merged_table,num_clusters,C,save_to,is_hr)
+function plot_physio_feats_3d(merged_table,num_clusters,C,save_to,is_hr,use_all)
 
 figure
 l = [];
 hs= [];
+mean_bars = [];
+std_errs = [];
 for s = 1:num_clusters
     cluster_table = merged_table(merged_table.idx == s, :);
 
     if ~is_hr
-        x = cluster_table.nanmean_avg_eng;
-        y = cluster_table.nanmean_num_maxes;
-        z = cluster_table.nanmean_num_mins;
+        x = cluster_table.avg_eng;
+        y = cluster_table.num_maxes;
+        z = cluster_table.num_mins;
     else
-        x = cluster_table.nanmean_percent_max_hr;
-        y = cluster_table.nanmean_percent_min_hr;
-        z = cluster_table.nanmean_direction;
+        x = cluster_table.percent_max_hr;
+        y = cluster_table.percent_min_hr;
+        z = cluster_table.direction;
     end
 
     mean_x = mean(x, 'omitnan');
@@ -36,22 +38,30 @@ for s = 1:num_clusters
     hs = [hs;h];
     curr_l = "cluster " + string(s);
     l = [l; curr_l];
-
+   
 end
+
 hold off
 legend(hs, l)
+
 if ~is_hr
     xlabel('avg pupil diam')
     ylabel('num maxes in pupil diam')
     zlabel('num mins in pupil diam')
     title('eye feats associated w clusters')
+
+    subtitle_str = physio_clusters_anova(merged_table, num_clusters, is_hr, use_all);
+    subtitle(subtitle_str)
     set(gcf,'renderer','Painters')
     savefig(save_to + 'eye_physio_feats_to_cluster_3d.fig')
 else 
-    xlabel('% max hr below avg')
+    xlabel('% max hr above avg')
     ylabel('% min hr below avg')
     zlabel('directoin')
     title('hr feats associated w clusters')
+
+    subtitle_str = physio_clusters_anova(merged_table, num_clusters, is_hr, use_all);
+    subtitle(subtitle_str)
     set(gcf,'renderer','Painters')
     savefig(save_to + 'hr_physio_feats_to_cluster_3d.fig')
 end

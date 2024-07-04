@@ -12,7 +12,7 @@ password = '1234'; %ENTER YOUR PASSWORD HERE, default should be "1234"
 % add new column for relevance
 thresh = 0;
 if using_prefs
-    thresh = 33;
+    thresh = 50;
 end
 [pref_approach_data] = add_pref_column(clean_approach_data, subject_prefs, thresh);
 
@@ -64,6 +64,8 @@ s_sessions = length(social_sessions);
 p_sessions = length(probability_sessions);
 
 total_sessions = aa_sessions + m_sessions + s_sessions + p_sessions;
+%% approach data w psych names
+
 
 
 %% normalization bar plots
@@ -93,14 +95,14 @@ run_dec_making_plot_loop(data,story_types,path_to_save,want_bdry,want_scale,want
 
 %% dec making maps
 
-want_bdry = 0;
+want_bdry = 1;
 want_scale = 0;
 want_save = 1;
 story_types = ["approach_avoid", "social", "probability", "moral"];
 data{1} = appr_avoid_combined_data;
-data{2} = social_combined_data;
-data{3} = probability_combined_data;
-data{4} = moral_combined_data;
+%data{2} = social_combined_data;
+%data{3} = probability_combined_data;
+%data{4} = moral_combined_data;
 path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\dec_making_maps";
 
 run_dec_making_plot_loop(data,story_types,path_to_save,want_bdry,want_scale,want_save)

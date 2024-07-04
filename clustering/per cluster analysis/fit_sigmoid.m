@@ -1,6 +1,5 @@
 function fit_sigmoid(x,y)
 
-
 [fitobject1, gof1]= fit(x.',y.','a*x+b');
 
 [fitobject2, gof2] = fit(x.', y.', '1 / (1 + (b*exp(-c * x)))');

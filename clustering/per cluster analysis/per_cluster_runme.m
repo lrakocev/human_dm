@@ -1,6 +1,6 @@
 %% clusters runme using spectral clustering table
 
-type = "min_pref_session_cost";
+type = "all_cost_5_clusters";
 table_name = "C:\Users\lrako\OneDrive\Documents\human dm\" + type + ".xlsx";
 spectral_table = readtable(table_name);
 

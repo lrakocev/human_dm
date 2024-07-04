@@ -18,6 +18,7 @@ function [table_of_data_dirs] = get_dirs_with_data(dir_with_all_sigmoid_data)
         all_absolute_dirs{i} = pwd;
         cd(directory_which_contains_subdirectories_of_data);
     end
+    
 
     table_of_data_dirs = table(all_directories_within_this_one,string(all_absolute_dirs),'VariableNames',["Task","Data_Directory"]);
     cd(home_dir)
