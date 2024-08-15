@@ -46,6 +46,8 @@ if split_by_dim
     saveas(f1, figname + "_dim_1.fig")
     saveas(f2, figname + "_dim_2.fig")
 else
+    set(gcf,'renderer','Painters')
+    saveas(f3, figname, "svg")
     saveas(f3, figname + ".fig")
 end
 close all 

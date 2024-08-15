@@ -3,7 +3,7 @@ load("subset_dirk_space.mat")
 save_to = "C:\Users\lrako\OneDrive\Documents\human dm\ai primitives\06_10_04";
 mkdir(save_to)
 num_clusters = 12;
-colors = distinguishable_colors(num_clusters);
+colors = distinguishable_colors(30);
 [dirk_cluster_data, param_data, index] = clusters_to_configs(myTable, param_table, rand_rows, num_clusters ,colors,'euclidean',save_to);
 savefig(save_to + "\dirk_clustering_" + string(num_clusters) + ".fig")
 %close all 
@@ -12,7 +12,7 @@ savefig(save_to + "\dirk_clustering_" + string(num_clusters) + ".fig")
 
 param_data.cluster = index;
 num_clusters = 12;
-colors = distinguishable_colors(num_clusters);
+%colors = distinguishable_colors(num_clusters);
 
 figure
 hs = [];
@@ -45,8 +45,8 @@ zlabel('lh hz')
 sgtitle("3d config plot")
 legend(hs)
 set(gcf,'renderer','Painters')
-savefig(save_to + "\configs_cluster_3d" + string(num_clusters) + ".fig")
-savefig(save_to + "\configs_cluster_3d" + string(num_clusters) + ".svg", "svg")
+saveas(gcf,save_to + "\configs_cluster_3d" + string(num_clusters) + ".fig","svg")
+saveas(gcf,save_to + "\configs_cluster_3d" + string(num_clusters) + ".svg", "svg")
 
 set(gcf,'renderer','Painters')
 
@@ -54,14 +54,14 @@ set(gcf,'renderer','Painters')
 
 param_data.cluster = index;
 num_clusters = 12;
-colors = distinguishable_colors(num_clusters);
+%colors = distinguishable_colors(num_clusters);
 
 mean_params = [];
 hs = [];
 for c = 1:num_clusters
     cluster_table = param_data(param_data.cluster == c, :);
 
-    if height(cluster_table) < 20
+    if height(cluster_table) > 0
 
     configs = groupcounts(cluster_table, ["strio", "DA_b", "LH0"]);
     collected = 0;
@@ -90,9 +90,9 @@ for c = 1:num_clusters
    
     
     sgtitle("3d config plot for cluster " + string(c))
-    legend(hs)
     set(gcf,'renderer','Painters')
-    %saveas(gcf, save_to + "\configs_cluster_3d_separate_cluster_" + string(c) + ".fig","fig")
-    %saveas(gcf, save_to +"\configs_cluster_3d_separate_cluster_" + string(c) + ".svg", "svg")
+    saveas(gcf, save_to + "\configs_cluster_3d_separate_cluster_" + string(c) + ".fig","fig")
+    saveas(gcf, save_to +"\configs_cluster_3d_separate_cluster_" + string(c) + ".svg", "svg")
+    close all
     end
 end

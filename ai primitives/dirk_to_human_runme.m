@@ -16,7 +16,7 @@ get_bhat_dist_heat_map_comparing_rat_to_human(human_data,dirk_cluster_data,1, ..
 get_bhat_dist_heat_map_comparing_rat_to_human(human_data,dirk_cluster_data,0, ...
     save_to,version_name,1)
 
-colors = distinguishable_colors(30);
+%colors = distinguishable_colors(30);
 
 normalized_human_to_rat_comparison_single_plot(dirk_table_name, ...
     human_data,save_to,"3d cluster plot dirk to human comparison",colors,1)

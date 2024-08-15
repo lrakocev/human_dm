@@ -43,6 +43,34 @@ total_table = renamevars(total_table,"t2","task2");
 summary_table = create_summary_table(all_psych_data,total_table,tasks);
 plot_heatmap(summary_table,save_to)
 
+%% calcs + plotting (run_chain takes a while)
+
+type = "individual";
+save_to = "C:\Users\lrako\OneDrive\Documents\human dm\figs\" + type +  "\chaining\";
+mkdir(save_to)
+tasks = ["approach_avoid","social","moral","probability"];
+use_cost = 0;
+sample_size = 150;
+if contains(type,"cost")
+    use_cost = 1;
+    sample_size = 500;
+end
+num_samples = 20;
+total_table = run_indiv_chain(all_psych_data,tasks,sample_size,save_to,num_samples);
+total_table = renamevars(total_table,"t1","task1");
+total_table = renamevars(total_table,"t2","task2");
+
+summary_table = create_indiv_summary_table(all_psych_data,total_table,tasks);
+all_ids = unique(summary_table.id);
+for i = 1:length(all_ids)
+    id = all_ids(i);
+    id_table = summary_table(summary_table.id == id, :);
+    plot_heatmap(id_table,save_to, string(id));
+    close all
+end
+
+
+
 %% validation plots
 
 save_to = "C:\Users\lrako\OneDrive\Documents\human dm\figs\" + type +  "\chaining\";

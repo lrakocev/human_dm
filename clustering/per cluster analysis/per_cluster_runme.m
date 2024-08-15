@@ -1,6 +1,6 @@
 %% clusters runme using spectral clustering table
 
-type = "all_cost_5_clusters";
+type = "all_session_updated";
 table_name = "C:\Users\lrako\OneDrive\Documents\human dm\" + type + ".xlsx";
 spectral_table = readtable(table_name);
 
@@ -11,7 +11,7 @@ spectral_table = readtable(table_name);
 %% concatenating the session tables into one big table per task
 
 want_plot = 1;
-same_scale = 1;
+same_scale = 0;
 save_to = "C:\Users\lrako\OneDrive\Documents\human dm\figs\" + type + "\avg_cluster_info";
 mkdir(save_to)
 use_cost = 0;

@@ -48,3 +48,14 @@ for s = 1:length(story_types)
     mkdir(save_to)
     indiv_subjects_in_cluster_3d(all_psych_data, story_type, save_to)
 end
+
+%% line plots of individual subject strategies
+
+home_dir = "C:\Users\lrako\OneDrive\Documents\human dm\figs\" + type + "\subjects_in_cluster\lines_overlaid\";
+story_types = ["approach_avoid", "social", "moral", "probability"];
+for s = 1:length(story_types)
+    story_type = story_types(s);
+    save_to = home_dir;
+    mkdir(save_to)
+    indiv_line_plots_overlaid(all_psych_data, story_type, save_to)
+end

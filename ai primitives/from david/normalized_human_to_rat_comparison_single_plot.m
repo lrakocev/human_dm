@@ -35,13 +35,13 @@ for i=1:length(rat_clusters)
     array_of_current_cluster_data_for_rat = [rat_current_cluster_info.clusterX,rat_current_cluster_info.clusterY,rat_current_cluster_info.clusterZ];
     % subplot(1,2,1);
     h = scatter3(array_of_current_cluster_data_for_rat(:,1),array_of_current_cluster_data_for_rat(:,2),array_of_current_cluster_data_for_rat(:,3),'o','MarkerEdgeColor',current_rat_color,'MarkerFaceColor',current_rat_color);
-    legend_strings = [legend_strings,strcat("Dirk Cluster ",string(i))];
+    legend_strings = [legend_strings,strcat("Model Cluster ",string(i))];
     hs = [hs,h];
     hold on;
     text(mean(array_of_current_cluster_data_for_rat(:,1)),...
         mean(array_of_current_cluster_data_for_rat(:,2)),...
         mean(array_of_current_cluster_data_for_rat(:,3))+4,...
-        strcat("dirk ",string(i)),'FontWeight','bold','Color',current_rat_color);
+        strcat("model ",string(i)),'FontWeight','bold','Color',current_rat_color);
     
     % plot3(rat_centers(i,1),rat_centers(i,2),rat_centers(i,3),"xk",MarkerSize=15,LineWidth=3);
     cell_array_of_b_dist = cell(length(human_clusters),1);
@@ -78,7 +78,7 @@ xlabel("log(abs(max))");
 ylabel("log(abs(shift))");
 zlabel("log(abs(slope))");
 
-title("Dirk vs Human Cluster Comparison, " + to_add_to_title)
+title("Model vs Human Cluster Comparison, " + to_add_to_title)
 
 legend(hs,legend_strings,'Location','best')
 saveas(gcf,strcat(dir_with_b_dist_plots_abs,"\Rat To Human Comparison ",to_add_to_title,".svg"),"svg")

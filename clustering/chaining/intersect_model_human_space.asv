@@ -1,0 +1,41 @@
+function percent_space = intersect_model_human_space(model_data, human_table,save_to)
+
+figure
+max_cluster = max(human_table.cluster_number);
+colors = distinguishable_colors(max_cluster+1);
+
+model_a = transf(model_data.a);
+model_b = transf(model_data.b);
+model_c = transf(model_data.c);
+[model_bdry, model_v] = boundary(model_a, model_b, model_c);
+h1 = trisurf(model_bdry,model_a, model_b, model_c,'FaceColor',colors(1,:),'FaceAlpha',0.1);
+hold on
+
+human_vs = [];
+human_bdrs = [];
+hs = [h1];
+l = ["total space"];
+for c = 1:max_cluster
+    c_table = human_table(human_table.cluster_number == c, :);
+    [human_bdry,human_v] = boundary(c_table.clusterX, c_table.clusterY, c_table.clusterZ);
+
+    human_vs = [human_vs; human_v];
+    h = trisurf(human_bdry,c_table.clusterX, c_table.clusterY, c_table.clusterZ,'FaceColor',colors(c+1,:),'FaceAlpha',0.5);
+    hs = [hs; h];
+    l = [l; "cluster " + string(c) + " volume"];
+    hold on
+end
+
+all_human_v = sum(human_vs);
+percent_space = all_human_v / model_v; 
+legend(hs,l);
+
+title("human clusters make up " + string(percent_space*100) +"% of the total space")
+set(gcf,'renderer','Painters')
+saveas(gcf,save_to + "")
+saveas(gcf,save_to + "", svg")
+end
+
+function a = transf(a)
+a= log(abs(a));
+end

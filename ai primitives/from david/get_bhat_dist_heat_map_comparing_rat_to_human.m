@@ -8,7 +8,7 @@ function [] = get_bhat_dist_heat_map_comparing_rat_to_human(human_data_table,rat
         heat_map_y_labels = cell(1,length(rat_clusters));
         for i=1:length(rat_clusters)
             curr_rat_cluster = rat_clusters(i);
-            heat_map_y_labels{i} = char(strcat("Dirk Cluster ",string(curr_rat_cluster)));
+            heat_map_y_labels{i} = char(strcat("Model Cluster ",string(curr_rat_cluster)));
             current_rat_cluster_table = rat_data_table(rat_data_table.cluster_number==curr_rat_cluster,:);
             rat_data = [current_rat_cluster_table.clusterX,current_rat_cluster_table.clusterY,current_rat_cluster_table.clusterZ];
             rat_labels = logical(zeros(size(current_rat_cluster_table,1),1));
@@ -56,10 +56,10 @@ function [] = get_bhat_dist_heat_map_comparing_rat_to_human(human_data_table,rat
             to_add_to_tile = to_add_to_tile+" Not Normalized";
         end
 
-        title("Mean Bhattacharya Distance between dirk modeled clusters vs human clusters" + newline + to_add_to_tile)
+        title("Mean Bhattacharya Distance between model clusters vs human clusters" + newline + to_add_to_tile)
 
         set(gcf,'renderer','Painters');
-        save_title = strcat(dir_to_save_figs_to,"\","Bhat Distance Between Dirk Clusters to Human Approach Avoid Clusters ",to_add_to_tile," ",version_name);
+        save_title = strcat(dir_to_save_figs_to,"\","Bhat Distance Between Model Clusters to Human Approach Avoid Clusters ",to_add_to_tile," ",version_name);
         saveas(gcf,strcat(save_title,".svg"),"svg")
         saveas(gcf,strcat(save_title,".fig"),"fig")
     end

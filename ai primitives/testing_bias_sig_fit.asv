@@ -1,0 +1,48 @@
+function testing_bias_sig_fit(sigmoid_table)
+    model_data = []; 
+
+    for y = 1:height(sigmoid_table)
+        row = sigmoid_table(y,:);
+        all_appr = [row.lvl1 row.lvl2 row.lvl3 row.lvl4];
+    
+        if all(~isnan(all_appr))
+            try
+                [a,b,c] = fit_sigmoid_w_diff_methods([1 2 3 4], all_appr, [], 1, 1);
+                row.a = a;
+                row.b = b;
+                row.c = c;
+                row.model = i;
+                model_data = [model_data; row];
+                
+            catch
+                continue
+            end
+        end
+    end
+    
+    save('testing_bias_filtered.mat','model_data')
+    
+    % simple plot
+    
+    figure
+    plot_n = height(model_data);
+    
+    hs = [];
+    prev_m = 0;
+    for i = 1:plot
+        row = model_data(i,:);
+        a = log(abs(row.a));
+        b = log(abs(row.b));
+        c = log(abs(row.c));
+        m = row.model;
+    
+        h = scatter3(a,b,c);
+        if m > prev_m 
+            hs = [hs; h];
+        end
+        prev_m = m;
+        hold on    
+    end
+    legend(hs)
+    title("testing bias w sigmoid fit")
+end

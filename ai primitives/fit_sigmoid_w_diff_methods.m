@@ -1,17 +1,19 @@
-function [a,b,c] = fit_sigmoid_w_diff_methods(x,y,start,alg_num,robust_num)
+function [a,b,c] = fit_sigmoid_w_diff_methods(x,y,sig_type)
 
-algs = {"Trust-Region", "Levenberg-Marquardt"};
-robust = {"off","LAR","Bisquare"};
-
-fo = fitoptions('Method','NonlinearLeastSquares','StartPoint', start,...
-    'Algorithm', algs{alg_num}, 'Robust', robust{robust_num},...
-    'TolFun', 1e-5, 'MaxFunEvals',750, 'MaxIter', 600);
-    %'Upper',start,'Lower',start);
-
-ft = fittype('(a/(1+b*exp(-c*(x))))','options',fo);
+if sig_type == 2
+    ft = fittype('1 /(1 + (b*exp(-c * x)))');
+    a = 1;
+elseif sig_type == 3
+    ft = fittype('(a/(1+b*exp(-c*(x))))');
+else 
+    ft = fittype('(a/(1+(b*(exp(-c*(x-d))))))');
+end
 
 [fitobject3, ~] = fit(x.',y.',ft);
-a = fitobject3.a;
+
+if sig_type ~=2
+    a = fitobject3.a;
+end
 b = fitobject3.b;
 c = fitobject3.c;
 

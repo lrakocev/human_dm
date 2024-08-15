@@ -1,12 +1,20 @@
 save_to = 'C:\Users\lrako\OneDrive\Documents\human dm\ai primitives\train_by_section\';
+
+load('full space w types.mat')
+starting_table = further_filter;
+% use same rand_rows from testing_bias_sig_fit.m if possible
+n = 5000;
+rows_used = randperm(height(starting_table), n);
+possible_table = starting_table(rows_used, :);
+possible_table = sortrows(possible_table, ["a","b","c"]);
 mkdir(save_to)
 h = height(possible_table);
 max_iter = round(h/4);
 min_iter = 1;
 num_iter = 5;
-num_models = 12;
+num_models = 20;
 section_num = round(h/num_models);
-num_pts_to_train_on = 100;
+num_pts_to_train_on = 50;
 
 model_num = 1;
 model_data = [];
@@ -37,36 +45,40 @@ for i = 1:num_models
         for y = 1:height(ys)
             all_appr = ys(y,:);
             if all(~isnan(all_appr))
-                try
-                    [a,b,c] = fit_sigmoid_w_diff_methods([1 2 3 4], all_appr, [], 1, 1);
-                    row.a = a;
-                    row.b = b;
-                    row.c = c;
-                    row.appr_vals = all_appr;
-                    row.model = i;
-                    model_data = [model_data; row];
-                    
-                catch
-                    continue
+                for sig_type = 2:4
+                    try
+                        [a,b,c] = fit_sigmoid_w_diff_methods([1 2 3 4], all_appr, sig_type);
+                        row.a = a;
+                        row.b = b;
+                        row.c = c;
+                        row.appr_vals = all_appr;
+                        row.model = i;
+                        model_data = [model_data; row];
+                        
+                    catch
+                        continue
+                    end
                 end
             end
         end
     end
 end
 
-save('testing_model_bias.mat','model_data')
+save('testing_model_bias_0805.mat','model_data')
 
 %% simple plot
 
 figure
-load('testing_model_bias.mat')
+%load('testing_model_bias.mat')
 colors = distinguishable_colors(num_models);
-plot_n = height(model_data);
+plot_n = 2500;
+
+model_data = sortrows(model_data, ["a","b","c"]);
 
 hs = [];
 prev_m = 0;
 for i = 1:plot_n
-    %rand_idx = randperm(height(model_data), 1);
+    rand_idx = randperm(height(model_data), 1);
     rand_idx = i;
     row = model_data(rand_idx,:);
     a = log(abs(row.a));
