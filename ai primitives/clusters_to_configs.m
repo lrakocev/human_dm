@@ -19,7 +19,7 @@ for j=1:length(unique_indexes)
     scatter3(group_n(:,1),group_n(:,2),group_n(:,3),[],current_color);
     hold on
 
-    three_d_cluster_table = getClusterTable3dWithExperiment(xVsYVsZ,labels,index,unique_indexes(j),[]);
+    three_d_cluster_table = getClusterTable3dWithExperiment(xVsYVsZ,[],labels,index,unique_indexes(j),[]);
     writetable(three_d_cluster_table,strcat(save_to,"\all_experiment_clustered_together.xlsx"),'WriteMode','append')
     hold on;
    

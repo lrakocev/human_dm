@@ -1,6 +1,8 @@
-function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, want_scale, want_save)
+function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, want_scale,want_save,subtit)
 
     subid = appr_table.subjectidnumber(1);
+    story_num = appr_table.story_num(1);
+
     cost_levels = 1/4:1/4:1;
     reward_levels = 1/4:1/4:1;
     
@@ -12,14 +14,8 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
     i = 1;
     for r=1:length(reward_levels)
         for c=1:length(cost_levels)
-            r_c_table =  appr_table(appr_table.cost == c & appr_table.rew == r,:);  %get the approach rate when cost = c and rew =r, and store it in ps
-           
-            if ~isempty(r_c_table)
-                ps(i) = r_c_table.approach_rate;
-            else
-                ps(i) = NaN;
-            end
-
+            ps(i) = appr_table(appr_table.cost == c & appr_table.rew == r,:).approach_rate;  %get the approach rate when cost = c and rew =r, and store it in ps
+            %ps(i) = 1./(1+exp(-2*r+3))*1./(1+exp(.6*c-2));
             observed_p_appr(c,r) = ps(i); %each row represents the reward level and each column is the cost 
             i = i+1;
         end
@@ -48,26 +44,38 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
     % Call fit and specify the value of c.
     f = fit( [rs, cs], ps, g, 'StartPoint', [1; 0; 1; 0]); 
     
+    % fsurf(@(R,C) 1./(1+exp(-f.a_R.*R+f.b_R))*1 ./ (1+exp(f.a_C.*C+f.b_C)), [0, 1]) %plots the background/ doesnt seem to matter
     frc = 1/(1+exp(-f.a_R*R+f.b_R))*1/(1+exp(f.a_C*C+f.b_C)); %plug the found sigmoid parameters into the sigmoid formula (its a 2d sigmoid)
     boundary_line = solve(frc==.5, C); %the boundary line is supposed to be when there's 50% approach and 50% avoid
+    %line 49 puts .5 on the left hand side of 48, we substitute .5 for frc gives a line which is a reward as a function of cost
+
+    % B = tiledlayout(1,2);
     
+    % Normal
+    % nexttile
     something = [observed_p_appr(4,:);observed_p_appr(3,:);observed_p_appr(2,:);observed_p_appr(1,:)];
-    
+    % heatmap(observed_p_appr)
+    % figure
 
     [the_min,the_max] = bounds(observed_p_appr,"all");
-    imagesc(observed_p_appr); 
-    %imagesc(flipud(observed_p_appr));
+    imagesc(observed_p_appr);%original
+    % imagesc(flipud(observed_p_appr)) 
     colormap("default");
     cb = colorbar;
-   
+    cb.Ticks = [min_p (min_p+max_p)/2 max_p];
+    clim([min_p max_p]);
+    % % set(gca,'xtick',[], 'ytick',[], 'FontSize',20, 'YDir','normal');
     ylabel(cb,'approach rate')
+    % % set(gca,'xtick',[], 'ytick',[], 'FontSize',20, 'YDir','normal');
     xlabel('reward')
     ylabel('cost')
     title("3D Psychometric fun. for subject: " + string(subid))
+    subtitle(subtit)
 
     set(gca,'YDir','normal')
     
     if want_bdry
+        % nexttile
         hold on;
         x_cont_prelim = linspace(0, 1.5, 1000); %array from 0 to 1000 with increments of 1.5
         dashed_curve_prelim = subs(boundary_line, R, x_cont_prelim)*4; %substitute R with the value of x in the x_cont_prelim array
@@ -75,14 +83,17 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
         dashed_curve = dashed_curve_prelim(imag(dashed_curve_prelim)==0);%keep only the y-values where the y-value is real
     
         plot(x_cont*4, dashed_curve, '--k', 'LineWidth',5)
-        hold off
+        
+        % ylim([0,1]);
+        % xlim([0,1]);
     end
 
+    fighandle = gcf;
+    set(gcf,'renderer','Painters')
     if want_save
-        fighandle = gcf;
-        set(gcf,'renderer','Painters')
-        saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_', string(subid),'.fig'))
-        close all
+    saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_', string(subid), '_', string(story_num),'.fig'),"fig")
+    saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_', string(subid), '_', string(story_num),'.svg'),"svg")
+    close all
     end
 
 end

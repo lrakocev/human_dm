@@ -1,4 +1,4 @@
-function fit_sigmoid(x,y)
+function [func,r] = fit_sigmoid(x,y,c)
 
 [fitobject1, gof1]= fit(x.',y.','a*x+b');
 
@@ -11,15 +11,25 @@ function fit_sigmoid(x,y)
 [fitobject5, gof5] = fit(x.',y.','a*(x-b)^(2)+c');
 
 if gof3.rsquare >= .6
-    plot(fitobject3,x.',y.')
+    plot(fitobject3,c,x.',y.')
+    r = gof3.rsquare;
+    func = fitobject3;
 elseif gof4.rsquare >= .6
-    plot(fitobject4,x.',y.')
+    plot(fitobject4,c,x.',y.')
+    r = gof4.rsquare;
+    func = fitobject4;
 elseif gof2.rsquare >= .6
-    plot(fitobject2,x.',y.')
+    plot(fitobject2,c,x.',y.')
+    r = gof2.rsquare;
+    func = fitobject4;
 elseif gof1.rsquare > gof5.rsquare
-    plot(fitobject1,x.',y.')
+    plot(fitobject1,c,x.',y.')
+    r = gof1.rsquare;
+    func = fitobject1;
 elseif gof5.rsquare > gof1.rsquare
-    plot(fitobject5,x.',y.')
+    plot(fitobject5,c,x.',y.')
+    r = gof5.rsquare;
+    func = fitobject5;
 end
 
 end

@@ -1,4 +1,4 @@
-function table_of_data = call_spectral_clustering_combine_all_human_data(table_of_dir,directory_where_cluster_table_should_be_saved,epsilon,given_number_of_clusters,colors,method,is_big)
+function table_of_data = call_spectral_clustering_combine_all_human_data(table_of_dir,directory_where_cluster_table_should_be_saved,epsilon,given_number_of_clusters,colors,method,is_big,file_name)
 table_of_data = cell2table(cell(0,5),"VariableNames",["A","B","C","D","E"]);
 directory_where_cluster_table_should_be_saved = create_a_file_if_it_doesnt_exist_and_ret_abs_path(directory_where_cluster_table_should_be_saved);
 for i=1:height(table_of_dir)
@@ -10,7 +10,8 @@ for i=1:height(table_of_dir)
 end
 
 task = "All_Human_data";
-xVsYVsZ = log(abs([table_of_data.A,table_of_data.B,table_of_data.C]));
+raw_xVsYVsZ = [table_of_data.A,table_of_data.B,table_of_data.C];
+xVsYVsZ = log(abs(raw_xVsYVsZ));
 labels = [table_of_data.D,table_of_data.D];
 
 % [~,V_temp,D_temp] = spectralcluster(xVsYVsZ,5);
@@ -35,8 +36,8 @@ for j=1:length(unique_indexes)
         dataTipTextRow("Story",table_of_data.E(index==unique_indexes(j)))];
 
     scatter_object.DataTipTemplate.DataTipRows(end+1:end+3) = dtRows;
-    three_d_cluster_table = getClusterTable3dWithExperiment(xVsYVsZ,labels,index,unique_indexes(j),table_of_data.E);
-    writetable(three_d_cluster_table,strcat(directory_where_cluster_table_should_be_saved,"\all_experiment_clustered_together.xlsx"),'WriteMode','append')
+    three_d_cluster_table = getClusterTable3dWithExperiment(xVsYVsZ,raw_xVsYVsZ,labels,index,unique_indexes(j),table_of_data.E);
+    writetable(three_d_cluster_table,strcat(directory_where_cluster_table_should_be_saved,"\" + file_name + ".xlsx"),'WriteMode','append')
     hold on;
 end
 

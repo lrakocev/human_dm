@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 700 525">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke-linecap: square;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        fill: none;
+        stroke-width: .8px;
+      }
+
+      .cls-1, .cls-2, .cls-4 {
+        stroke: #262626;
+      }
+
+      .cls-1, .cls-4 {
+        stroke-linejoin: round;
+      }
+
+      .cls-5 {
+        fill: #fff;
+      }
+
+      .cls-6 {
+        font-size: 18.3px;
+      }
+
+      .cls-6, .cls-7 {
+        fill: #262626;
+      }
+
+      .cls-6, .cls-7, .cls-8 {
+        font-family: ArialMT, Arial;
+        isolation: isolate;
+      }
+
+      .cls-9 {
+        fill: #0072bd;
+      }
+
+      .cls-7 {
+        font-size: 16.7px;
+      }
+
+      .cls-2, .cls-3 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-3 {
+        stroke: #000;
+      }
+
+      .cls-10 {
+        fill: #d95319;
+      }
+
+      .cls-8 {
+        font-size: 15px;
+      }
+    </style>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.7.1, SVG Export Plug-In . SVG Version: 1.2.0 Build 142)  -->
+  <g>
+    <g id="Layer_1">
+      <line class="cls-4" x1="204" y1="338" x2="634" y2="338"/>
+      <path class="cls-9" d="M236.9,338v-66.3h-16.5v66.3h16.5ZM308.9,338v-26.7h-16.5v26.7h16.5ZM380.9,338V73.2h-16.5v264.8h16.5ZM452.9,338v-16.2h-16.5v16.2h16.5ZM525,338v-53.1h-16.5v53.1h16.5Z"/>
+      <g>
+        <path class="cls-3" d="M220.5,338v-66.3h16.5v66.3h-16.5Z"/>
+        <path class="cls-3" d="M292.5,338v-26.7h16.5v26.7h-16.5Z"/>
+        <path class="cls-3" d="M364.5,338V73.2h16.5v264.8h-16.5Z"/>
+        <path class="cls-3" d="M436.5,338v-16.2h16.5v16.2h-16.5Z"/>
+        <path class="cls-3" d="M508.5,338v-53.1h16.5v53.1h-16.5Z"/>
+        <path class="cls-3" d="M580.5,338h16.5-16.5Z"/>
+      </g>
+      <path class="cls-10" d="M257.5,338v-1.2h-16.5v1.2h16.5ZM329.5,338v-130.3h-16.5v130.3h16.5ZM401.5,338v-66.9h-16.5v66.9h16.5ZM473.5,338v-3.1h-16.5v3.1h16.5ZM545.5,338v-22.9h-16.5v22.9h16.5ZM617.5,338V64.4h-16.5v273.6h16.5Z"/>
+      <g>
+        <path class="cls-3" d="M241,338v-1.2h16.5v1.2h-16.5Z"/>
+        <path class="cls-3" d="M313,338v-130.3h16.5v130.3h-16.5Z"/>
+        <path class="cls-3" d="M385.1,338v-66.9h16.5v66.9h-16.5Z"/>
+        <path class="cls-3" d="M457.1,338v-3.1h16.5v3.1h-16.5Z"/>
+        <path class="cls-3" d="M529.1,338v-22.9h16.5v22.9h-16.5Z"/>
+        <path class="cls-3" d="M601.1,338V64.4h16.5v273.6h-16.5Z"/>
+      </g>
+      <g>
+        <line class="cls-1" x1="204" y1="338" x2="634" y2="338"/>
+        <line class="cls-1" x1="204" y1="39" x2="634" y2="39"/>
+        <line class="cls-1" x1="239" y1="338" x2="239" y2="333.7"/>
+        <line class="cls-1" x1="311" y1="338" x2="311" y2="333.7"/>
+        <line class="cls-1" x1="383" y1="338" x2="383" y2="333.7"/>
+        <line class="cls-1" x1="455" y1="338" x2="455" y2="333.7"/>
+        <line class="cls-1" x1="527" y1="338" x2="527" y2="333.7"/>
+        <line class="cls-1" x1="599" y1="338" x2="599" y2="333.7"/>
+        <line class="cls-1" x1="239" y1="39" x2="239" y2="43.3"/>
+        <line class="cls-1" x1="311" y1="39" x2="311" y2="43.3"/>
+        <line class="cls-1" x1="383" y1="39" x2="383" y2="43.3"/>
+        <line class="cls-1" x1="455" y1="39" x2="455" y2="43.3"/>
+        <line class="cls-1" x1="527" y1="39" x2="527" y2="43.3"/>
+        <line class="cls-1" x1="599" y1="39" x2="599" y2="43.3"/>
+      </g>
+      <text class="cls-7" transform="translate(147 417.4) rotate(-30)"><tspan x="0" y="0">hum 1, theo: 19</tspan></text>
+      <text class="cls-7" transform="translate(82.2 496.4) rotate(-30)"><tspan x="0" y="0">hum 2, theo: 7, 14, 25, 31, 33, 35, 44</tspan></text>
+      <text class="cls-7" transform="translate(170.7 486.9) rotate(-30)"><tspan x="0" y="0">hum 3, theo: 16, 23, 35, 42, 43, 44</tspan></text>
+      <text class="cls-7" transform="translate(363 417.4) rotate(-30)"><tspan x="0" y="0">hum 4, theo: 23</tspan></text>
+      <text class="cls-7" transform="translate(386.6 445.4) rotate(-30)"><tspan x="0" y="0">hum 5, theo: 16, 43, 44</tspan></text>
+      <text class="cls-7" transform="translate(429.1 462.4) rotate(-30)"><tspan x="0" y="0">all theo not mapping to hum</tspan></text>
+      <text class="cls-6" transform="translate(349.5 519.5)"><tspan x="0" y="0">mapping clusters</tspan></text>
+      <g>
+        <line class="cls-1" x1="204" y1="338" x2="204" y2="39"/>
+        <line class="cls-1" x1="634" y1="338" x2="634" y2="39"/>
+        <line class="cls-1" x1="204" y1="338" x2="208.3" y2="338"/>
+        <line class="cls-1" x1="204" y1="295.3" x2="208.3" y2="295.3"/>
+        <line class="cls-1" x1="204" y1="252.6" x2="208.3" y2="252.6"/>
+        <line class="cls-1" x1="204" y1="209.9" x2="208.3" y2="209.9"/>
+        <line class="cls-1" x1="204" y1="167.1" x2="208.3" y2="167.1"/>
+        <line class="cls-1" x1="204" y1="124.4" x2="208.3" y2="124.4"/>
+        <line class="cls-1" x1="204" y1="81.7" x2="208.3" y2="81.7"/>
+        <line class="cls-1" x1="204" y1="39" x2="208.3" y2="39"/>
+        <line class="cls-1" x1="634" y1="338" x2="629.7" y2="338"/>
+        <line class="cls-1" x1="634" y1="295.3" x2="629.7" y2="295.3"/>
+        <line class="cls-1" x1="634" y1="252.6" x2="629.7" y2="252.6"/>
+        <line class="cls-1" x1="634" y1="209.9" x2="629.7" y2="209.9"/>
+        <line class="cls-1" x1="634" y1="167.1" x2="629.7" y2="167.1"/>
+        <line class="cls-1" x1="634" y1="124.4" x2="629.7" y2="124.4"/>
+        <line class="cls-1" x1="634" y1="81.7" x2="629.7" y2="81.7"/>
+        <line class="cls-1" x1="634" y1="39" x2="629.7" y2="39"/>
+      </g>
+      <text class="cls-7" transform="translate(187.3 344.5)"><tspan x="0" y="0">0</tspan></text>
+      <text class="cls-7" transform="translate(178.3 301.8)"><tspan x="0" y="0">10</tspan></text>
+      <text class="cls-7" transform="translate(178.3 259.1)"><tspan x="0" y="0">20</tspan></text>
+      <text class="cls-7" transform="translate(178.3 216.4)"><tspan x="0" y="0">30</tspan></text>
+      <text class="cls-7" transform="translate(178.3 173.6)"><tspan x="0" y="0">40</tspan></text>
+      <text class="cls-7" transform="translate(178.3 130.9)"><tspan x="0" y="0">50</tspan></text>
+      <text class="cls-7" transform="translate(178.3 88.2)"><tspan x="0" y="0">60</tspan></text>
+      <text class="cls-7" transform="translate(178.3 45.5)"><tspan x="0" y="0">70</tspan></text>
+      <text class="cls-6" transform="translate(168.3 254) rotate(-90)"><tspan x="0" y="0">% of total space</tspan></text>
+      <path class="cls-5" d="M621,98v-46h-134v46h134Z"/>
+      <text class="cls-8" transform="translate(545.9 70.6)"><tspan x="0" y="0">human</tspan></text>
+      <path class="cls-9" d="M542.1,72.2v-15.1h-50.1v15.1h50.1Z"/>
+      <path class="cls-3" d="M492,72.2v-15.1h50.1v15.1h-50.1Z"/>
+      <text class="cls-8" transform="translate(545.9 91.4)"><tspan x="0" y="0">theoretical</tspan></text>
+      <path class="cls-10" d="M542.1,93v-15.1h-50.1v15.1h50.1Z"/>
+      <g>
+        <path class="cls-3" d="M492,93v-15.1h50.1v15.1h-50.1Z"/>
+        <path class="cls-2" d="M487,98v-46h134v46h-134Z"/>
+      </g>
+    </g>
+  </g>
+</svg>

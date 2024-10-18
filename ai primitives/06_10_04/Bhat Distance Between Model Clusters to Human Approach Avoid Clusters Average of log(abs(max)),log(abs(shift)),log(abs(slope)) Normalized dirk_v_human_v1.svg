@@ -171,151 +171,164 @@
       >Average of log(abs(max)),log(abs(shift)),log(abs(slope)) Normalized</text
     ></g
     ><g transform="matrix(0.5,0,0,0.5,133,53)" style="fill-opacity:0; fill:rgb(0,0,0); text-rendering:optimizeSpeed; image-rendering:optimizeSpeed; color-rendering:optimizeSpeed; shape-rendering:crispEdges; stroke:rgb(0,0,0); color-interpolation:sRGB; stroke-opacity:0;"
-    ><image x="0" y="0" width="922" xlink:href="data:image/png;base64,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
-" style="clip-path:url(#clipPath2);" height="770" preserveAspectRatio="none"
+    ><image x="0" y="0" width="922" xlink:href="data:image/png;base64,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" style="clip-path:url(#clipPath2);" height="770" preserveAspectRatio="none"
     /></g
     ><g style="stroke-linecap:butt; fill:rgb(38,38,38); text-rendering:geometricPrecision; image-rendering:optimizeQuality; color-rendering:optimizeQuality; stroke-linejoin:round; stroke:rgb(38,38,38); color-interpolation:linearRGB; stroke-width:0.8333;"
     ><line y2="438" style="fill:none;" x1="225.2" x2="225.2" y1="53"
@@ -335,245 +348,245 @@ UCSZs3h9ZM6CgyLJnMXrI3MWB0WSzFm8PrrQAigdZIE62zgDAAAAAElFTkSuQmCC
       /><line y2="405.9167" style="fill:none;" x1="133" x2="594" y1="405.9167"
       /><path d="M133 53 L594 53 L594 438 L133 438 Z" style="fill:none; fill-rule:evenodd; stroke-linejoin:miter;"
     /></g
+    ><g transform="translate(179.1,69.0417)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >3.574</text
+    ></g
+    ><g transform="translate(179.1,101.125)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-16.5" xml:space="preserve" y="6.5" style="stroke:none;"
+      >8.07</text
+    ></g
+    ><g transform="translate(179.1,133.2083)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >4.155</text
+    ></g
+    ><g transform="translate(179.1,165.2917)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >5.217</text
+    ></g
+    ><g transform="translate(179.1,197.375)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >3.269</text
+    ></g
+    ><g transform="translate(179.1,229.4583)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >5.032</text
+    ></g
+    ><g transform="translate(179.1,261.5417)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >5.774</text
+    ></g
+    ><g transform="translate(179.1,293.625)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >2.115</text
+    ></g
+    ><g transform="translate(179.1,357.7917)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >6.762</text
+    ></g
+    ><g transform="translate(179.1,389.875)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >6.471</text
+    ></g
+    ><g transform="translate(179.1,421.9583)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >5.748</text
+    ></g
     ><g transform="translate(271.3,69.0417)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >1.082</text
+      >1.109</text
+    ></g
+    ><g transform="translate(271.3,101.125)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >2.531</text
     ></g
     ><g transform="translate(271.3,133.2083)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
-    ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.9585</text
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >1.416</text
+    ></g
+    ><g transform="translate(271.3,165.2917)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >1.382</text
     ></g
     ><g transform="translate(271.3,197.375)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.8598</text
+      >0.9538</text
+    ></g
+    ><g transform="translate(271.3,229.4583)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >1.207</text
+    ></g
+    ><g transform="translate(271.3,261.5417)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >1.376</text
     ></g
     ><g transform="translate(271.3,293.625)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >1.081</text
+    ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
+      >0.6123</text
     ></g
     ><g transform="translate(271.3,325.7083)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
-    ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.6452</text
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >2.835</text
+    ></g
+    ><g transform="translate(271.3,357.7917)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >1.757</text
+    ></g
+    ><g transform="translate(271.3,389.875)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-16.5" xml:space="preserve" y="6.5" style="stroke:none;"
+      >1.54</text
     ></g
     ><g transform="translate(271.3,421.9583)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
-    ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.5797</text
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >1.727</text
     ></g
     ><g transform="translate(363.5,69.0417)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.3633</text
+      >0.4617</text
     ></g
     ><g transform="translate(363.5,101.125)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
-    ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.7127</text
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >1.265</text
     ></g
     ><g transform="translate(363.5,133.2083)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
-    ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.4329</text
+    ><text x="-16.5" xml:space="preserve" y="6.5" style="stroke:none;"
+      >1.17</text
     ></g
     ><g transform="translate(363.5,165.2917)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.4066</text
+      >0.3016</text
     ></g
     ><g transform="translate(363.5,197.375)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >0.525</text
+    ></g
+    ><g transform="translate(363.5,229.4583)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.5348</text
+      >0.7369</text
     ></g
     ><g transform="translate(363.5,261.5417)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.3623</text
+      >0.3706</text
     ></g
     ><g transform="translate(363.5,293.625)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.5266</text
+      >0.6311</text
     ></g
     ><g transform="translate(363.5,325.7083)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.4702</text
+      >0.8545</text
     ></g
     ><g transform="translate(363.5,357.7917)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.7481</text
+      >0.4412</text
     ></g
     ><g transform="translate(363.5,389.875)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
-    ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.3563</text
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >0.404</text
     ></g
     ><g transform="translate(363.5,421.9583)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.6106</text
+      >0.6359</text
+    ></g
+    ><g transform="translate(455.7,69.0417)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >3.291</text
+    ></g
+    ><g transform="translate(455.7,101.125)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >12.42</text
+    ></g
+    ><g transform="translate(455.7,133.2083)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >2.679</text
+    ></g
+    ><g transform="translate(455.7,165.2917)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
+      >0.6095</text
+    ></g
+    ><g transform="translate(455.7,197.375)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >3.301</text
+    ></g
+    ><g transform="translate(455.7,229.4583)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >3.788</text
+    ></g
+    ><g transform="translate(455.7,261.5417)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >3.174</text
+    ></g
+    ><g transform="translate(455.7,293.625)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >2.153</text
+    ></g
+    ><g transform="translate(455.7,325.7083)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >6.155</text
+    ></g
+    ><g transform="translate(455.7,357.7917)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >3.798</text
+    ></g
+    ><g transform="translate(455.7,389.875)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >2.633</text
+    ></g
+    ><g transform="translate(455.7,421.9583)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
+      >0.9049</text
     ></g
     ><g transform="translate(547.9,69.0417)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.3282</text
+      >0.3543</text
     ></g
     ><g transform="translate(547.9,101.125)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
-    ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.6398</text
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >1.271</text
     ></g
     ><g transform="translate(547.9,133.2083)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
-    ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.3428</text
+    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
+      >0.471</text
     ></g
     ><g transform="translate(547.9,165.2917)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.4268</text
+      >0.7982</text
     ></g
     ><g transform="translate(547.9,197.375)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.3001</text
+      >0.5169</text
+    ></g
+    ><g transform="translate(547.9,229.4583)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
+    ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
+      >0.7725</text
     ></g
     ><g transform="translate(547.9,261.5417)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.3319</text
+      >0.3539</text
     ></g
     ><g transform="translate(547.9,293.625)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.4057</text
+      >0.5796</text
     ></g
     ><g transform="translate(547.9,325.7083)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.4355</text
+      >0.6642</text
     ></g
     ><g transform="translate(547.9,357.7917)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.8199</text
+      >0.4551</text
     ></g
     ><g transform="translate(547.9,389.875)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
     ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.6726</text
+      >0.6318</text
     ></g
     ><g transform="translate(547.9,421.9583)" style="text-rendering:geometricPrecision; font-size:16.6667px; color-interpolation:linearRGB; color-rendering:optimizeQuality; image-rendering:optimizeQuality;"
-    ><text x="-25.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >0.5204</text
-    ></g
-    ><g transform="translate(179.1,69.0417)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
     ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >3.897</text
-    ></g
-    ><g transform="translate(179.1,101.125)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >7.125</text
-    ></g
-    ><g transform="translate(179.1,133.2083)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >3.261</text
-    ></g
-    ><g transform="translate(179.1,165.2917)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >4.594</text
-    ></g
-    ><g transform="translate(179.1,197.375)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >4.117</text
-    ></g
-    ><g transform="translate(179.1,229.4583)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >3.799</text
-    ></g
-    ><g transform="translate(179.1,261.5417)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >5.791</text
-    ></g
-    ><g transform="translate(179.1,293.625)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >3.447</text
+      >1.122</text
     ></g
     ><g transform="translate(179.1,325.7083)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
     ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >2.464</text
-    ></g
-    ><g transform="translate(179.1,357.7917)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >6.867</text
-    ></g
-    ><g transform="translate(179.1,389.875)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >6.514</text
-    ></g
-    ><g transform="translate(179.1,421.9583)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >2.069</text
-    ></g
-    ><g transform="translate(271.3,101.125)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >1.961</text
-    ></g
-    ><g transform="translate(271.3,165.2917)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >1.234</text
-    ></g
-    ><g transform="translate(271.3,229.4583)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >2.311</text
-    ></g
-    ><g transform="translate(271.3,261.5417)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-12" xml:space="preserve" y="6.5" style="stroke:none;"
-      >1.4</text
-    ></g
-    ><g transform="translate(271.3,357.7917)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >1.719</text
-    ></g
-    ><g transform="translate(271.3,389.875)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >1.567</text
-    ></g
-    ><g transform="translate(363.5,229.4583)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >3.185</text
-    ></g
-    ><g transform="translate(455.7,69.0417)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-16.5" xml:space="preserve" y="6.5" style="stroke:none;"
-      >2.95</text
-    ></g
-    ><g transform="translate(455.7,101.125)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >5.871</text
-    ></g
-    ><g transform="translate(455.7,133.2083)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >2.997</text
-    ></g
-    ><g transform="translate(455.7,165.2917)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >3.418</text
-    ></g
-    ><g transform="translate(455.7,197.375)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >1.701</text
-    ></g
-    ><g transform="translate(455.7,229.4583)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >6.876</text
-    ></g
-    ><g transform="translate(455.7,261.5417)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >3.221</text
-    ></g
-    ><g transform="translate(455.7,293.625)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-12" xml:space="preserve" y="6.5" style="stroke:none;"
-      >3.4</text
-    ></g
-    ><g transform="translate(455.7,325.7083)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >2.526</text
-    ></g
-    ><g transform="translate(455.7,357.7917)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >5.374</text
-    ></g
-    ><g transform="translate(455.7,389.875)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >2.907</text
-    ></g
-    ><g transform="translate(455.7,421.9583)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >2.002</text
-    ></g
-    ><g transform="translate(547.9,229.4583)" style="font-size:16.6667px; fill:white; text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:white; color-interpolation:linearRGB;"
-    ><text x="-21" xml:space="preserve" y="6.5" style="stroke:none;"
-      >2.967</text
+      >18.91</text
     ></g
     ><g style="fill:rgb(38,38,38); text-rendering:geometricPrecision; image-rendering:optimizeQuality; color-rendering:optimizeQuality; stroke-linejoin:round; stroke:rgb(38,38,38); color-interpolation:linearRGB; stroke-width:0.8333;"
     ><line y2="438" style="fill:none;" x1="607" x2="634" y1="438"
@@ -582,62 +595,99 @@ UCSZs3h9ZM6CgyLJnMXrI3MWB0WSzFm8PrrQAigdZIE62zgDAAAAAElFTkSuQmCC
       /><line y2="53" style="fill:none;" x1="634" x2="634" y1="438"
     /></g
     ><g transform="matrix(0.5,0,0,0.5,607,53)" style="fill-opacity:0; fill:rgb(0,0,0); text-rendering:optimizeSpeed; image-rendering:optimizeSpeed; color-rendering:optimizeSpeed; shape-rendering:crispEdges; stroke:rgb(0,0,0); color-interpolation:sRGB; stroke-opacity:0;"
-    ><image x="0" y="0" width="54" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAMCCAIAAACtJKKsAAACB0lEQVR42u3OMQ0A
-AAjAMDTjD20ggoeELhPQiKzrIyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi
-IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi
-IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi
-IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi
-IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi
-IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi
-IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi
-IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi
-IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiI+Jvb5EBERERER
-ERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERER
-ERERERERERERERERERERERERERERERERERFXDQRaBfSKp6npAAAAAElFTkSuQmCC
-" style="clip-path:url(#clipPath3);" height="770" preserveAspectRatio="none"
+    ><image x="0" y="0" width="54" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAMCCAIAAACtJKKsAAAHRklEQVR42u3O03Ie
+CgCF0R7btm3btm1btW3btu02ts0/ttEkTS7PK+RiX+yZfjPrAVaPHj2D3FE8RorH
+9QwyR1FSPL5XkDmKkuIJvYLNUZQUT+wdbI6ipHhS72BzFDXFPsHmKEqKJ/cJMUdR
+Ujylb4g5ipLiqX1DzFGUFE/rF2KOoqR4er9QcxQlxTP6h5qjKCme2T/UHEVJ8awB
+oeYoSopnDwg1R1FTHBhmjqKkeM7AMHMUJcVzB4WZoygpnjcozBxFSfH8weHmKEqK
+FwwON0dRUrxwSLg5ipLiRUPCzVGUFC8eGmGOoqR4ydAIcxQ1xWER5ihKipcOizBH
+UVK8bHiEOYqS4uXDI81RlBSvGBFpjqKkeOWISHMUJcWrRkaaoygpXj0yyhxFSfGa
+UVHmKEqK146KMkdRUxwdZY6ipHjd6GhzFCXF68dEm6MoKd4wJtocRUnxxrHR5ihK
+ijeNjTFHUVK8eVyMOYqS4i3jYsxRlBRvHR9jjqKkeNv4GHMUNcUJseYoSoq3T4g1
+R1FSvGNirDmKkuKdE2PNUZQU75oUZ46ipHj3pDhzFCXFeybHmaMoKd47Oc4cRUnx
+vinx5ihSpNj94v1T481RlBQfmBpvjqKk+OC0eHMUJcWHpiWYoygpPjw9wRxFSfGR
+6QnmKEqKj85IMEdRUnxsRqI5ipLi4zMTzVGUFJ+YmWiOoqY4K9EcRUnxyVlJ5ihK
+ik/NTjJHUVJ8enaSOYqS4jNzksxRlBSfnZNsjqKk+NzcZHMUJcXn5yaboygpvjAv
+2RxFSfHFecnmKGqK81PMUZQUX5qfYo6ipPjyghRzFCXFVxakmKMoKb66MNUcRUnx
+tYWp5ihKiq8vSjVHUVJ8Y1GqOYqS4puL08xRlBTfWpxmjqKmuCTNHEVJ8e0laeYo
+SorvLE0zR1FSfHdpujmKkuJ7y9LNUZQU31+Wbo6ipPjB8nRzFCXFD5dnmKMoKX60
+IsMcRUnx4xUZ5ihqiiszzFGUFD9ZmWmOoqT46apMcxQlxc9WZZqjKCl+vjrTHEVJ
+8YvVmeYoSopfrskyR1FS/GpNljmKkuLXa7PMUZQUv1mbZY6iprgu2xxFSfHbddnm
+KEqK363PNkdRUvx+fbY5ipLiDxtyzFGUFH/ckGOOoqT408YccxQlxZ835pijKCn+
+sinXHEVJ8ddNueYoaoqbc81RlBR/25xrjqKk+PuWXHMUJcU/tuSZoygp/rk1zxxF
+SfGvrXnmKEqKf2/LM0dRUvxnW745ipLiv9vzzVGUFP/bnm+Ooqa4I98cRUmx546A
+OYrHSrHXzoA5ipJi750BcxQlxT67AuYoSop9dwXMUZQU++0uMEdRUuy/u8AcRUlx
+wJ4CcxQlxYF7CsxR1BT3FpqjKCkO2ltojqKkOHhfoTmKkuKQfYXmKEqKQ/cXmaMo
+KQ7bX2SOoqQ4/ECROYqS4ogDReYoSoojDxaboygpjjpYbI6ipnio2BxFSXH0oWJz
+FCXFMYeLzVGUFMceLjFHUVIcF1RijqKkOD6oxBxFSXFCcIk5ipLixOBScxQlxUkh
+peYoUqTY/eLk0FJzFCXFKaFl5ihKilPDysxRlBSnhZWZoygpTg8vM0dRUpwRXmaO
+oqQ4M6LcHEVJcVZEuTmKkuLsyHJzFCXFOZHl5ihqilEV5ihKinOjKsxRlBTnRVeY
+oygpzo+uMEdRUlwQU2mOoqS4MKbSHEVJcVFspTmKkuLi2EpzFCXFJXFV5ihKikvj
+qsxR1BTjq8xRlBSXxVeZoygpLk+oMkdRUlyRUG2OoqS4MrHaHEVJcVVitTmKkuLq
+pGpzFCXFNUk15ihKimuTa8xRlBTXJdeYo6gpptSYoygprk+pNUdRUtyQWmuOoqS4
+MbXWHEVJcVNarTmKkuLmtFpzFCXFLel15ihKilvT68xRlBS3ZdSZoygpbs+oM0dR
+U8ysN0dRUtyRWW+OoqS4M6veHEVJcVdWvTmKkuLu7AZzFCXFPdkN5ihKintzGsxR
+lBT35TSYoygp7s9tNEdRUjyQ22iOoqaY12iOoqR4MK/RHEVJ8VB+ozmKkuLh/CZz
+FCXFoECTOYqSYnCgyRxFSTEk0GSOoqQYWtBsjqKkGFbQbI6ipBhe2GyOIkWK3S9G
+FLWYoygpRha1mKMoKUYVt5ijKClGF7eYoygpxpS0mKMoKcaWtJqjKCnGlbaaoygp
+xpe2mqMoKSaUtZqjKCoeMUdRUkwsP2KOoqSYVH7EHEVJMbniiDmKkmJKRZs5ipJi
+amWbOYqSYlplmzmKkmJ6VZs5ipJiRlW7OYqaYnW7OYqSYmZ1uzmKkmJWTbs5ipJi
+dk27OYqSYk5thzmKkmJubYc5ipJiXl2HOYqSYn5dhzmKkmKg/qg5ipJiQf1RcxQl
+xcKGo+YoUqTY/WJRY6c5ipJicWOnOYqSYklTpzmKkmJpU6c5ipJiWXOnOYqSYnlz
+lzmKkmJFS5c5ipJiZUuXOYqSYlVrlzmKCv8DsDAJf9ZX/SQAAAAASUVORK5CYII=" style="clip-path:url(#clipPath3);" height="770" preserveAspectRatio="none"
     /></g
     ><g style="fill:rgb(38,38,38); text-rendering:geometricPrecision; image-rendering:optimizeQuality; color-rendering:optimizeQuality; stroke-linejoin:round; stroke:rgb(38,38,38); color-interpolation:linearRGB; stroke-width:0.8333;"
     ><line y2="53" style="fill:none;" x1="634" x2="634" y1="438"
       /><line y2="438" style="fill:none;" x1="634" x2="630.15" y1="438"
-      /><line y2="383" style="fill:none;" x1="634" x2="630.15" y1="383"
-      /><line y2="328" style="fill:none;" x1="634" x2="630.15" y1="328"
-      /><line y2="273" style="fill:none;" x1="634" x2="630.15" y1="273"
-      /><line y2="218" style="fill:none;" x1="634" x2="630.15" y1="218"
-      /><line y2="163" style="fill:none;" x1="634" x2="630.15" y1="163"
-      /><line y2="108" style="fill:none;" x1="634" x2="630.15" y1="108"
-      /><line y2="53" style="fill:none;" x1="634" x2="630.15" y1="53"
+      /><line y2="397.4737" style="fill:none;" x1="634" x2="630.15" y1="397.4737"
+      /><line y2="356.9474" style="fill:none;" x1="634" x2="630.15" y1="356.9474"
+      /><line y2="316.4211" style="fill:none;" x1="634" x2="630.15" y1="316.4211"
+      /><line y2="275.8947" style="fill:none;" x1="634" x2="630.15" y1="275.8947"
+      /><line y2="235.3684" style="fill:none;" x1="634" x2="630.15" y1="235.3684"
+      /><line y2="194.8421" style="fill:none;" x1="634" x2="630.15" y1="194.8421"
+      /><line y2="154.3158" style="fill:none;" x1="634" x2="630.15" y1="154.3158"
+      /><line y2="113.7895" style="fill:none;" x1="634" x2="630.15" y1="113.7895"
+      /><line y2="73.2632" style="fill:none;" x1="634" x2="630.15" y1="73.2632"
     /></g
     ><g transform="translate(640.3333,438)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
     ><text x="0" xml:space="preserve" y="6" style="stroke:none;"
       >0</text
     ></g
-    ><g transform="translate(640.3333,383)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
-    ><text x="0" xml:space="preserve" y="6" style="stroke:none;"
-      >1</text
-    ></g
-    ><g transform="translate(640.3333,328)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
+    ><g transform="translate(640.3333,397.4737)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
     ><text x="0" xml:space="preserve" y="6" style="stroke:none;"
       >2</text
     ></g
-    ><g transform="translate(640.3333,273)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
-    ><text x="0" xml:space="preserve" y="6" style="stroke:none;"
-      >3</text
-    ></g
-    ><g transform="translate(640.3333,218)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
+    ><g transform="translate(640.3333,356.9474)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
     ><text x="0" xml:space="preserve" y="6" style="stroke:none;"
       >4</text
     ></g
-    ><g transform="translate(640.3333,163)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
-    ><text x="0" xml:space="preserve" y="6" style="stroke:none;"
-      >5</text
-    ></g
-    ><g transform="translate(640.3333,108)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
+    ><g transform="translate(640.3333,316.4211)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
     ><text x="0" xml:space="preserve" y="6" style="stroke:none;"
       >6</text
     ></g
-    ><g transform="translate(640.3333,53)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
+    ><g transform="translate(640.3333,275.8947)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
     ><text x="0" xml:space="preserve" y="6" style="stroke:none;"
-      >7</text
+      >8</text
+    ></g
+    ><g transform="translate(640.3333,235.3684)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
+    ><text x="0" xml:space="preserve" y="6" style="stroke:none;"
+      >10</text
+    ></g
+    ><g transform="translate(640.3333,194.8421)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
+    ><text x="0" xml:space="preserve" y="6" style="stroke:none;"
+      >12</text
+    ></g
+    ><g transform="translate(640.3333,154.3158)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
+    ><text x="0" xml:space="preserve" y="6" style="stroke:none;"
+      >14</text
+    ></g
+    ><g transform="translate(640.3333,113.7895)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
+    ><text x="0" xml:space="preserve" y="6" style="stroke:none;"
+      >16</text
+    ></g
+    ><g transform="translate(640.3333,73.2632)" style="font-size:15px; fill:rgb(38,38,38); text-rendering:geometricPrecision; color-rendering:optimizeQuality; image-rendering:optimizeQuality; stroke:rgb(38,38,38); color-interpolation:linearRGB;"
+    ><text x="0" xml:space="preserve" y="6" style="stroke:none;"
+      >18</text
     ></g
     ><g style="fill:rgb(38,38,38); text-rendering:geometricPrecision; image-rendering:optimizeQuality; color-rendering:optimizeQuality; stroke-linejoin:round; stroke:rgb(38,38,38); color-interpolation:linearRGB; stroke-width:0.8333;"
     ><line y2="53" style="fill:none;" x1="607" x2="634" y1="53"

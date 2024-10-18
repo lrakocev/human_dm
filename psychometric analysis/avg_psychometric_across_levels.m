@@ -1,6 +1,8 @@
-function avg_psychometric_across_levels(approach_data, type, constant, story_type, path_to_save)
+function h = avg_psychometric_across_levels(approach_data, type, constant, story_type, path_to_save,want_save)
 
-figure
+if want_save
+    figure
+end
 avg = [];
 num_sessions = 0;
 num_trials = 0;
@@ -51,13 +53,15 @@ s = std(avg, 0, 'all');
     
 hold on
 means = mean(avg,2, 'omitnan');
-plot(means,'LineWidth',5)
+h = plot(means,'LineWidth',5);
 xlabel(xlabel_str)
-title(constant + "s constant, # trials = " + num_trials + "# sessions = " + num_sessions + " # subjects = " + num_subjects)
 ylabel(ylabel_str)
-fighandle = gcf;
-savefig(fighandle,strcat(path_to_save,story_type,'/avg_psych_constant',constant,'_across_lvls.fig'))
-close all
+if want_save
+    title(constant + "s constant, # trials = " + num_trials + "# sessions = " + num_sessions + " # subjects = " + num_subjects)
+    fighandle = gcf;
+    savefig(fighandle,strcat(path_to_save,story_type,'/avg_psych_constant',constant,'_across_lvls.fig'))
+    close all
+end
 end
 
 function table = get_curr_table(appr_table, lvl, constant)

@@ -147,7 +147,7 @@ for s = 1:length(story_types)
         avg_psychometric_plot_per_level(combined_data, type, constant, story_type, path_to_save)
         
         % this plots average results for each level - one plot total
-        avg_psychometric_across_levels(combined_data,  type, constant, story_type, path_to_save)
+        avg_psychometric_across_levels(combined_data,  type, constant, story_type, path_to_save,1)
         
         % this plots average result for reward vs cost - one plot per level
         avg_rew_v_cost_comparison_per_lvl(combined_data, type, constant, story_type, path_to_save)
@@ -155,4 +155,40 @@ for s = 1:length(story_types)
         % this plots the 4 individual psychometric functions keeping constant r/c
         plot_individual_psychs_across_lvls(combined_data, constant, story_type, path_to_save)
     end
+end
+
+%% overlapped for fig 6
+
+story_types = ["approach_avoid", "social", "probability", "moral"];
+consts = ["reward", "cost"];
+type = "approach rate";
+data{1} = appr_avoid_combined_data;
+data{2} = social_combined_data;
+data{3} = probability_combined_data;
+data{4} = moral_combined_data;
+
+path_to_save = 'C:\Users\lrako\OneDrive\Documents\human dm\figs\all_session_updated\psych_stats\';
+for c = 1:length(consts)
+    constant = consts(c);
+    figure
+    hs = [];
+    for s = 1:length(story_types)
+        story_type = story_types(s);
+        story_dir = path_to_save + story_type;
+        mkdir(story_dir)
+        combined_data = data{s};
+    
+        story_type = story_types(s);
+
+        % this plots all the individual results + the average - one plot per level
+        h = [avg_psychometric_across_levels(combined_data,  type, constant, story_type, path_to_save, 0)];
+        hs = [hs; h];
+        hold on
+    end
+    title("comparison of avg approach rates for tasks, with constant " + constant)
+    legend(hs,story_types)
+    hold off
+    set(gcf,'renderer','Painters')
+    saveas(gcf,strcat(path_to_save,'/overlapped_avg_psych_constant',constant,'_across_lvls'),'fig')
+    saveas(gcf,strcat(path_to_save,'/overlapped_avg_psych_constant',constant,'_across_lvls'),'svg')
 end

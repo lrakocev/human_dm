@@ -15,13 +15,15 @@ prob_hr = read_hr_csv_to_table("probability_hr_0415.xlsx");
 
 %% spectral table
 
-type = "all_cost_5_clusters";
+type = "all_session_updated";
 table_name = "C:\Users\lrako\OneDrive\Documents\human dm\" + type + ".xlsx";
 spectral_table = readtable(table_name);
 
 %% get behavioral data
 
-% to get session data, need to run the hum_new_tasks_runme 
+% to get session data, need to run the hum_new_tasks_runme
+
+load("C:\Users\lrako\OneDrive\Documents\human dm\ingest helpers\human data.mat")
 
 %% get psych data
 
@@ -33,6 +35,7 @@ use_cost = 0;
 if contains(type,"cost")
     use_cost = 1;
 end
+plot_interactions = 0 ;
 story_types = ["approach_avoid", "social", "probability", "moral"];
 all_data{1} = appr_avoid_sessions;
 all_data{2} = social_sessions;
@@ -40,21 +43,23 @@ all_data{3} = probability_sessions;
 all_data{4} = moral_sessions;
 
 
-all_psych_data = plot_avg_spec_cluster_psychs(spectral_table, all_data, same_scale, story_types, save_to, want_plot, split_by_dim, use_cost);
+all_psych_data = plot_avg_spec_cluster_psychs(spectral_table, all_data, same_scale, story_types, save_to, want_plot, split_by_dim, use_cost,plot_interactions);
 all_psych_data = renamevars(all_psych_data,'experiment','story_type');
 
 %% merging tables
 
 tot_eye = [appr_avoid_eye; social_eye; prob_eye; moral_eye];
 tot_hr = [appr_avoid_hr; social_hr; prob_hr; moral_hr];
-eye_merged = merge_feat_to_clusters(tot_eye, all_psych_data, 0);
-hr_merged = merge_feat_to_clusters(tot_hr, all_psych_data, 1);
-%{
+
+use_cost = 0;
+eye_merged = merge_feat_to_clusters(tot_eye, all_psych_data, 0, use_cost);
+hr_merged = merge_feat_to_clusters(tot_hr, all_psych_data, 1, use_cost);
+
 mega_merge = outerjoin(eye_merged,hr_merged,'MergeKeys',true,'Keys',...
     {'clusterX','clusterY','clusterZ','clusterLabels','story_type','idx',...
     'subjectidnumber','story_num','cost',...
-    'nanmean_decision_made','nanmean_real_r'});
-%}
+    'decision_made','real_r'});
+
 %% 3d plot for clusters
 
 num_clusters = max(all_psych_data.idx);
@@ -64,9 +69,11 @@ C = {[1 0 0], [0 1 0], [0 0 1],...
 save_to = "C:\Users\lrako\OneDrive\Documents\human dm\figs\" + type + "\physio_corr\";
 mkdir(save_to)
 
-plot_physio_feats_bar_plot(eye_merged,num_clusters,save_to,0)
 
-plot_physio_feats_bar_plot(hr_merged,num_clusters,save_to,1)
+%plot_physio_feats_3d(eye_merged,num_clusters,C,save_to,0,0)
+%plot_physio_feats_3d(hr_merged,num_clusters,C,save_to,1,0)
+plot_physio_feats_3d(mega_merge,num_clusters,C,save_to,0,1)
+
 
 %% 3d plot for tasks
 

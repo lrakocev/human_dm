@@ -12,13 +12,13 @@ final_filter = filter_space(further_filter);
 
 %% plot sigmoidal space
 
-plot_space(final_filter)
+plot_space(final_filter,5000)
 
 %% sampling plot
 
 figure
-plot_n = 10000;
-to_plot = further_filter;
+plot_n = 5000;
+to_plot = final_filter;
 
 hs = [];
 prev_m = 0;
@@ -33,8 +33,10 @@ title("final filtered space w/ all types")
 
 %% plot biased version of space
 
-n = 5000;
-rows_used = testing_bias_sig_fit(further_filter, n);
+n = 2500;
+new_name = "v-" + string(datetime("today"));
+further_filter = sortrows(further_filter,{'a','b','c'});
+testing_bias_sig_fit(further_filter, n, 'new_name');
 
 %% ai fitting to space
 
@@ -58,25 +60,22 @@ v1
 a = 2.30685;
 b = 4.95814;
 c = 5.15586;
-%}
-
 
 tit="far left";
 a = -48.7279;
 b = -0.911;
 c = -0.05;
 
-tit= "far right";
-a = 4;
-b = 32.96;
-c = 2.7;
-
-%{
 tit = "far bottom";
 a = 2.66425;
 b = -1.25456;
 c = -29.8884;
 %}
+
+tit= "far right";
+a = 4;
+b = 32.96;
+c = 2.7;
 
 plot_both=1;
 plot_sigmoid_from_coeffs(a,b,c,plot_both,tit)

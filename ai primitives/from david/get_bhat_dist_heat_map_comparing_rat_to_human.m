@@ -1,4 +1,4 @@
-function [] = get_bhat_dist_heat_map_comparing_rat_to_human(human_data_table,rat_data_table,normalize_or_dont,dir_to_save_figs_to,version_name,create_average_plot_or_dont)
+function bhatt_table = get_bhat_dist_heat_map_comparing_rat_to_human(human_data_table,rat_data_table,normalize_or_dont,dir_to_save_figs_to,version_name,create_average_plot_or_dont,want_plot)
     function [bhat_distance_matrix_max,bhat_distance_matrix_shift,bhat_distance_matrix_slope,heat_map_x_labels,heat_map_y_labels] = get_bhat_distance_matrix(human_data_table,rat_data_table,rat_clusters,human_clusters)
         bhat_distance_matrix_max = zeros(length(rat_clusters),length(human_clusters));
         bhat_distance_matrix_shift = zeros(length(rat_clusters),length(human_clusters));
@@ -23,7 +23,7 @@ function [] = get_bhat_dist_heat_map_comparing_rat_to_human(human_data_table,rat
 
                 try 
                     dimensions_of_bhat_distance =  bhattacharyyaDistance([hu_data;rat_data],[hu_labels;rat_labels]);
-          
+                    
                     bhat_distance_matrix_max(i,j) = dimensions_of_bhat_distance(1);
                     bhat_distance_matrix_shift(i,j) = dimensions_of_bhat_distance(2);
                     bhat_distance_matrix_slope(i,j) = dimensions_of_bhat_distance(3);
@@ -37,8 +37,10 @@ function [] = get_bhat_dist_heat_map_comparing_rat_to_human(human_data_table,rat
     end
     function [] = create_heat_map(matrix_to_turn_into_heat_map,which_dimension,dir_to_save_figs_to,heat_map_x_labels,heat_map_y_labels,normalize_or_dont,version_name)
        figure;
-       the_color_map_to_use = generatecolormapthreshold([0,1,1.1,round(max(matrix_to_turn_into_heat_map,[],"all"))],[1 1 1; 0 0.4470 0.7410;0 0.4470 0.7410]);
-        heatmap(heat_map_x_labels,heat_map_y_labels,matrix_to_turn_into_heat_map,'ColorMap',the_color_map_to_use,'ColorLimits',[0,round(max(matrix_to_turn_into_heat_map,[],"all"))]);
+        the_color_map_to_use = generatecolormapthreshold([0,1,1.1,round(max(matrix_to_turn_into_heat_map,[],"all"))],[1 1 1; 0 0.4470 0.7410;0 0.4470 0.7410]);
+        heatmap(heat_map_x_labels,heat_map_y_labels,matrix_to_turn_into_heat_map, 'ColorMap',the_color_map_to_use,'ColorLimits',[0,round(max(matrix_to_turn_into_heat_map,[],"all"))]);
+        %heatmap(heat_map_x_labels,heat_map_y_labels,matrix_to_turn_into_heat_map,'ColorLimits',[0,round(max(matrix_to_turn_into_heat_map,[],"all"))]);
+
         % clim([0,1])
         if which_dimension==1
             to_add_to_tile = "log(abs(max))";
@@ -91,7 +93,16 @@ if ~create_average_plot_or_dont
     create_heat_map(bhat_distance_matrix_slope,3,dir_to_save_figs_to,heat_map_x_labels,heat_map_y_labels,normalize_or_dont,version_name);
 else
     average_matrix = (bhat_distance_matrix_max+bhat_distance_matrix_shift+bhat_distance_matrix_slope) ./3;
-    create_heat_map(average_matrix,0,dir_to_save_figs_to,heat_map_x_labels,heat_map_y_labels,normalize_or_dont,version_name)
+
+    hum_idxs = repelem(1:length(human_clusters), 1, length(rat_clusters));
+    model_idxs = repmat(1:length(rat_clusters),1, length(human_clusters));
+    bhatt_table.model_idx = model_idxs';
+    bhatt_table.hum_idx = hum_idxs';
+    bhatt_table.bhatt_dist = average_matrix(:);
+    bhatt_table = struct2table(bhatt_table);
+    if want_plot
+        create_heat_map(average_matrix,0,dir_to_save_figs_to,heat_map_x_labels,heat_map_y_labels,normalize_or_dont,version_name)
+    end
 end
 
 

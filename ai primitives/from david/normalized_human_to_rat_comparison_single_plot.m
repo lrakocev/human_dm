@@ -1,16 +1,9 @@
-function normalized_human_to_rat_comparison_single_plot(name_of_rat_file,human_cluster_table,directory_of_rat_file,b_dist_plots_dir,colors,normalize_or_dont)
-% home_dir = cd(directory_of_human_file);
-% % human_cluster_table = readtable(name_of_human_file);
-% cd(home_dir)
-home_dir = cd(directory_of_rat_file);
-rat_table = readtable(name_of_rat_file);
-cd(home_dir)
+function normalized_human_to_rat_comparison_single_plot(rat_table,human_cluster_table,directory_of_rat_file,b_dist_plots_dir,colors,normalize_or_dont)
 
 dir_with_b_dist_plots_abs = create_a_file_if_it_doesnt_exist_and_ret_abs_path(b_dist_plots_dir);
 
 rat_clusters = unique(rat_table.cluster_number);
 human_clusters = unique(human_cluster_table.cluster_number);
-
 
 if normalize_or_dont
     human_data = [human_cluster_table.clusterX,human_cluster_table.clusterY,human_cluster_table.clusterZ];
@@ -44,7 +37,6 @@ for i=1:length(rat_clusters)
         strcat("model ",string(i)),'FontWeight','bold','Color',current_rat_color);
     
     % plot3(rat_centers(i,1),rat_centers(i,2),rat_centers(i,3),"xk",MarkerSize=15,LineWidth=3);
-    cell_array_of_b_dist = cell(length(human_clusters),1);
     array_of_cluster_labels_for_rat = logical(zeros(size(array_of_current_cluster_data_for_rat,1),1));
 
     to_be_x = cell(1,length(human_clusters));
@@ -59,7 +51,6 @@ for j=1:length(human_clusters)
     legend_strings = [legend_strings,strcat("Human Cluster ",string(j))];
     % plot3(human_centers(j,1),human_centers(j,2),human_centers(j,3),"*k",MarkerSize=15,LineWidth=3);
     array_of_cluster_labels_for_human =logical(ones(size(array_of_current_cluster_data_for_human,1),1));
-    cell_array_of_b_dist{j} = bhattacharyyaDistance([array_of_current_cluster_data_for_rat;array_of_current_cluster_data_for_human],[array_of_cluster_labels_for_rat;array_of_cluster_labels_for_human]);
     text(mean(array_of_current_cluster_data_for_human(:,1)),...
         mean(array_of_current_cluster_data_for_human(:,2)),...
         mean(array_of_current_cluster_data_for_human(:,3))+4,...

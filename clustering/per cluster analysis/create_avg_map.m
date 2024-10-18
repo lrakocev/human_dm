@@ -32,7 +32,7 @@ for i = 1 : num_clusters
         figure(4)
     end
     nexttile
-    make_dec_making_plots(map_table,"","",1,want_scale,0)
+    make_dec_making_plots(map_table,"","",1,want_scale,0,"")
     title("cluster " + string(i) + " dim: " + string(dim))
 end
 if want_scale 

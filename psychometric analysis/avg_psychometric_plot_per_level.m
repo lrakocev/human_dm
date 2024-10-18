@@ -56,8 +56,10 @@ for lvl = 1:4
     title(constant + " level " + string(lvl) + " constant, # trials = " + num_trials + "# sessions = " + num_sessions + " # subjects = " + num_subjects)
     ylabel(ylabel_str)
     fighandle = gcf;
+
     savefig(fighandle,strcat(path_to_save,story_type,'/avg_psych_constant_',constant,'_lvl_',string(lvl),'.fig'))
     close all 
+   
 end
 
 

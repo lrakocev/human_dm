@@ -1,0 +1,22 @@
+function new_table = get_subj_var(sesh_table)
+
+subjects = unique(sesh_table.subjectidnumber);
+new_table = [];
+for i = 1:length(subjects)
+    subject = subjects(i);
+    subject_table = sesh_table(sesh_table.subjectidnumber == subject, :);
+
+    sub_sessions = unique(subject_table.sesh_label);
+    for j = 1:length(sub_sessions)
+    label_table.subj_var = repelem(calc_var(label_table), height(label_table), 1);
+    new_table = [new_table; label_table];
+end
+
+end
+
+function calc_var()
+
+
+
+end
+
