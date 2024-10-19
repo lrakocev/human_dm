@@ -5,13 +5,6 @@ sesh_data = totals{5}; % includes all task data
 clusters = unique(spectral_table.cluster_number);
 for s = 1:length(clusters)
     cluster = clusters(s);
-    %{
-    if story_type == "all"
-        story_table = spectral_table;
-    else
-        story_table = spectral_table(spectral_table.experiment == story_type, :);
-    end
-    %}
     cluster_table = spectral_table(spectral_table.cluster_number == cluster, :);
     psych_to_cluster = psychs_in_spec_cluster(cluster_table, use_cost);
 

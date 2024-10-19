@@ -1,6 +1,6 @@
 function indiv_subjects_in_cluster_3d(all_psych_data, story_type, save_to)
 
-all_psych_data = all_psych_data(all_psych_data.story_type == story_type, :);
+all_psych_data = all_psych_data(all_psych_data.experiment == story_type, :);
 
 num_clusters = max(unique(all_psych_data.idx));
 unique_ids = unique(all_psych_data.subjectidnumber);

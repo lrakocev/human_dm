@@ -1,6 +1,6 @@
 save_to = 'C:\Users\lrako\OneDrive\Documents\human dm\ai primitives\train_by_section\';
 
-load('full space w types.mat')
+load('C:\Users\lrako\OneDrive\Documents\human dm\ai primitives\mat files\full space w types.mat')
 starting_table = further_filter;
 % use same rand_rows from testing_bias_sig_fit.m if possible
 n = 5000;
@@ -64,12 +64,12 @@ for i = 1:num_models
     end
 end
 
-save('testing_model_bias_0805.mat','model_data')
+new_name = "testing_model_bias_" + string(datetime('today'));
+save(new_name+'.mat','model_data')
 
 %% simple plot
 
 figure
-%load('testing_model_bias.mat')
 colors = distinguishable_colors(num_models);
 plot_n = 2500;
 

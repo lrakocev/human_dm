@@ -21,15 +21,12 @@ spectral_table = readtable(table_name);
 
 %% get behavioral data
 
-% to get session data, need to run the hum_new_tasks_runme
-
 load("C:\Users\lrako\OneDrive\Documents\human dm\ingest helpers\human data.mat")
 
 %% get psych data
 
 want_plot = 0;
 same_scale = 1;
-split_by_dim = 0;
 save_to = "";
 use_cost = 0;
 if contains(type,"cost")
@@ -42,9 +39,7 @@ all_data{2} = social_sessions;
 all_data{3} = probability_sessions;
 all_data{4} = moral_sessions;
 
-
-all_psych_data = plot_avg_spec_cluster_psychs(spectral_table, all_data, same_scale, story_types, save_to, want_plot, split_by_dim, use_cost,plot_interactions);
-all_psych_data = renamevars(all_psych_data,'experiment','story_type');
+all_psych_data = plot_avg_spec_cluster_psychs(spectral_table, all_data, same_scale, story_types, save_to, want_plot, use_cost,plot_interactions);
 
 %% merging tables
 
@@ -69,9 +64,8 @@ C = {[1 0 0], [0 1 0], [0 0 1],...
 save_to = "C:\Users\lrako\OneDrive\Documents\human dm\figs\" + type + "\physio_corr\";
 mkdir(save_to)
 
-
-%plot_physio_feats_3d(eye_merged,num_clusters,C,save_to,0,0)
-%plot_physio_feats_3d(hr_merged,num_clusters,C,save_to,1,0)
+plot_physio_feats_3d(eye_merged,num_clusters,C,save_to,0,0)
+plot_physio_feats_3d(hr_merged,num_clusters,C,save_to,1,0)
 plot_physio_feats_3d(mega_merge,num_clusters,C,save_to,0,1)
 
 
@@ -85,7 +79,6 @@ save_to = "C:\Users\lrako\OneDrive\Documents\human dm\figs\" + type + "\physio_c
 mkdir(save_to)
 
 plot_physio_feats_3d_by_task(eye_merged,story_types,C,save_to,0,1)
-
 plot_physio_feats_3d_by_task(hr_merged,story_types,C,save_to,1,0)
 
 %% anovas

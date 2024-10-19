@@ -2,7 +2,7 @@ function probability_of_behavior_3d(all_psych_data, story_type, save_to)
 figure 
 
 if story_type ~= "all"
-    story_psychs = all_psych_data(all_psych_data.story_type == story_type, :);
+    story_psychs = all_psych_data(all_psych_data.experiment == story_type, :);
 else
     story_psychs = all_psych_data;
 end

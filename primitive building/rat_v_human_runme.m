@@ -32,7 +32,6 @@ normalized_human_to_rat_comparison_single_plot_2d(rat_data, ...
 human_data = readtable("C:\Users\lrako\OneDrive\Documents\human dm\figs\all_session_updated\2d_clustering\human_2d_clusters.xlsx");
 rat_data = readtable("C:\Users\lrako\OneDrive\Documents\human dm\figs\all_session_updated\2d_clustering\rat_2d_clusters.xlsx");
 
-
 %% 2D hum prim table
 
 load("C:\Users\lrako\OneDrive\Documents\human dm\ingest helpers\human data.mat")
@@ -83,4 +82,3 @@ viz = rat_to_hum_homolog(rat_2d_prim, hum_2d_prim ,dist_2d_table,want_save,save_
 %%  OR use the 2d plot for distance but use the 3d clustering ?? 
 
 viz = rat_to_hum_homolog(new_rat_prim_table, prim_table ,dist_2d_table, want_save,save_to,want_and,10);
-

@@ -55,23 +55,6 @@ percent_space = intersect_model_human_space(model_data, human_table,shrink_facto
 
 %% pick point from above that doesn't overlap
 
-%{
-v1
-a = 2.30685;
-b = 4.95814;
-c = 5.15586;
-
-tit="far left";
-a = -48.7279;
-b = -0.911;
-c = -0.05;
-
-tit = "far bottom";
-a = 2.66425;
-b = -1.25456;
-c = -29.8884;
-%}
-
 tit= "far right";
 a = 4;
 b = 32.96;

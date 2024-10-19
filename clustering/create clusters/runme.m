@@ -1,5 +1,5 @@
 %% human
-num_clusters = 16;
+num_clusters = 5;
 
 colors = distinguishable_colors(num_clusters);
 dir = 'C:\Users\lrako\OneDrive\Documents\human dm\test_run\session_clustering';
@@ -12,14 +12,7 @@ call_spectral_clustering_combine_all_human_data(table_of_human_dir,save_to,0,num
 %%  rat
 dir = 'C:\Users\lrako\OneDrive\Documents\human dm\rat sigmoid data';
 save_to = 'C:\Users\lrako\OneDrive\Documents\human dm\primitive building';
-
-%{
-table_of_rat_dir.Task = "rat";
-table_of_rat_dir.Data_Directory = dir;
-table_of_rat_dir = struct2table(table_of_rat_dir);
-%}
-
-num_clusters = 15;
+num_clusters = 6;
 
 colors = distinguishable_colors(num_clusters);
 is_big = 0;

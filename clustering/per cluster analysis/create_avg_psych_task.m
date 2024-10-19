@@ -31,7 +31,7 @@ for i = 1 : num_tasks
     y = [mean_lvl_1, mean_lvl_2, mean_lvl_3, mean_lvl_4];
 
     ax(i) = subplot(1,num_tasks,i);
-    fit_sigmoid(x,y);
+    fit_sigmoid(x,y,"r");
     yl = get(gca, 'YLim');
     curr_y_min = yl(1);
     curr_y_max = yl(2);

@@ -1,4 +1,4 @@
-save_to = 'C:\Users\lrako\OneDrive\Documents\human dm\ai primitives\dirk_model_v2\';
+save_to = 'C:\Users\lrako\OneDrive\Documents\human dm\ai primitives\model_' + string(datetime("today"));
 mkdir(save_to)
 
 max_t = 5;

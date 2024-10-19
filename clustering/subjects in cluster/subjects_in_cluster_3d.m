@@ -1,7 +1,7 @@
 function subjects_in_cluster_3d(all_psych_data, story_type, y_max, save_to)
 
 if story_type ~= "all"
-    all_psych_data = all_psych_data(all_psych_data.story_type == story_type, :);
+    all_psych_data = all_psych_data(all_psych_data.experiment == story_type, :);
 end
 
 num_clusters = max(unique(all_psych_data.idx));

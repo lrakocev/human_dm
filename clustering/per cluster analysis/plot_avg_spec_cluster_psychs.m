@@ -1,4 +1,4 @@
-function all_psych_data = plot_avg_spec_cluster_psychs(spectral_table, all_data, same_scale, story_types, save_to, want_plot, split_by_dim, use_cost,plot_interactions)
+function all_psych_data = plot_avg_spec_cluster_psychs(spectral_table, all_data, same_scale, story_types, save_to, want_plot, use_cost, plot_interactions)
 
 totals = setup_for_avgs(all_data,story_types);
 
@@ -17,7 +17,7 @@ for s = 1:length(story_types)
 
     if want_plot
         create_avg_psych(sesh_data,psych_to_cluster,story_type + " avg psych",same_scale,save_to,use_cost)
-        create_avg_map(sesh_data,psych_to_cluster,story_type + " map", same_scale, save_to, split_by_dim,use_cost)
+        create_avg_map(sesh_data,psych_to_cluster,story_type + " map", same_scale, save_to,use_cost)
     end
     if plot_interactions
         create_avg_psych_per_level(sesh_data,psych_to_cluster,story_type + " avg psych",save_to,use_cost)

@@ -11,7 +11,7 @@ end
 
 %% get behavioral data
 
-% to get session data, need to run the hum_new_tasks_runme 
+load("C:\Users\lrako\OneDrive\Documents\human dm\ingest helpers\human data.mat")
 
 %% find session-cost sigmoids
 
@@ -45,12 +45,4 @@ new_starting_dir = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\session_
 story_types = ["approach_avoid","social","moral","probability"];
 save_to = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\psych_cost_session_counts";
 
-fin_summary = sigmoidal_percentage(new_starting_dir, story_types, save_to)
-
-%% probability of behavior -- this is outdated, leaving it in temporarily
-
-home_dir = "C:\Users\lrako\OneDrive\Documents\RECORD\Stopping Points\human_dec_making\final_run\sessions\";
-sigmoid_type = "sessions";
-num_clusters = 4;
-means_2d = prep_means();
-probability_of_behavior(home_dir, sigmoid_type, num_clusters, means_2d)
+fin_summary = sigmoidal_percentage(new_starting_dir, story_types, save_to);

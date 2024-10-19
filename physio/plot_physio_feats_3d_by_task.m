@@ -7,7 +7,7 @@ mean_bars = [];
 std_errs = [];
 for s = 1:length(story_types)
     story = story_types(s);
-    cluster_table = merged_table(merged_table.story_type == story, :);
+    cluster_table = merged_table(merged_table.experiment == story, :);
 
     if ~is_hr
         x = cluster_table.avg_eng;

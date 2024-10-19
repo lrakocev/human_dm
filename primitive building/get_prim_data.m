@@ -1,4 +1,4 @@
-function cluster_mse = get_prim_data(spectral_table, all_data, story_types, use_cost)
+function mse = get_prim_data(spectral_table, all_data, story_types, use_cost)
 
 totals = setup_for_avgs(all_data,story_types);
 sesh_data = totals{1};
@@ -18,13 +18,12 @@ sesh_table.r_plus_c = sesh_table.rew + sesh_table.cost;
 sesh_table.r_min_c = sesh_table.rew - sesh_table.cost;
 
 cluster_mse = get_cluster_mse(sesh_table);
-%{
 range = get_interactions(cluster_mse);
 subj_var = get_subj_var(range);
 sesh_var = get_sesh_var(subj_var);
 impulse = get_impulsivity(sesh_var);
 appr_bias = get_appr_bias(impulse);
 mse = get_mse(appr_bias);
-%}
+
 
 end

@@ -25,6 +25,7 @@ function bhatt_table = rat_hum_distance_2d(human_data_table,rat_data_table,norma
                     distance_matrix(i,j) = mean(dimensions_of_bhat_distance,'all');
                 catch
                     distance_matrix(i,j) = 10;
+                    
                 end
             end
         end

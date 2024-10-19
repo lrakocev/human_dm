@@ -6,7 +6,7 @@ spectral_table = readtable(table_name);
 
 %% get behavioral data
 
-% to get session data, need to run the hum_new_tasks_runme 
+load("C:\Users\lrako\OneDrive\Documents\human dm\ingest helpers\human data.mat")
 
 %% concatenating the session tables into one big table per task
 
@@ -29,11 +29,9 @@ all_data{2} = appr_avoid_sessions;
 all_data{3} = social_sessions;
 all_data{4} = probability_sessions;
 all_data{5} = moral_sessions;
-split_by_dim = 0;
 plot_interactions = 0;
 
-all_psych_data = plot_avg_spec_cluster_psychs(spectral_table, all_data, same_scale, story_types, save_to, want_plot, split_by_dim, use_cost,plot_interactions);
-all_psych_data = renamevars(all_psych_data,'experiment','story_type');
+all_psych_data = plot_avg_spec_cluster_psychs(spectral_table, all_data, same_scale, story_types, save_to, want_plot, use_cost,plot_interactions);
 
 %% supplementary plot
 plot_avg_task_cluster_psych(spectral_table, all_data, same_scale, story_types, save_to, use_cost)

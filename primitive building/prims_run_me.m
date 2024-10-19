@@ -1,6 +1,6 @@
 %% human cluster data - created using C:\Users\lrako\OneDrive\Documents\human dm\clustering\create clusters\run_me.m
 
-% granular human data
+% just using this to get the raw coefficient values
 raw = "human_clusters";
 raw_name = "C:\Users\lrako\OneDrive\Documents\human dm\primitive building\" + raw + ".xlsx";
 spectral_table = readtable(raw_name);
@@ -33,15 +33,13 @@ if contains(type,"cost")
 end
 story_types = ["all"]; %"approach_avoid"
 all_data{1} = [appr_avoid_sessions moral_sessions social_sessions probability_sessions];
-split_by_dim = 0;
 
-%main_hum_table = spectral_table;
 main_hum_table.clusterLabels = main_hum_table.clusterLabels + " " + main_hum_table.experiment;
 
 prim_table = get_prim_data(main_hum_table, all_data, story_types, use_cost);
 
-plot_interactions = 1;
-%all_psych_data = plot_avg_spec_cluster_psychs(main_hum_table, all_data, 0, "all", save_to, 0, 0, use_cost, plot_interactions);
+plot_interactions = 0;
+all_psych_data = plot_avg_spec_cluster_psychs(main_hum_table, all_data, 0, "all", save_to, 0, use_cost, plot_interactions);
 
 %% prim histogram
 

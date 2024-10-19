@@ -25,11 +25,3 @@ subtit = "subj var: " + string(start_table.subj_var(1));
 
 make_dec_making_plots(start_table, save_to, task , 1, 0, want_save,subtit)
 
-%% r-c interact
-% C:\Users\lrako\OneDrive\Documents\human dm\test_run\psych_stats\individual_overlays\approach_avoid\
-
-% good separation  = 1464_approach_avoid_story_10 or
-% 28690_approach_avoid_story_12
-
-% bad separation
-% 31657_social_story_12

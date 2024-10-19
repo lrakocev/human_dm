@@ -34,11 +34,7 @@ human_data = readtable(table_name);
 version_name = "hum_v_theory_2";
 
 colors = distinguishable_colors(60);
-
-%normalized_human_to_rat_comparison_single_plot(theo_table_name, human_data,save_to,"hum v theory",colors,0)
-
 bhatt_table = get_bhat_dist_heat_map_comparing_rat_to_human(human_data,theo_data,0, save_to,version_name,1,0);
-
 non_mapping_idx = compare_densities(human_data, theo_data, bhatt_table);
 
 %% compare human clusters to overall space
