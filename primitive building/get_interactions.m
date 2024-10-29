@@ -17,10 +17,10 @@ end
 function space = get_r_overlap(sesh_table)
 
 areas = [];
-for r = 1:4
+for r = 1:3
     r_table = sesh_table(sesh_table.rew == r, :);
     curr_apprs = r_table.approach_rate;
-    area = mean(curr_apprs);
+    area = mean(curr_apprs,'omitnan');
     areas = [areas; area];
 end
 

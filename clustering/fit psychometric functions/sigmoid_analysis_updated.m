@@ -1,31 +1,20 @@
-function sigmoid_analysis_updated(approach_data, dirName, sig_type)
+function fit_count = sigmoid_analysis_updated(approach_data, dirName, sig_type)
 
-function [] = createSigmoidFigures(results,dirName,thresh,sig_type)
-
+function was_fit = createSigmoidFigures(results,dirName,thresh,sig_type)
+    was_fit = 0;
     if ~isempty(results)
-        if sig_type == "cost"
-            x = unique(results.rew)';
-        else
-            x = unique(results.cost)';
-        end
-          
-        
+        x=1:4;
         y = [];
         for r = 1:length(x)
-            if sig_type == "cost"
-                curr = results(results.rew == r, :);
-            else
-                curr = results(results.cost == r, :);
-            end
+            curr = results(results.rew == r, :);
             appr_rate = mean(curr.approach_rate, 'omitnan');
             y = [y; appr_rate];
         end
 
         y = y';
 
-
         if length(y) >= 4 && all(~isnan(y))
-        
+            was_fit = 1;
             subid = results.subjectidnumber(1);
             story_num = results.story_num(1);
        
@@ -99,7 +88,6 @@ function [] = createSigmoidFigures(results,dirName,thresh,sig_type)
                 set(fighandle5, 'visible', 'on');
                 saveas(fighandle5,strcat(dirName,"Parabolas\",string(subid),"_",string(story_num),".fig"))
                 save(strcat(dirName,'Parabola Data\',string(subid),"_",string(story_num),'.mat'),'fitobject5')
-            
             end
 
         end
@@ -108,10 +96,12 @@ function [] = createSigmoidFigures(results,dirName,thresh,sig_type)
 
 end
 
+fit_count = 0;
 thresh = 0.4;
 N = length(approach_data);
 for i = 1:N
     results = approach_data(i);
-    createSigmoidFigures(results{1}, dirName,thresh,sig_type)
+    was_fit = createSigmoidFigures(results{1}, dirName,thresh,sig_type);
+    fit_count = fit_count + was_fit;
 end
 end

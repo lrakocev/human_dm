@@ -1,4 +1,4 @@
-function h = avg_psychometric_across_levels(approach_data, type, constant, story_type, path_to_save,want_save)
+function [h,avg,lvl_lens] = avg_psychometric_across_levels(approach_data, type, constant, story_type, path_to_save,want_save)
 
 if want_save
     figure
@@ -7,6 +7,7 @@ avg = [];
 num_sessions = 0;
 num_trials = 0;
 id_list = [];
+lvl_lens = [];
 for lvl = 1:4
         if isequal(constant, "cost")
             xlabel_str = "reward";
@@ -19,6 +20,7 @@ for lvl = 1:4
             ylabel_str = "timing";
         end
         
+        lvl_len = 0;
         for N = 1:length(approach_data)
             appr_table = approach_data{N};
             if ~isempty(appr_table)
@@ -31,6 +33,7 @@ for lvl = 1:4
                 num_sessions = num_sessions + 1;
                 curr_table = get_curr_table(appr_table, lvl, constant);
                 num_trials = num_trials + height(appr_table);
+                lvl_len = lvl_len + height(curr_table);
                 if isequal(type, "approach rate")
                     appr_rate = curr_table.approach_rate;
                     if length(appr_rate) < 4
@@ -45,6 +48,7 @@ for lvl = 1:4
            ylabel(type)
            end
         end
+        lvl_lens = [lvl_lens; lvl_len];
 end
 
 num_subjects = length(unique(id_list));

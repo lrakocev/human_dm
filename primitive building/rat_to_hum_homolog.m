@@ -1,4 +1,4 @@
-function viz = rat_to_hum_homolog(rat_prim_table, human_prim_table ,dist_table,want_save,save_to,want_and,thresh)
+function viz = rat_to_hum_homolog(rat_prim_table,human_prim_table, want_cols, dist_table,want_save,save_to,want_and,thresh)
 
 % locations of interest
 close_clusters = dist_table(dist_table.avg_dist < thresh, :);
@@ -6,7 +6,6 @@ close_clusters = dist_table(dist_table.avg_dist < thresh, :);
 % get the cluster means for features (mse, mean_var, r_impulse, rawY,
 % rawZ)
 
-want_cols =  {'r_interact','sesh_var','r_impulse','rawY','rawZ','idx'};
 hum_table = prims_of_interest(human_prim_table,want_cols);
 rat_table = prims_of_interest(rat_prim_table,want_cols);
 
@@ -27,30 +26,41 @@ for i = 3:width(hum_summary)
     rat_zs(:,i-1) = abs(zscore(table2array(rat_summary(:,i)))) > z_thresh ; % abs > z_thresh
 end
 
-hum_zs = array2table(hum_zs, 'VariableNames', ["hum_idx" "z_rawY" "z_rawZ" "z_var" "z_interact" "z_impulse"]);
-rat_zs = array2table(rat_zs, 'VariableNames', ["model_idx" "z_rawY" "z_rawZ" "z_impulse" "z_interact" "z_var"]);
+hum_zs = array2table(hum_zs, 'VariableNames', ["hum_idx" "z_rawY" "z_rawZ" "z_cluster_mse" "z_interact"  "z_subj_var" "z_sesh_var" "z_impulse" "z_mean_appr" "z_max_appr"]);
+rat_zs = array2table(rat_zs, 'VariableNames', ["model_idx" "z_rawY" "z_rawZ" "z_impulse" "z_mean_appr" "z_max_appr"  "z_interact" "z_sesh_var" "z_cluster_mse" "z_subj_var"]);
 
 merge = outerjoin(outerjoin(close_clusters, rat_zs, 'MergeKeys',1,'Keys','model_idx'), hum_zs, 'MergeKeys', 1, 'Keys', 'hum_idx');
 merge = merge(~isnan(merge.model_idx) & ~isnan(merge.hum_idx),:);
 viz.pair_name = "rat: " + string(merge.model_idx) + ", hum: " + string(merge.hum_idx);
 
 if want_and
-    viz.rawY_match = merge.z_rawY_left == merge.z_rawY_hum_zs;
-    viz.rawZ_match = merge.z_rawZ_left == merge.z_rawZ_hum_zs;
-    viz.impulse_match = merge.z_impulse_left == merge.z_impulse_hum_zs;
-    viz.var_match = merge.z_var_left == merge.z_var_hum_zs;
-    viz.interact_match = merge.z_interact_left == merge.z_interact_hum_zs;
+    viz.valuation = merge.z_rawY_left == merge.z_rawY_hum_zs;
+    viz.elasticity = merge.z_rawZ_left == merge.z_rawZ_hum_zs;
+    viz.impulse = merge.z_impulse_left == merge.z_impulse_hum_zs;
+    viz.interact = merge.z_interact_left == merge.z_interact_hum_zs;
+    viz.mean_appr = merge.z_mean_appr_left == merge.z_mean_appr_hum_zs;
+    viz.max_appr = merge.z_max_appr_left == merge.z_max_appr_hum_zs;
+
+    viz.cluster_mse = merge.z_cluster_mse_left == merge.z_cluster_mse_hum_zs;
+    viz.sesh_var = merge.z_sesh_var_left == merge.z_sesh_var_hum_zs;
+     viz.subj_var = merge.z_subj_var_left == merge.z_subj_var_hum_zs;
 else 
-    viz.rawY_match = merge.z_rawY_left & merge.z_rawY_hum_zs;
-    viz.rawZ_match = merge.z_rawZ_left & merge.z_rawZ_hum_zs;
-    viz.impulse_match = merge.z_impulse_left & merge.z_impulse_hum_zs;
-    viz.var_match = merge.z_var_left & merge.z_var_hum_zs;
-    viz.interact_match = merge.z_interact_left & merge.z_interact_hum_zs;
+    viz.valuation = merge.z_rawY_left & merge.z_rawY_hum_zs;
+    viz.elasticity = merge.z_rawZ_left & merge.z_rawZ_hum_zs;
+    viz.impulse = merge.z_impulse_left & merge.z_impulse_hum_zs;
+    viz.interact = merge.z_interact_left & merge.z_interact_hum_zs;
+   
+    viz.mean_appr = merge.z_mean_appr_left & merge.z_mean_appr_hum_zs;
+    viz.max_appr = merge.z_max_appr_left & merge.z_max_appr_hum_zs;
+
+    viz.cluster_mse = merge.z_cluster_mse_left & merge.z_cluster_mse_hum_zs;
+    viz.sesh_var = merge.z_sesh_var_left & merge.z_sesh_var_hum_zs;
+     viz.subj_var = merge.z_subj_var_left & merge.z_subj_var_hum_zs;
 end
 
 
 viz = struct2table(viz);
-pos_viz = viz(viz.rawY_match | viz.rawZ_match | viz.impulse_match | viz.var_match | viz.interact_match , :);
+pos_viz = viz; % viz(viz.rawY_match | viz.rawZ_match | viz.impulse_match | viz.var_match | viz.interact_match , :);
 pos_viz_arr = table2array(pos_viz(:,2:end));
 
 figure

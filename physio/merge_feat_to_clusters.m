@@ -2,7 +2,6 @@ function merged_table = merge_feat_to_clusters(feat_table, all_psych_data, want_
 
 [feat_table] = add_story_column(feat_table);
     
-% collapse on: subject, session, cost level
 new_table = renamevars(feat_table,"real_c","cost");
 
 % join tables + get rows with indexes

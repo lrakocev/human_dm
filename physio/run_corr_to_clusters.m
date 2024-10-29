@@ -51,9 +51,8 @@ eye_merged = merge_feat_to_clusters(tot_eye, all_psych_data, 0, use_cost);
 hr_merged = merge_feat_to_clusters(tot_hr, all_psych_data, 1, use_cost);
 
 mega_merge = outerjoin(eye_merged,hr_merged,'MergeKeys',true,'Keys',...
-    {'clusterX','clusterY','clusterZ','clusterLabels','story_type','idx',...
-    'subjectidnumber','story_num','cost',...
-    'decision_made','real_r'});
+    {'clusterX','clusterY','clusterZ','clusterLabels','experiment','idx',...
+    'subjectidnumber','story_num','cost','decision_made','real_r'});
 
 %% 3d plot for clusters
 
@@ -64,6 +63,7 @@ C = {[1 0 0], [0 1 0], [0 0 1],...
 save_to = "C:\Users\lrako\OneDrive\Documents\human dm\figs\" + type + "\physio_corr\";
 mkdir(save_to)
 
+save_to = "";
 plot_physio_feats_3d(eye_merged,num_clusters,C,save_to,0,0)
 plot_physio_feats_3d(hr_merged,num_clusters,C,save_to,1,0)
 plot_physio_feats_3d(mega_merge,num_clusters,C,save_to,0,1)

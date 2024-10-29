@@ -1,18 +1,22 @@
-function means = prim_histogram_by_task(prim_table, hum_or_rat, feat_name, want_save, save_to)
+function prim_histogram_by_task(prim_table, hum_or_rat, feat_name, want_save, save_to)
+
+prim_table = prim_table(prim_table.rew == 1 & prim_table.cost == 1, :);
 
 means = [];
 serrs = [];
-stories = unique(prim_table.story_type);
+anova = [];
+ls = [];
+stories = unique(prim_table.experiment);
 for i = 1:length(stories)
     story = stories(i);
-    story_table = prim_table(prim_table.story_type == story, :);
+    story_table = prim_table(prim_table.experiment == story, :);
 
     if feat_name == "mean appr"
         data = story_table.mean_appr;
     elseif feat_name == "max appr"
         data = story_table.max_appr;
-    elseif feat_name == "med appr"
-        data = story_table.med_appr;
+    elseif feat_name == "min appr"
+        data = story_table.min_appr;
     elseif feat_name == "reward interact"
         data = story_table.r_interact;
     elseif feat_name == "cost interact"
@@ -23,8 +27,13 @@ for i = 1:length(stories)
         data = story_table.c_impulse;
     elseif feat_name == "subj var"
         data = story_table.subj_var;
+    elseif feat_name == "sesh var"
+        data = story_table.sesh_var;
     end
 
+
+    anova = [anova; data];
+    ls = [ls; height(data)];
     [curr_mean, curr_serr] = get_summary(data);
     
     means = [means; curr_mean];
@@ -38,7 +47,32 @@ if feat_name == "valuation"
 elseif feat_name == "elasticity"
     feat_name = "elasticity (aka slope)";
 end
-plot_data(stories,means, serrs, hum_or_rat + " " + feat_name, want_save, save_to)
+
+cls = cumsum(ls);
+
+if feat_name == "subj var"
+    ftest = 1;
+    % checking diff for task 3
+    [h1,p1] = vartest2(anova(1:cls(1)), anova(cls(2):cls(3)));
+    [h2,p2] = vartest2(anova(cls(1):cls(2)), anova(cls(2):cls(3)));
+    [h3,p3] = vartest2(anova(cls(3):cls(4)),  anova(cls(2):cls(3)));
+
+    p = strjoin([string(p1),string(p2),string(p3)]," ");
+    
+elseif feat_name == "sesh var"
+    ftest = 1;
+    % checking diff for task 1
+    [h1,p1] = vartest2(anova(cls(2):cls(3)), anova(1:cls(1)));
+    [h2,p2] = vartest2(anova(cls(1):cls(2)), anova(1:cls(1)));
+    [h3,p3] = vartest2(anova(cls(3):cls(4)),  anova(1:cls(1)));
+
+    p = strjoin([string(p1),string(p2),string(p3)]," ");
+    
+else
+    ftest = 0;
+    p = calc_anova(anova, ls);
+end
+plot_data(stories,means, serrs, hum_or_rat + " " + feat_name,p,ftest, want_save, save_to)
 
 end
 
@@ -47,23 +81,37 @@ function [means, serrs] = get_summary(data)
 non_nan = data(~isnan(data));
 means = mean(non_nan, 'omitnan');
 % div by 16 because of the overcounting due to each lvl in the session
-serrs = std(non_nan, 'omitnan') / sqrt(length(non_nan) / 16 );
+serrs = std(non_nan, 'omitnan') / sqrt(length(non_nan)); % / 16 
 
 end
 
-function plot_data(unique_tasks,mean_dat, serr_dat, feat_name, want_save, save_to)
+function p = calc_anova(data, ls)
+
+clusters = [];
+for l = 1:length(ls)
+    len = ls(l);
+    clusters = [clusters repelem(l, len)];
+end
+
+[p,t,stats,terms] = anovan(data,{clusters});
+
+end
+
+function plot_data(unique_tasks,mean_dat, serr_dat, feat_name, p, ftest, want_save, save_to)
 
 figure
 bar(unique_tasks,mean_dat)
 hold on
-errorbar(1:length(unique_tasks),mean_dat, serr_dat)
+if ~ftest
+    errorbar(1:length(unique_tasks),mean_dat, serr_dat)
+end
 xlabel("cluster number")
 ylabel(feat_name)
-title(feat_name + " for psychs in cluster")
+title(feat_name + " for psychs in task, one-way anova p=" + string(p));
 if want_save
-set(gcf,'renderer','Painters')
-saveas(gcf,save_to + "\" + feat_name, "fig")
-saveas(gcf,save_to + "\" + feat_name, "svg")
+    set(gcf,'renderer','Painters')
+    saveas(gcf,save_to + "\" + feat_name, "fig")
+    saveas(gcf,save_to + "\" + feat_name, "svg")
 end
 
 end

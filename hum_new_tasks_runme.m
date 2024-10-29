@@ -168,10 +168,14 @@ data{3} = probability_combined_data;
 data{4} = moral_combined_data;
 
 path_to_save = 'C:\Users\lrako\OneDrive\Documents\human dm\figs\all_session_updated\psych_stats\';
+
 for c = 1:length(consts)
     constant = consts(c);
     figure
     hs = [];
+    task_anova = [];
+    ls = [];
+    lvls = [];
     for s = 1:length(story_types)
         story_type = story_types(s);
         story_dir = path_to_save + story_type;
@@ -181,11 +185,27 @@ for c = 1:length(consts)
         story_type = story_types(s);
 
         % this plots all the individual results + the average - one plot per level
-        h = [avg_psychometric_across_levels(combined_data,  type, constant, story_type, path_to_save, 0)];
+        [h,avg,lvl_lens] = avg_psychometric_across_levels(combined_data,  type, constant, story_type, path_to_save, 0);
+        avg = reshape(avg,1,4*length(avg));
+        task_anova = [task_anova avg];
+        ls = [ls; length(avg)];
         hs = [hs; h];
         hold on
+
+        for j = 1:length(lvl_lens)
+            lvl_len = lvl_lens(j);
+            lvls = [lvls repelem(j, lvl_len)];
+        end
     end
-    title("comparison of avg approach rates for tasks, with constant " + constant)
+
+    tasks = [];
+    for l = 1:length(ls)
+        len = ls(l);
+        tasks = [tasks repelem(l, len)];
+    end
+
+    [p,t,stats,terms] =  anovan(task_anova, {tasks;lvls},'model','interaction','varnames',{'task','lvl'});
+    title("comparison of avg approach rates for tasks, with constant " + constant + ", two-way anova btwn tasks: p=" + string(p));
     legend(hs,story_types)
     hold off
     set(gcf,'renderer','Painters')

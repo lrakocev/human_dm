@@ -1,6 +1,6 @@
 %% create new directory for data
 
-new_dir = 'C:\Users\lrako\OneDrive\Documents\human dm\test_run\session_reward_clustering';
+new_dir = 'C:\Users\lrako\OneDrive\Documents\human dm\test_run\sessions_oct_27';
 mkdir(new_dir)
 story_types = ["approach_avoid", "social", "probability", "moral"];
 for i = 1:length(story_types)
@@ -28,7 +28,7 @@ create_sigmoids(home_dir, story_types, data, by_session, sig_type)
 
 %% find session sigmoids
 
-home_dir = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\min_pref_session_clustering\";
+home_dir = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\sessions_oct_27\";
 story_types = ["approach_avoid", "social", "probability", "moral"];
 data{1} = appr_avoid_sessions;
 data{2} = social_sessions;
@@ -37,12 +37,13 @@ data{4} = moral_sessions;
 by_session = 1;
 sig_type = "cost";
 
-create_sigmoids(home_dir, story_types, data, by_session, sig_type)
+total_fit = create_sigmoids(home_dir, story_types, data, by_session, sig_type);
 
 %% get % sigmoidal vs non sigmoidal
 
-new_starting_dir = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\session_cost_clustering\";
+% prev_dir = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\session_clustering\";
+new_starting_dir = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\sessions_oct_27\";
 story_types = ["approach_avoid","social","moral","probability"];
-save_to = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\psych_cost_session_counts";
-
+save_to ="C:\Users\lrako\OneDrive\Documents\human dm\test_run\psych_stats\sessions_oct_27";
+mkdir(save_to)
 fin_summary = sigmoidal_percentage(new_starting_dir, story_types, save_to);

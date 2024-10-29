@@ -5,14 +5,18 @@ l = [];
 hs= [];
 mean_bars = [];
 std_errs = [];
+all_subs = [];
+tot_height = 0;
 for s = 1:num_clusters
     cluster_table = merged_table(merged_table.idx == s, :);
-
+    subs = unique(cluster_table.subjectidnumber);
+    all_subs = [all_subs;subs];
+    tot_height = tot_height + height(cluster_table);
     if ~use_both 
         if ~is_hr
             x = cluster_table.avg_eng;
-            y = cluster_table.num_maxes;
-            z = cluster_table.num_mins;
+            y = cluster_table.num_maxes ;
+            z = cluster_table.num_mins  ;
         elseif is_hr 
             x = cluster_table.percent_max_hr;
             y = cluster_table.percent_min_hr;
@@ -50,12 +54,13 @@ end
 hold off
 legend(hs, l)
 
+num_subs = length(unique(all_subs));
 if ~use_both
     if ~is_hr
         xlabel('avg pupil diam')
         ylabel('num maxes in pupil diam')
         zlabel('num mins in pupil diam')
-        title('eye feats associated w clusters')
+        title('eye feats associated w clusters, n = ' + string(tot_height) +' , subs= ' + string(num_subs))
     
         subtitle_str = physio_clusters_anova(merged_table, num_clusters, is_hr, use_both);
         subtitle(subtitle_str)
@@ -66,7 +71,7 @@ if ~use_both
         xlabel('% max hr above avg')
         ylabel('% min hr below avg')
         zlabel('directoin')
-        title('hr feats associated w clusters')
+        title('hr feats associated w clusters, n = ' + string(tot_height)+' , subs= ' + string(num_subs))
     
         subtitle_str = physio_clusters_anova(merged_table, num_clusters, is_hr, use_both);
         subtitle(subtitle_str)
@@ -79,7 +84,7 @@ else
     xlabel('avg eng')
     ylabel('% min hr below avg')
     zlabel('num spikes in eng')
-    title('hr + eyetracker feats associated w clusters')
+    title('hr + eyetracker feats associated w clusters, n = ' + string(tot_height)+' , subs= ' + string(num_subs))
 
     subtitle_str = physio_clusters_anova(merged_table, num_clusters, is_hr, use_both);
     subtitle(subtitle_str)

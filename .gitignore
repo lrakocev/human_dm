@@ -1,6 +1,4 @@
 # ignore all .mat files
-*.mat
 *.fig
-*.xlsx
 *.zip
 /test_run/*.zip

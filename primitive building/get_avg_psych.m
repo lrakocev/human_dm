@@ -16,10 +16,11 @@ y = [mean_lvl_1, mean_lvl_2, mean_lvl_3, mean_lvl_4];
 count = 1;
 r = 0;
 not_same = 0;
-while (count < 20 && r < 0.75) || not_same < 1
+while (count < 10 && r < 0.75) || abs(not_same) < 1
     [avg_psych, r] = fit_sigmoid(x,y,"r");
     avg_pts = avg_psych([1 2 3 4]);
-    not_same = sum(diff(avg_pts));
+    not_same = sum(abs(diff(avg_pts)));
+    count = count + 1;
 end
 
 end
