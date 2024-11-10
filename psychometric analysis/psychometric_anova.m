@@ -24,5 +24,5 @@ lvl_4 = repelem(4, length(l4));
 lvls = [lvl_1 lvl_2 lvl_3 lvl_4];
 
 % Perform n-way ANOVA
-[p,t,stats,terms] = anovan(responseData, {lvls}, 'varnames', {'levels'},'display','off');
+[p,t,stats,terms] = anovan(responseData, {lvls}, 'varnames', {'levels'});
 end

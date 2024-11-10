@@ -51,12 +51,6 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
 
     % B = tiledlayout(1,2);
     
-    % Normal
-    % nexttile
-    something = [observed_p_appr(4,:);observed_p_appr(3,:);observed_p_appr(2,:);observed_p_appr(1,:)];
-    % heatmap(observed_p_appr)
-    % figure
-
     [the_min,the_max] = bounds(observed_p_appr,"all");
     imagesc(observed_p_appr);%original
     % imagesc(flipud(observed_p_appr)) 

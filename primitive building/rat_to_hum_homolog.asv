@@ -1,0 +1,94 @@
+function viz = rat_to_hum_homolog(rat_prim_table,human_prim_table, want_cols, dist_table,want_save,save_to,want_and,thresh)
+
+% locations of interest
+close_clusters = dist_table(dist_table.avg_dist < thresh, :);
+
+% get the cluster means for features (mse, mean_var, r_impulse, rawY,
+% rawZ)
+
+hum_table = prims_of_interest(human_prim_table,want_cols);
+rat_table = prims_of_interest(rat_prim_table,want_cols);
+
+hum_summary = grpstats(hum_table,"idx",'mean');
+hum_summary = renamevars(hum_summary,'idx','hum_idx');
+rat_summary = grpstats(rat_table,"idx",'mean');
+rat_summary = renamevars(rat_summary,'idx','model_idx');
+
+hum_zs = nan(height(hum_summary),width(hum_summary)-2);
+hum_zs(:,1) = hum_summary.hum_idx;
+
+rat_zs = nan(height(rat_summary),width(rat_summary)-2);
+rat_zs(:,1) = rat_summary.model_idx;
+
+z_thresh = 1;
+for i = 3:width(hum_summary)
+    hum_zs(:,i-1) = abs(zscore(table2array(hum_summary(:,i)))) > z_thresh ;
+    rat_zs(:,i-1) = abs(zscore(table2array(rat_summary(:,i)))) > z_thresh ; % abs > z_thresh
+end
+
+hum_zs = array2table(hum_zs, 'VariableNames', ["hum_idx" "z_rawY" "z_rawZ" "z_mse" "z_cluster_mse" "z_interact"  "z_var" "z_impulse" "z_mean_appr" "z_max_appr" "z_mse"]);
+rat_zs = array2table(rat_zs, 'VariableNames', ["model_idx" "z_rawY" "z_rawZ" "z_impulse" "z_mean_appr" "z_max_appr" "z_mse" "z_interact" "z_var" "z_cluster_mse"]);
+
+merge = outerjoin(outerjoin(close_clusters, rat_zs, 'MergeKeys',1,'Keys','model_idx'), hum_zs, 'MergeKeys', 1, 'Keys', 'hum_idx');
+merge = merge(~isnan(merge.model_idx) & ~isnan(merge.hum_idx),:);
+viz.pair_name = "rat: " + string(merge.model_idx) + ", hum: " + string(merge.hum_idx);
+
+if want_and
+    viz.rawY_match = merge.z_rawY_left == merge.z_rawY_hum_zs;
+    viz.rawZ_match = merge.z_rawZ_left == merge.z_rawZ_hum_zs;
+    viz.impulse_match = merge.z_impulse_left == merge.z_impulse_hum_zs;
+    viz.var_match = merge.z_var_left == merge.z_var_hum_zs;
+    viz.interact_match = merge.z_interact_left == merge.z_interact_hum_zs;
+    viz.appr_match = merge.z_mean_appr_left == merge.z_mean_appr_hum_zs;
+    viz.cluster_mse = merge.z_mean__left == merge.z_mean_appr_hum_zs;
+    viz.appr_match = merge.z_mean_appr_left == merge.z_mean_appr_hum_zs;
+    viz.appr_match = merge.z_mean_appr_left == merge.z_mean_appr_hum_zs;
+else 
+    viz.rawY_match = merge.z_rawY_left & merge.z_rawY_hum_zs;
+    viz.rawZ_match = merge.z_rawZ_left & merge.z_rawZ_hum_zs;
+    viz.impulse_match = merge.z_impulse_left & merge.z_impulse_hum_zs;
+    viz.var_match = merge.z_var_left & merge.z_var_hum_zs;
+    viz.interact_match = merge.z_interact_left & merge.z_interact_hum_zs;
+   
+    viz.appr_match = merge.z_mean_appr_left & merge.z_mean_appr_hum_zs;
+end
+
+
+viz = struct2table(viz);
+pos_viz = viz(viz.rawY_match | viz.rawZ_match | viz.impulse_match | viz.var_match | viz.interact_match , :);
+pos_viz_arr = table2array(pos_viz(:,2:end));
+
+figure
+w = size(pos_viz_arr,2);
+h = size(pos_viz_arr,1);
+X = repmat(1:w,h,1);
+Y = repmat(1:h,w,1)';
+s = image(pos_viz_arr);
+colorMap = jet(2);
+colormap(colorMap);
+cb = colorbar;
+cb.Ticks = [0.5,1.5];
+cb.TickLabels = ["No Match (One Has)", "Match (Both Have/Not Have)"];
+set(gca,'YTick',1:h);
+set(gca,'YTickLabels',pos_viz.pair_name);
+set(gca,'XTick',1:w);
+set(gca,'XTickLabels',pos_viz.Properties.VariableNames(2:end));
+title("Rat + Human Cluster Pairs w/ Proximal Location + Matching Features")
+if want_save
+    set(gcf,'renderer','Painters')
+    if want_and
+         figname = save_to + "\rat_hum_homologous_v2";
+    else
+        figname = save_to + "\rat_hum_homologous";
+    end
+    saveas(gcf,figname, "fig")
+    saveas(gcf,figname, "svg")
+end
+
+end
+
+function new_table = prims_of_interest(curr_table, cols)
+new_table = curr_table(:,ismember(curr_table.Properties.VariableNames,cols));
+end
+
+

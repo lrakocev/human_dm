@@ -64,9 +64,6 @@ s_sessions = length(social_sessions);
 p_sessions = length(probability_sessions);
 
 total_sessions = aa_sessions + m_sessions + s_sessions + p_sessions;
-%% approach data w psych names
-
-
 
 %% normalization bar plots
 

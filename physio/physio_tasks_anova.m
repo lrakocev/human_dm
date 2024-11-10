@@ -6,7 +6,7 @@ zs = [];
 ls = [];
 for s = 1:length(story_types)
     story = story_types(s);
-    task_table = merged_table(merged_table.story_type == story, :);
+    task_table = merged_table(merged_table.experiment == story, :);
     ls = [ls; height(task_table)];
 
     if ~is_hr

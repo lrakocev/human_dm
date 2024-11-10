@@ -11,8 +11,8 @@ for s = 1:length(story_types)
 
     if ~is_hr
         x = cluster_table.avg_eng;
-        y = cluster_table.num_maxes / cluster_table.order;
-        z = cluster_table.num_mins  / cluster_table.order;
+        y = cluster_table.num_maxes;
+        z = cluster_table.num_mins;
     else
         x = cluster_table.percent_max_hr;
         y = cluster_table.percent_min_hr;

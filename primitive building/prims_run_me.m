@@ -24,7 +24,8 @@ main_hum.clusterLabels = main_hum.clusterLabels + " " + main_hum.experiment;
 prim_table = get_prim_data(main_hum, all_data, story_types, use_cost);
 save(save_to, "prim_table")
 
-plot_interactions = 1;
+
+plot_interactions = 0;
 all_psych_data = plot_avg_spec_cluster_psychs(main_hum, all_data, 0, "all", save_to, 0, use_cost, plot_interactions);
 
 %% prim histogram
