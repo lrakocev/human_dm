@@ -1,4 +1,4 @@
-%% SAME THING BUT USING CLUSTERS CREATED OCT 27/28
+%% read in data
 
 hum_table_name = "C:\Users\lrako\OneDrive\Documents\human dm\clustering\create clusters\og_cluster_dir_10-28-2024\all human data.xlsx";
 main_hum = readtable(hum_table_name);

@@ -1,9 +1,9 @@
-function [h,avg,lvl_lens] = avg_psychometric_across_levels(approach_data, type, constant, story_type, path_to_save,want_save)
+function [h,all,lvl_lens] = avg_psychometric_across_levels(approach_data, type, constant, story_type, path_to_save,want_save)
 
 if want_save
     figure
 end
-avg = [];
+all = [];
 num_sessions = 0;
 num_trials = 0;
 id_list = [];
@@ -14,8 +14,8 @@ for lvl = 1:4
         else
             xlabel_str = "cost";
         end
-        if isequal(type, "appr_rate")
-            ylabel_str = "approach rate";
+        if isequal(type, "approach rate")
+            ylabel_str = "Mean Appr.";
         else
             ylabel_str = "timing";
         end
@@ -39,10 +39,10 @@ for lvl = 1:4
                     if length(appr_rate) < 4
                         continue
                     end
-                    avg = [avg appr_rate];
+                    all = [all appr_rate];
                 else
                     timings = curr_table.timing;
-                    avg = [avg timings];
+                    all = [all timings];
                 end
 
            ylabel(type)
@@ -52,12 +52,14 @@ for lvl = 1:4
 end
 
 num_subjects = length(unique(id_list));
-m = mean(mean(avg),'omitnan');
-s = std(avg, 0, 'all');
     
 hold on
-means = mean(avg,2, 'omitnan');
-h = plot(means,'LineWidth',5);
+means = mean(all,2, 'omitnan');
+s = std(all, 0, 2) / sqrt(length(all));
+plot(means,'LineWidth',5);
+hold on
+h = errorbar(1:4,means,s,'LineWidth',5);
+hold off
 xlabel(xlabel_str)
 ylabel(ylabel_str)
 if want_save

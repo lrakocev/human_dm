@@ -1,4 +1,4 @@
-function prim_histogram_by_task(prim_table, hum_or_rat, feat_name, want_save, save_to)
+function prim_histogram_by_task(prim_table, hum_or_rat, feat_name, stories, want_save, save_to)
 
 prim_table = prim_table(prim_table.rew == 1 & prim_table.cost == 1, :);
 
@@ -6,7 +6,6 @@ means = [];
 serrs = [];
 anova = [];
 ls = [];
-stories = unique(prim_table.experiment);
 for i = 1:length(stories)
     story = stories(i);
     story_table = prim_table(prim_table.experiment == story, :);
@@ -87,13 +86,13 @@ end
 
 function p = calc_anova(data, ls)
 
-clusters = [];
+feats = [];
 for l = 1:length(ls)
     len = ls(l);
-    clusters = [clusters repelem(l, len)];
+    feats = [feats repelem(l, len)];
 end
 
-[p,t,stats,terms] = anovan(data,{clusters});
+[p,t,stats,terms] = anovan(data,{feats});
 
 end
 

@@ -53,8 +53,11 @@ num_all_subjects = length(unique(tot.subjectidnumber));
 
 story_types = ["approach_avoid", "social", "probability", "moral"];
 counts = [];
+all_ids = [];
 for j = 1:length(story_types)
-    count = length(unique(tot(tot.story_type == story_types(j), :).subjectidnumber));
+    ids = unique(tot(tot.story_type == story_types(j), :).subjectidnumber);
+    all_ids = [all_ids; ids];
+    count = length(ids);
     counts = [counts; count];
 end
 
@@ -64,6 +67,16 @@ s_sessions = length(social_sessions);
 p_sessions = length(probability_sessions);
 
 total_sessions = aa_sessions + m_sessions + s_sessions + p_sessions;
+
+%% metadata counts
+
+results = get_hum_metadata();
+single_table = consolidate_metadata(results, all_ids);
+
+sex = groupcounts(single_table,'sex');
+age = groupcounts(single_table,'age');
+race = groupcounts(single_table,'race');
+ethnicity =groupcounts(single_table,'ethnicity'); 
 
 %% normalization bar plots
 
@@ -154,7 +167,7 @@ for s = 1:length(story_types)
     end
 end
 
-%% overlapped for fig 6
+%% overlapped for fig 3
 
 story_types = ["approach_avoid", "social", "probability", "moral"];
 consts = ["reward", "cost"];
