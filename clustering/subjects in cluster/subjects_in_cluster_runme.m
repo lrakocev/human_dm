@@ -1,6 +1,6 @@
 
-type = "all_session_updated";
-table_name = "C:\Users\lrako\OneDrive\Documents\human dm\" + type + ".xlsx";
+type = "oct27";
+table_name = "C:\Users\lrako\OneDrive\Documents\human dm\clustering\create clusters\og_cluster_dir_10-28-2024\all human data.xlsx";
 spectral_table = readtable(table_name);
 
 %% get behavioral data
