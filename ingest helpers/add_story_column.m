@@ -13,7 +13,7 @@ if ~isempty(appr_table)
         split_story = split(story,'/');
         story_type = split_story(2);
         story_num = split_story(3);
-        row.experiment = story_type;
+        row.story_type = story_type;
         row.story_num = story_num;
         new_table = [new_table; row];
     end

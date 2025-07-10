@@ -63,7 +63,8 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
     % % set(gca,'xtick',[], 'ytick',[], 'FontSize',20, 'YDir','normal');
     xlabel('reward')
     ylabel('cost')
-    title("3D Psychometric fun. for subject: " + string(subid))
+    title("3D Psychometric fun. for subject " + string(subid) + ", story type " + ...
+        story_type);
     subtitle(subtit)
 
     set(gca,'YDir','normal')

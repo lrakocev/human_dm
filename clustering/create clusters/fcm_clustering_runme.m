@@ -2,7 +2,9 @@
 % created by Luis David Davila
 
 %dir = 'C:\Users\lrako\OneDrive\Documents\human dm\test_run\session_clustering';
+% dir = 'C:\Users\lrako\OneDrive\Documents\human dm\test_run\sessions_oct_27';
 dir = 'C:\Users\lrako\OneDrive\Documents\human dm\test_run\sessions_oct_27';
+
 
 table_of_human_dir = get_dirs_with_data(dir);
 centers = [-7.95484 -0.2253 -13.3709;

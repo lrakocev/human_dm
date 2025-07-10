@@ -6,11 +6,12 @@ load("C:\Users\lrako\OneDrive\Documents\human dm\ingest helpers\human data.mat")
 
 %% find session-cost sigmoids
 
-story_types = ["approach_avoid", "social", "probability", "moral"];
+story_types = ["approach_avoid", "social", "probability", "moral","super"];
 data{1} = appr_avoid_sessions;
 data{2} = social_sessions;
 data{3} = probability_sessions;
 data{4} = moral_sessions;
+data{5} = super_sessions;
 
 sig_table = run_alt_fit(data,story_types, 0);
 sig_table.clusterLabels = sig_table.subjectidnumber + "_" + sig_table.story_num + ".mat";
@@ -21,9 +22,9 @@ sig_table.clusterLabels = sig_table.subjectidnumber + "_" + sig_table.story_num 
 %% clustering 2d sigs 
 
 colors = distinguishable_colors(30);
-save_to = "C:\Users\lrako\OneDrive\Documents\human dm\figs\all_session_updated\2d sig clustering";
+save_to = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025";
 mkdir(save_to)
-file_name = "extra_filters";
+file_name = "super_alt_clusters";
 feats = ["a_R","b_R","b_C"];
 centers = [0.5 0.2 -116;
     -1.5 -.9 -70;
@@ -31,7 +32,9 @@ centers = [0.5 0.2 -116;
     89.6 50 0;
     77 19.5 -2.4;
     155 42 -2.3];
-spectral_clustering_2D_sig(sig_table, feats, colors, centers, save_to, file_name)
+
+super_table = sig_table(sig_table.experiment == "super", :);
+spectral_clustering_2D_sig(super_table, feats, colors, centers, save_to, file_name)
 
 %% dec making plot per "cluster"
 

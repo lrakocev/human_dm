@@ -3,8 +3,10 @@ function story_data = combine_stories_for_map(approach_data, story_type)
 all_story_trials = [];
 for N = 1:length(approach_data)
     appr_table = approach_data{N};
-    correct_type = appr_table(appr_table.story_type == story_type, :);
-    all_story_trials = [all_story_trials; correct_type];
+    if ~isempty(appr_table)
+        correct_type = appr_table(appr_table.story_type == story_type, :);
+        all_story_trials = [all_story_trials; correct_type];
+    end
 end
 
 unique_stories = unique(all_story_trials.story_num);

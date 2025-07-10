@@ -1,12 +1,13 @@
 %% Human New Tasks Run Me
 
 using_prefs = 0;
-datasource = 'PostgreSQL30'; %ENTER YOUR DATASOURCE NAME HERE, default should be "live_database"
+datasource = 'PostgreSQL30'; %ENTER YOUR DATASOURCE NAME HERE, default should be "live_database" or "PostgreSQL30"
 username = 'postgres'; %ENTER YOUR USERNAME HERE, default should be "postgres"
 password = '1234'; %ENTER YOUR PASSWORD HERE, default should be "1234"
 
 % ingest data
-[init_approach_data, r_ratings, c_ratings] = get_new_task(datasource,username,password);
+table_name = "human_dec_making_table"; %_utep"
+[init_approach_data, r_ratings, c_ratings] = get_new_task(datasource,username,password, table_name);
 [clean_approach_data, subject_prefs] = clean_ingested_new_task(init_approach_data);
 
 % add new column for relevance
@@ -20,23 +21,26 @@ end
 [approach_data] = add_story_column_loop(pref_approach_data);
 
 % get data w enough trials 
-min_num_sessions = 2;
+min_num_sessions = 0;
 [N_trial_data, idxs] = filter_hum_appr_data(approach_data, 16*min_num_sessions);
 
 % combine trials for dec maps
 appr_avoid_combined_data = combine_for_map(N_trial_data, "approach_avoid");
+super_combined_data = combine_for_map(N_trial_data, "obvious_supersense");
 social_combined_data = combine_for_map(N_trial_data, "social");
 probability_combined_data = combine_for_map(N_trial_data, "probability");
 moral_combined_data = combine_for_map(N_trial_data, "moral");
 
 % separate each individual story out by type
 appr_avoid_sessions = sessions_by_tasktype(N_trial_data, "approach_avoid");
+super_sessions = sessions_by_tasktype(N_trial_data, "obvious_supersense");
 social_sessions = sessions_by_tasktype(N_trial_data, "social");
 probability_sessions = sessions_by_tasktype(N_trial_data, "probability");
 moral_sessions = sessions_by_tasktype(N_trial_data, "moral");
 
 % separate trials by story for dec map
 appr_avoid_stories = combine_stories_for_map(N_trial_data, "approach_avoid");
+super_stories = combine_stories_for_map(N_trial_data, "obvious_supersense");
 social_stories = combine_stories_for_map(N_trial_data, "social");
 probability_stories = combine_stories_for_map(N_trial_data, "probability");
 moral_stories = combine_stories_for_map(N_trial_data, "moral");
@@ -93,13 +97,14 @@ end
 want_bdry = 0;
 want_scale = 0;
 want_save = 1;
-story_types = ["approach_avoid", "social", "probability", "moral"];
+story_types = ["approach_avoid", "social", "probability", "moral", "super"];
 data{1} = appr_avoid_stories;
 data{2} = social_stories;
 data{3} = probability_stories;
 data{4} = moral_stories;
-path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\dec_making_story_maps";
-
+data{5} = super_stories;
+path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025\dec_making_story_maps";
+mkdir(path_to_save)
 run_dec_making_plot_loop(data,story_types,path_to_save,want_bdry,want_scale,want_save)
 
 
@@ -108,24 +113,27 @@ run_dec_making_plot_loop(data,story_types,path_to_save,want_bdry,want_scale,want
 want_bdry = 1;
 want_scale = 0;
 want_save = 1;
-story_types = ["approach_avoid", "social", "probability", "moral"];
+story_types = ["approach_avoid", "social", "probability", "moral","super"];
 data{1} = appr_avoid_combined_data;
-%data{2} = social_combined_data;
-%data{3} = probability_combined_data;
-%data{4} = moral_combined_data;
+data{2} = social_combined_data;
+data{3} = probability_combined_data;
+data{4} = moral_combined_data;
+data{5} = super_combined_data;
+
 path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\dec_making_maps";
 
 run_dec_making_plot_loop(data,story_types,path_to_save,want_bdry,want_scale,want_save)
 
 %% avg map per task
 
-story_types = ["approach_avoid", "social", "probability", "moral","all"];
+story_types = ["approach_avoid", "social", "probability", "moral","super"];
 data{1} = appr_avoid_combined_data;
 data{2} = social_combined_data;
 data{3} = probability_combined_data;
 data{4} = moral_combined_data;
-data{5} = [appr_avoid_combined_data;social_combined_data;probability_combined_data;moral_combined_data];
-path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\avg_maps";
+data{5} = super_combined_data;
+%data{6} = [appr_avoid_combined_data;social_combined_data;probability_combined_data;moral_combined_data];
+path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025";
 want_bdry = 0;
 want_scale = 1;
 want_save = 1;
@@ -134,15 +142,16 @@ avg_data = make_avg_dec_making_plot(data, story_types, path_to_save,want_bdry,wa
 
 %% plotting summary stats
 
-story_types = ["approach_avoid", "social", "probability", "moral"];
+story_types = ["approach_avoid", "social", "probability", "moral","super"];
 consts = ["reward", "cost"];
 type = "approach rate";
 data{1} = appr_avoid_combined_data;
 data{2} = social_combined_data;
 data{3} = probability_combined_data;
 data{4} = moral_combined_data;
+data{5} = super_combined_data;
 
-path_to_save = 'C:\Users\lrako\OneDrive\Documents\human dm\figs\all_session\psych_stats\';
+path_to_save = 'C:\Users\lrako\OneDrive\Documents\human dm\july_2025\';
 
 for s = 1:length(story_types)
     story_type = story_types(s);
@@ -163,7 +172,7 @@ for s = 1:length(story_types)
         avg_rew_v_cost_comparison_per_lvl(combined_data, type, constant, story_type, path_to_save)
         
         % this plots the 4 individual psychometric functions keeping constant r/c
-        plot_individual_psychs_across_lvls(combined_data, constant, story_type, path_to_save)
+        %plot_individual_psychs_across_lvls(combined_data, constant, story_type, path_to_save)
     end
 end
 

@@ -28,7 +28,7 @@ for j=1:optimum_number_of_clusters %length(unique_indexes)
     scatter_object.DataTipTemplate.DataTipRows(end+1:end+3) = dtRows;
     three_d_cluster_table = getClusterTable3dWithExperiment(xVsYVsZ,[],labels,indexes,unique_indexes(j),data_table.experiment);
     %}
-   three_d_cluster_table = getClusterTable3d(xVsYVsZ,labels,indexes,j,data_table.experiment);
+   three_d_cluster_table = getClusterTable3d(xVsYVsZ,[],labels,indexes,j,data_table.experiment);
 
     writetable(three_d_cluster_table,strcat(save_to,"\" + file_name + ".xlsx"),'WriteMode','append')
     hold on;
@@ -46,7 +46,7 @@ xlim([-100 170])
 ylim([-100 120])
 zlim([-140 70])
 set(gcf,'renderer','Painters')
-saveas(gcf,save_to + "\2d spec clustering", "fig")
-saveas(gcf,save_to + "\2d spec clustering", "svg")
+saveas(gcf,save_to + "\2d_spec_clustering" + file_name, "fig")
+saveas(gcf,save_to + "\2d_spec_clustering" + file_name, "svg")
 
 end
