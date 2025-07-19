@@ -69,6 +69,7 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
         subtitle(subtit)
     end
 
+
     set(gca,'YDir','normal')
     
     if want_bdry

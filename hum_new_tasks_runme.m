@@ -137,22 +137,6 @@ path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025\dec_making_
 
 run_dec_making_plot_loop(data,story_types,path_to_save,want_bdry,want_scale,want_save,for_ml)
 
-%% avg map per task
-
-story_types = ["approach_avoid", "social", "probability", "moral","super"];
-data{1} = appr_avoid_combined_data;
-data{2} = social_combined_data;
-data{3} = probability_combined_data;
-data{4} = moral_combined_data;
-data{5} = super_combined_data;
-
-path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025";
-want_bdry = 0;
-want_scale = 1;
-want_save = 1;
-
-avg_data = make_avg_dec_making_plot(data, story_types, path_to_save,want_bdry,want_scale,want_save);
-
 %% plotting summary stats
 
 story_types = ["approach_avoid", "social", "probability", "moral","super"];
