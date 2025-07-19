@@ -23,7 +23,7 @@ for i = 1:length(story_types)
         end
     end
     avg_data{i} = avg_table;
-    make_dec_making_plots(avg_table, path_to_save, story_type,want_bdry,want_scale,want_save)
+    make_dec_making_plots(avg_table, path_to_save, story_type, want_bdry, want_scale, want_save, "")
 end
 
 end

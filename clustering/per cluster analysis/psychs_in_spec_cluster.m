@@ -7,6 +7,7 @@ newTable = [humanTable ids story_nums];
 if use_cost
     costs = rowfun(@get_cost_lvl,humanTable,"InputVariables","clusterLabels","OutputVariableNames","cost");
     newTable = [newTable costs];
+    
 end
 
 finTable = renamevars(newTable,'cluster_number','idx');
@@ -32,9 +33,18 @@ end
 
 
 function cost = get_cost_lvl(E)
+
 list = strsplit(E,"_");
-cost_str = list(5);
+
+if ismember('story', list)
+    cost_str = list(5);
+else
+    cost_str = list(4);
+end
+
 cost_list = strsplit(cost_str,".");
-cost = str2num(cost_list(1));
+extra_cleaning = strsplit(cost_list(1),"-");
+cost = str2num(extra_cleaning(1));
+
 end
 

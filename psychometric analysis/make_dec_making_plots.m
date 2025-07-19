@@ -1,4 +1,4 @@
-function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, want_scale,want_save,subtit)
+function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, want_scale, want_save,subtit,for_ml)
 
     subid = appr_table.subjectidnumber(1);
     story_num = appr_table.story_num(1);
@@ -55,17 +55,19 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
     imagesc(observed_p_appr);%original
     % imagesc(flipud(observed_p_appr)) 
     colormap("default");
-    cb = colorbar;
-    cb.Ticks = [min_p (min_p+max_p)/2 max_p];
-    clim([min_p max_p]);
-    % % set(gca,'xtick',[], 'ytick',[], 'FontSize',20, 'YDir','normal');
-    ylabel(cb,'approach rate')
-    % % set(gca,'xtick',[], 'ytick',[], 'FontSize',20, 'YDir','normal');
-    xlabel('reward')
-    ylabel('cost')
-    title("3D Psychometric fun. for subject: " + string(subid))
-    subtitle(subtit)
-
+    if ~for_ml
+        cb = colorbar;
+        cb.Ticks = [min_p (min_p+max_p)/2 max_p];
+        clim([min_p max_p]);
+        % % set(gca,'xtick',[], 'ytick',[], 'FontSize',20, 'YDir','normal');
+        ylabel(cb,'approach rate')
+        % % set(gca,'xtick',[], 'ytick',[], 'FontSize',20, 'YDir','normal');
+        xlabel('reward')
+        ylabel('cost')
+        title("3D Psychometric fun. for subject " + string(subid) + ", story type " + ...
+            story_type);
+        subtitle(subtit)
+    end
     set(gca,'YDir','normal')
     
     if want_bdry
@@ -85,9 +87,11 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
     fighandle = gcf;
     set(gcf,'renderer','Painters')
     if want_save
-    saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_', string(subid), '_', string(story_num),'.fig'),"fig")
-    saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_', string(subid), '_', string(story_num),'.svg'),"svg")
-    close all
-    end
+        if ~for_ml
+            saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_', string(subid), '_', string(story_num),'.fig'),"fig")
+        end
+        saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_', string(subid), '_', string(story_num),'.svg'),"svg")
+        close all
+        end
 
 end

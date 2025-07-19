@@ -1,4 +1,4 @@
-function total_fit = create_sigmoids(home_dir, story_types, data, by_session, sig_type)
+function total_fit = create_sigmoids(home_dir, story_types, data, by_session, sig_type, thresh)
 
 total_fit = 0;
 for s = 1:length(story_types)
@@ -7,10 +7,10 @@ for s = 1:length(story_types)
     dirName = home_dir + story_type + "\" ;
             
     if by_session
-        fit_count = sigmoid_analysis_updated(combined_data, dirName, sig_type);
+        fit_count = sigmoid_analysis_updated(combined_data, dirName, sig_type, thresh);
         total_fit = total_fit + fit_count;
     else
-        sigmoid_analysis_cost(combined_data, dirName, sig_type)
+        sigmoid_analysis_cost(combined_data, dirName, sig_type, thresh)
     end
 end
 

@@ -1,6 +1,11 @@
-function table_of_data = call_spectral_clustering_combine_all_human_data(table_of_dir,directory_where_cluster_table_should_be_saved,epsilon,given_number_of_clusters,colors,method,is_big,file_name)
+function table_of_data = call_spectral_clustering_combine_all_human_data(table_of_dir,directory_where_cluster_table_should_be_saved,epsilon,given_number_of_clusters,colors,method,is_big,file_name,isolate_task)
 table_of_data = cell2table(cell(0,5),"VariableNames",["A","B","C","D","E"]);
 directory_where_cluster_table_should_be_saved = create_a_file_if_it_doesnt_exist_and_ret_abs_path(directory_where_cluster_table_should_be_saved);
+
+%if ~isempty(isolate_task)
+%    table_of_dir = table_of_dir(table_of_dir.Task == isolate_task, :);
+%end
+
 for i=1:height(table_of_dir)
     current_table = getTableBig(table_of_dir{i,2},is_big);
     E = repelem(table_of_dir{i,1},height(current_table),1);
@@ -9,7 +14,11 @@ for i=1:height(table_of_dir)
     table_of_data = [table_of_data;current_table];
 end
 
-task = "All_Human_data";
+if isempty(isolate_task)
+    task = "All_Human_data";
+else 
+    task = isolate_task;
+end
 raw_xVsYVsZ = [table_of_data.A,table_of_data.B,table_of_data.C];
 xVsYVsZ = log(abs(raw_xVsYVsZ));
 labels = [table_of_data.D,table_of_data.D];
