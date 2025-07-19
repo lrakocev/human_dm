@@ -24,10 +24,11 @@ data{4} = moral_sessions;
 data{5} = super_sessions;
 
 by_session = 0;
-sig_type = "reward";
+sig_type = "reward"; %% sigh - this should be "cost" for cost-lvl psychs, need to re-run
 
 thresh = 0;
-create_sigmoids(home_dir, story_types, data, by_session, sig_type, thresh)
+is_sigmoidal = 1;
+create_sigmoids(home_dir, story_types, data, by_session, sig_type, thresh, is_sigmoidal);
 
 %% find session sigmoids
 
