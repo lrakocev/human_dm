@@ -23,7 +23,6 @@ data{3} = probability_sessions;
 data{4} = moral_sessions;
 data{5} = super_sessions;
 
-
 by_session = 0;
 sig_type = "reward";
 

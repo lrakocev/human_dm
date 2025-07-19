@@ -113,8 +113,20 @@ run_dec_making_plot_loop(data,story_types,path_to_save,want_bdry,want_scale,want
 want_bdry = 0;
 want_scale = 0;
 want_save = 1;
-for_ml = 1;
-story_types = ["approach_avoid", "social", "probability", "moral", "super"];
+story_types = ["approach_avoid", "social", "probability", "moral","super"];
+data{1} = appr_avoid_combined_data;
+data{2} = social_combined_data;
+data{3} = probability_combined_data;
+data{4} = moral_combined_data;
+data{5} = super_combined_data;
+
+path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\dec_making_maps";
+
+run_dec_making_plot_loop(data,story_types,path_to_save,want_bdry,want_scale,want_save)
+
+%% avg map per task
+
+story_types = ["approach_avoid", "social", "probability", "moral","super"];
 data{1} = appr_avoid_combined_data;
 data{2} = social_combined_data;
 data{3} = probability_combined_data;
@@ -133,7 +145,7 @@ data{2} = social_combined_data;
 data{3} = probability_combined_data;
 data{4} = moral_combined_data;
 data{5} = super_combined_data;
-%data{6} = [appr_avoid_combined_data;social_combined_data;probability_combined_data;moral_combined_data];
+
 path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025";
 want_bdry = 0;
 want_scale = 1;
