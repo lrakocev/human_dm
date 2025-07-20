@@ -18,7 +18,7 @@ function fit_pig(approach_data, dirName, sig_type, thresh)
         
     
                 counter = 1;
-                cannon_eq = "1/(1+exp(a*(b*x - c*" + string(c) + ")))";
+                cannon_eq = "1/(1+exp(-a*(b*x - c*" + string(c) + ")))";
                 [fitobject1, gof1] = fit(x.', y.', cannon_eq);
                 while counter <20 && gof1.rsquare < .4
                     [fitobject1, gof1] = fit(x.', y.', cannon_eq);
@@ -26,7 +26,7 @@ function fit_pig(approach_data, dirName, sig_type, thresh)
                 end
 
                 counter = 1;
-                new_eq = "1/(1+exp([a + d *" + story_pref + " ] * (b*x - c* " + string(c) + ")))";
+                new_eq = "1/(1+exp(-[a + d *" + story_pref + " ] * (b*x - c* " + string(c) + ")))";
                 [fitobject2, gof2] = fit(x.', y.', new_eq);
                 while counter <20 && gof2.rsquare < .4
                     [fitobject2, gof2] = fit(x.', y.', new_eq);
