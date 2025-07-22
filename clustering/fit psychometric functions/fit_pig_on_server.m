@@ -14,7 +14,7 @@ load(behavioral_data)
 
 %% fit proposed models
 
-home_dir = pwd + "\" + new_dir;
+home_dir = new_dir;
 story_types = ["approach_avoid", "social", "probability", "moral", "super"];
 data{1} = appr_avoid_sessions;
 data{2} = social_sessions;
