@@ -1,6 +1,6 @@
 
-new_dir = "scratch/lrakocevic/human_dm/test_run/pig_on_server/";
-story_types = ["old_approach_avoid", "super", "approach_avoid", "social", "probability", "moral"];
+new_dir = "pig_on_server/";
+story_types = ["super", "approach_avoid", "social", "probability", "moral"];
 for i = 1:length(story_types)
     sub_dir = new_dir + "/" + story_types(i);
     mk_new_dir_for_pig(sub_dir) 
@@ -14,7 +14,7 @@ load(behavioral_data)
 
 %% fit proposed models
 
-home_dir = new_dir;
+home_dir = pwd + "\" + new_dir;
 story_types = ["approach_avoid", "social", "probability", "moral", "super"];
 data{1} = appr_avoid_sessions;
 data{2} = social_sessions;
