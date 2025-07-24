@@ -24,6 +24,8 @@ is_sigmoidal = 0;
 thresh = 0;
 create_sigmoids(home_dir, story_types, session_data, by_session, sig_type, thresh, is_sigmoidal)
 
+% can get AIC from the fitobject -- fitobject.ModelCriterion.AIC
+
 %% if you want to check validity after (especially discreteness / clustering)
 
 num_clusters = 15;
