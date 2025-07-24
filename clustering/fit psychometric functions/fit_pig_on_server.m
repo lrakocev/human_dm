@@ -9,7 +9,7 @@ end
 
 %% get behavioral data
 
-behavioral_data = "scratch/lrakocevic/human_dm/for_dirk.mat";
+behavioral_data = "human_dm/for_dirk.mat";
 load(behavioral_data)
 
 %% fit proposed models
@@ -31,7 +31,7 @@ num_clusters = 15;
 colors = distinguishable_colors(num_clusters);
 dir = "pig_on_server/"; % wherever your home_dir was set to above 
 
-save_to = 'C:\Users\lrako\OneDrive\Documents\human dm\july_2025';
+save_to = ""; % wherever you want to save
 mkdir(save_to)
 file_name = "all_clusters";
 table_of_human_dir = get_dirs_with_data(dir);
