@@ -1,8 +1,14 @@
-function [adj_approach_data,subject_prefs] = clean_ingested_new_task(adj_results)
+function [adj_approach_data,subject_prefs] = clean_ingested_new_task(adj_results,table_name)
 
 adj_results = removevars(adj_results,{'trial_start','reward_level','cost_level'});
 adj_results = renamevars(adj_results,["decision_made","tasktypedone","trial_elapsed","tired"]...
     ,["approach_rate","story_num","timing","tiredness"]);
+
+if ~contains(table_name,"utep")
+    adj_results = renamevars(adj_results,["hungry","age_range", "in_pain","gender"]...
+        ,["hunger","age","pain","sex"]);
+end
+
 unique_ids = unique(adj_results.subjectidnumber);
 
 N = length(unique_ids);
@@ -27,7 +33,25 @@ for i = 1:N
     sub_results.approach_rate = str2double(sub_results.approach_rate);
     sub_results.subjectidnumber = str2double(sub_results.subjectidnumber);
     sub_results.story_num = string(sub_results.story_num);
+
+    if contains(table_name, "utep")
+        pupil_diameter = rowfun(@clean_pupil_diam, sub_results, "InputVariables",...
+            "pupil_diameter", "OutputVariableNames", "mean");
+        sub_results.pupil_diameter = pupil_diameter.mean;
+    else
+        sub_results.pupil_diameter = zeros(height(sub_results),1);
+    end
     
     subject_prefs(i) = {sub_prefs};
     adj_approach_data(i) = {sub_results};
+end
+end
+
+function mean_diam = clean_pupil_diam(row)
+
+    lvl1 = replace(string(row),'[','');
+    lvl2 = str2double(split(lvl1,','));
+    filtered = lvl2(lvl2 > 0);
+    mean_diam = mean(filtered, 'omitnan');
+
 end

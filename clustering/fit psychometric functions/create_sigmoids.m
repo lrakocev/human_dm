@@ -4,7 +4,7 @@ total_fit = 0;
 for s = 1:length(story_types)
     story_type = story_types(s);
     combined_data = data{s};
-    dirName = home_dir + story_type + "\" ;
+    dirName = home_dir + story_type + "/" ;
             
     if by_session
         fit_count = sigmoid_analysis_updated(combined_data, dirName, sig_type, thresh);

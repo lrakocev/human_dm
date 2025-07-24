@@ -5,7 +5,6 @@ num_clusters = 15;
 colors = distinguishable_colors(num_clusters);
 dir = 'C:\Users\lrako\OneDrive\Documents\human dm\test_run\no_filter_full_07';
 
-
 save_to = 'C:\Users\lrako\OneDrive\Documents\human dm\july_2025';
 mkdir(save_to)
 file_name = "all_clusters";

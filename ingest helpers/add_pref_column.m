@@ -12,6 +12,12 @@ for i = 1:length(approach_data)
         for j = 1:length(unique_stories)
             story_num = unique_stories(j);
             story_table = appr_table(appr_table.story_num == story_num, :);
+
+            if contains(story_num, "old_approach_avoid")
+                split_story = split(story_num, ["/","_"]);
+                story_num = split_story(6);
+            end
+
             pref_score = pref_table(pref_table.story_num == story_num, :).score;
             if length(pref_score) > 1
                 pref_score = mean(pref_score,'omitnan');

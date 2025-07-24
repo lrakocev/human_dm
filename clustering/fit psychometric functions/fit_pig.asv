@@ -12,7 +12,7 @@ function fit_pig(approach_data, dirName, sig_type, thresh)
             story_pref = results.story_prefs(1)/100;
             y = constant_lvl.approach_rate.';
 
-            pupil_diam = mean(results.pupil_diameter, 'omitnan');
+            pupil_diam = mean(results.pupil_diamet, 'omitnan');
         
             if length(y) >= 4 && all(~isnan(y))
                 subid = constant_lvl.subjectidnumber(1);

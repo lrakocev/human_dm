@@ -1,49 +1,39 @@
 %% Human New Tasks Run Me
 
-using_prefs = 0;
 datasource = 'PostgreSQL30'; %ENTER YOUR DATASOURCE NAME HERE, default should be "live_database" or "PostgreSQL30"
 username = 'postgres'; %ENTER YOUR USERNAME HERE, default should be "postgres"
 password = '1234'; %ENTER YOUR PASSWORD HERE, default should be "1234"
 
-% ingest data
-table_name = "human_dec_making_table_utep";
-[init_approach_data, r_ratings, c_ratings] = get_new_task(datasource,username,password, table_name);
-[clean_approach_data, subject_prefs] = clean_ingested_new_task(init_approach_data);
+[new_trial_data, r_ratings, c_ratings] = prep_session_data(datasource, username, password, "human_dec_making_table_utep");
+[old_trial_data, ~, ~] = prep_session_data(datasource, username, password, "human_dec_making_table");
 
-% add new column for relevance
-thresh = 0;
-if using_prefs
-    thresh = 50;
+all_trial_data = [new_trial_data; old_trial_data];
+
+%% 
+
+story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
+
+for i = 1:length(story_types)
+    story = story_types(i);
+    task_combined_data = combine_for_map(all_trial_data, story);
+    combined_data{i} = task_combined_data;
 end
-[pref_approach_data] = add_pref_column(clean_approach_data, subject_prefs, thresh);
 
-% add new column for story type 
-[approach_data] = add_story_column_loop(pref_approach_data);
+%%
+story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
 
-% get data w enough trials 
-min_num_sessions = 0;
-[N_trial_data, idxs] = filter_hum_appr_data(approach_data, 16*min_num_sessions);
+for i = 1:length(story_types)
+    story = story_types(i);
+    task_session_data = sessions_by_tasktype(all_trial_data, story);
+    session_data{i} = task_session_data;
+end
 
-% combine trials for dec maps
-appr_avoid_combined_data = combine_for_map(N_trial_data, "approach_avoid");
-super_combined_data = combine_for_map(N_trial_data, "obvious_supersense");
-social_combined_data = combine_for_map(N_trial_data, "social");
-probability_combined_data = combine_for_map(N_trial_data, "probability");
-moral_combined_data = combine_for_map(N_trial_data, "moral");
-
-% separate each individual story out by type
-appr_avoid_sessions = sessions_by_tasktype(N_trial_data, "approach_avoid");
-super_sessions = sessions_by_tasktype(N_trial_data, "obvious_supersense");
-social_sessions = sessions_by_tasktype(N_trial_data, "social");
-probability_sessions = sessions_by_tasktype(N_trial_data, "probability");
-moral_sessions = sessions_by_tasktype(N_trial_data, "moral");
-
-% separate trials by story for dec map
-appr_avoid_stories = combine_stories_for_map(N_trial_data, "approach_avoid");
-super_stories = combine_stories_for_map(N_trial_data, "obvious_supersense");
-social_stories = combine_stories_for_map(N_trial_data, "social");
-probability_stories = combine_stories_for_map(N_trial_data, "probability");
-moral_stories = combine_stories_for_map(N_trial_data, "moral");
+%%
+for i = 1:length(story_types)
+    story = story_types(i);
+    story_session_data = combine_stories_for_map(all_trial_data, story);
+    story_data{i} = story_session_data;
+end
 
 %% get counts
 
@@ -97,15 +87,11 @@ end
 want_bdry = 0;
 want_scale = 0;
 want_save = 1;
-story_types = ["approach_avoid", "social", "probability", "moral", "super"];
-data{1} = appr_avoid_stories;
-data{2} = social_stories;
-data{3} = probability_stories;
-data{4} = moral_stories;
-data{5} = super_stories;
+story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
+
 path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025\dec_making_story_maps";
 mkdir(path_to_save)
-run_dec_making_plot_loop(data,story_types,path_to_save,want_bdry,want_scale,want_save)
+run_dec_making_plot_loop(story_data,story_types,path_to_save,want_bdry,want_scale,want_save)
 
 
 %% dec making maps
@@ -113,40 +99,23 @@ run_dec_making_plot_loop(data,story_types,path_to_save,want_bdry,want_scale,want
 want_bdry = 0;
 want_scale = 0;
 want_save = 1;
-story_types = ["approach_avoid", "social", "probability", "moral","super"];
-data{1} = appr_avoid_combined_data;
-data{2} = social_combined_data;
-data{3} = probability_combined_data;
-data{4} = moral_combined_data;
-data{5} = super_combined_data;
-
+story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
 path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\dec_making_maps";
 
-run_dec_making_plot_loop(data,story_types,path_to_save,want_bdry,want_scale,want_save)
+run_dec_making_plot_loop(combined_data,story_types,path_to_save,want_bdry,want_scale,want_save)
 
 %% avg map per task
 
-story_types = ["approach_avoid", "social", "probability", "moral","super"];
-data{1} = appr_avoid_combined_data;
-data{2} = social_combined_data;
-data{3} = probability_combined_data;
-data{4} = moral_combined_data;
-data{5} = super_combined_data;
-
+story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
 path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025\dec_making_maps";
 
-run_dec_making_plot_loop(data,story_types,path_to_save,want_bdry,want_scale,want_save,for_ml)
+run_dec_making_plot_loop(combined_data,story_types,path_to_save,want_bdry,want_scale,want_save,for_ml)
 
 %% plotting summary stats
 
-story_types = ["approach_avoid", "social", "probability", "moral","super"];
+story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
 consts = ["reward", "cost"];
 type = "approach rate";
-data{1} = appr_avoid_combined_data;
-data{2} = social_combined_data;
-data{3} = probability_combined_data;
-data{4} = moral_combined_data;
-data{5} = super_combined_data;
 
 path_to_save = 'C:\Users\lrako\OneDrive\Documents\human dm\july_2025\';
 
@@ -154,34 +123,30 @@ for s = 1:length(story_types)
     story_type = story_types(s);
     story_dir = path_to_save + story_type;
     mkdir(story_dir)
-    combined_data = data{s};
+    task_combined_data = combined_data{s};
     for c = 1:length(consts)
         constant = consts(c);
         story_type = story_types(s);
 
         % this plots all the individual results + the average - one plot per level
-        avg_psychometric_plot_per_level(combined_data, type, constant, story_type, path_to_save)
+        avg_psychometric_plot_per_level(task_combined_data, type, constant, story_type, path_to_save)
         
         % this plots average results for each level - one plot total
-        avg_psychometric_across_levels(combined_data,  type, constant, story_type, path_to_save,1)
+        avg_psychometric_across_levels(task_combined_data,  type, constant, story_type, path_to_save,1)
         
         % this plots average result for reward vs cost - one plot per level
-        avg_rew_v_cost_comparison_per_lvl(combined_data, type, constant, story_type, path_to_save)
+        avg_rew_v_cost_comparison_per_lvl(task_combined_data, type, constant, story_type, path_to_save)
         
         % this plots the 4 individual psychometric functions keeping constant r/c
-        %plot_individual_psychs_across_lvls(combined_data, constant, story_type, path_to_save)
+        plot_individual_psychs_across_lvls(task_combined_data, constant, story_type, path_to_save)
     end
 end
 
 %% overlapped for fig 3
 
-story_types = ["approach_avoid", "social", "probability", "moral"];
+story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
 consts = ["reward", "cost"];
 type = "approach rate";
-data{1} = appr_avoid_combined_data;
-data{2} = social_combined_data;
-data{3} = probability_combined_data;
-data{4} = moral_combined_data;
 
 path_to_save = 'C:\Users\lrako\OneDrive\Documents\human dm\figs\all_session_updated\psych_stats\';
 
@@ -196,12 +161,12 @@ for c = 1:length(consts)
         story_type = story_types(s);
         story_dir = path_to_save + story_type;
         mkdir(story_dir)
-        combined_data = data{s};
+        task_combined_data = combined_data{s};
     
         story_type = story_types(s);
 
         % this plots all the individual results + the average - one plot per level
-        [h,avg,lvl_lens] = avg_psychometric_across_levels(combined_data,  type, constant, story_type, path_to_save, 0);
+        [h,avg,lvl_lens] = avg_psychometric_across_levels(task_combined_data,  type, constant, story_type, path_to_save, 0);
         avg = reshape(avg,1,4*length(avg));
         task_anova = [task_anova avg];
         ls = [ls; length(avg)];
