@@ -14,7 +14,13 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
     i = 1;
     for r=1:length(reward_levels)
         for c=1:length(cost_levels)
-            ps(i) = appr_table(appr_table.cost == c & appr_table.rew == r,:).approach_rate;  %get the approach rate when cost = c and rew =r, and store it in ps
+
+            r_c_table =  appr_table(appr_table.cost == c & appr_table.rew == r,:);
+            if ~isempty(r_c_table)
+                ps(i) = r_c_table.approach_rate;  %get the approach rate when cost = c and rew =r, and store it in ps
+            else
+                ps(i) = NaN;
+            end
             %ps(i) = 1./(1+exp(-2*r+3))*1./(1+exp(.6*c-2));
             observed_p_appr(c,r) = ps(i); %each row represents the reward level and each column is the cost 
             i = i+1;
@@ -57,8 +63,12 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
     colormap("default");
     if ~for_ml
         cb = colorbar;
+        try
         cb.Ticks = [min_p (min_p+max_p)/2 max_p];
         clim([min_p max_p]);
+        catch
+            
+        end
         % % set(gca,'xtick',[], 'ytick',[], 'FontSize',20, 'YDir','normal');
         ylabel(cb,'approach rate')
         % % set(gca,'xtick',[], 'ytick',[], 'FontSize',20, 'YDir','normal');

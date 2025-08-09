@@ -20,7 +20,7 @@ for i = 1 : num_clusters
     map_table = combined_data{1};
 
     nexttile
-    make_dec_making_plots(map_table,"","",1,want_scale,0,"")
+    make_dec_making_plots(map_table,"","",1,want_scale,0,"",0)
     title("cluster " + string(i))
 end
 if want_scale 

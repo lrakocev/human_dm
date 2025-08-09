@@ -19,8 +19,8 @@ function fit_pig(approach_data, dirName, sig_type, thresh)
         
             if length(y) >= 4 && all(~isnan(y))
                 subid = constant_lvl.subjectidnumber(1);
-                story_num = constant_lvl.story_num(1);
-        
+                story_num = constant_lvl.story_num(1);        
+                
                 f1 = @(b,x) 100./(1+exp(-b(1).*(b(2).*x - b(3).*c)));
                 mdl1 = fit_model(x, y, f1, [1,1,1]);
 
@@ -60,7 +60,7 @@ catch
     mdl = 0;
     return
 end
-while counter < 20 && mdl.Rsquared.Ordinary < .4
+while counter < 20 && mdl.Rsquared.Ordinary < .65
     try
         init = mdl.Coefficients.Estimate;
     catch

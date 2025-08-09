@@ -27,11 +27,21 @@ for i = 1 : num_clusters
     mean_lvl_3 = mean(lvl_3, 'omitnan');
     mean_lvl_4 = mean(lvl_4, 'omitnan');
 
+    mean_cost = mean(sesh_table.cost, 'omitnan');
+    mean_story_pref = mean(sesh_table.story_prefs, 'omitnan');
+    mean_pupil_diam = mean(sesh_table.pupil_diameter, 'omitnan');
+    mean_hunger = mean(sesh_table.hunger, 'omitnan');
+    mean_tiredness = mean(sesh_table.tiredness, 'omitnan');
+    mean_pain = mean(sesh_table.pain, 'omitnan');
+
+
+
     x = [1,2,3,4];
     y = [mean_lvl_1, mean_lvl_2, mean_lvl_3, mean_lvl_4];
 
     ax(i) = subplot(1,num_clusters,i);
-    fit_sigmoid(x,y,"r");
+    [func, r] = fit_eng_model(x,y, mean_cost, mean_story_pref, mean_pupil_diam, mean_hunger, mean_tiredness, mean_pain);
+    %fit_sigmoid(x,y,"r");
     yl = get(gca, 'YLim');
     curr_y_min = yl(1);
     curr_y_max = yl(2);
@@ -41,7 +51,7 @@ for i = 1 : num_clusters
     if curr_y_max > y_max
         y_max = curr_y_max;
     end
-    title("cluster " + string(i))
+    title("c" + string(i) + ", r: " + string(round(r,2)))
 
 end
 figname = save_to + "/" + strrep(type," ", "_") + ".fig";

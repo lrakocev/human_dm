@@ -7,7 +7,15 @@ password = '1234'; %ENTER YOUR PASSWORD HERE, default should be "1234"
 [new_trial_data, r_ratings, c_ratings] = prep_session_data(datasource, username, password, "human_dec_making_table_utep");
 [old_trial_data, ~, ~] = prep_session_data(datasource, username, password, "human_dec_making_table");
 
-all_trial_data = [new_trial_data; old_trial_data];
+all_trial_data = [new_trial_data old_trial_data];
+
+story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
+
+for i = 1:length(story_types)
+    story = story_types(i);
+    task_session_data = sessions_by_tasktype(all_trial_data, story);
+    session_data{i} = task_session_data;
+end
 
 %% 
 
@@ -17,15 +25,6 @@ for i = 1:length(story_types)
     story = story_types(i);
     task_combined_data = combine_for_map(all_trial_data, story);
     combined_data{i} = task_combined_data;
-end
-
-%%
-story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
-
-for i = 1:length(story_types)
-    story = story_types(i);
-    task_session_data = sessions_by_tasktype(all_trial_data, story);
-    session_data{i} = task_session_data;
 end
 
 %%

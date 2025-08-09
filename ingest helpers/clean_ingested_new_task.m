@@ -38,8 +38,13 @@ for i = 1:N
         pupil_diameter = rowfun(@clean_pupil_diam, sub_results, "InputVariables",...
             "pupil_diameter", "OutputVariableNames", "mean");
         sub_results.pupil_diameter = pupil_diameter.mean;
+
+        heart_rate = rowfun(@clean_pupil_diam, sub_results, "InputVariables", ...
+            "heart_rate_data", "OutputVariableNames", "mean");
+        sub_results.heart_rate_data = heart_rate.mean;
     else
         sub_results.pupil_diameter = zeros(height(sub_results),1);
+        sub_results.heart_rate_data = zeros(height(sub_results),1);
     end
     
     subject_prefs(i) = {sub_prefs};
