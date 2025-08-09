@@ -6,7 +6,15 @@ def get_prefs(pref_str, trial_date):
     if trial_date[0] == '0':
         trial_date = ["Mon May 22 00:00:00.00 1998 UTC"]
 
-    trial_tup = time.strptime(trial_date[0], "%a %b %d %H:%M:%S.%f %Y %Z")
+    start_date = trial_date[0];
+    stripped_date = start_date.replace("\n","");
+    stripped_date = stripped_date.replace("\r","");
+    
+    try:
+        trial_tup = time.strptime(stripped_date, "%a %b %d %H:%M:%S.%f %Y %Z")
+    except:
+        trial_tup = time.strptime(stripped_date, "%a %b %d %H:%M:%S %Y")
+
     trial_date = time.mktime(trial_tup)
         
     ## date of the switch = june 8, 2023

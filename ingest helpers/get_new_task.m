@@ -1,7 +1,12 @@
-function [adj_results, r_ratings, c_ratings] = get_new_task(datasource,username,password)
+function [adj_results, r_ratings, c_ratings] = get_new_task(datasource,username,password,table_name)
 
 conn = database(datasource,username,password); %creates the database connection
-query = "select subjectidnumber,tasktypedone,reward_prefs,cost_prefs,reward_level,cost_level,decision_made,trial_start,hunger,tired,pain,sex,age,trial_elapsed from human_dec_making_table_utep;"; % group by subjectidnumber having count(distinct tasktypedone) > 2";
+
+if contains(table_name,"utep")
+    query = "select subjectidnumber,tasktypedone,story_prefs,reward_prefs,cost_prefs,reward_level,cost_level,decision_made,trial_start,trial_end,hunger,tired,pain,sex,age,trial_elapsed,pupil_diameter,heart_rate_data from " + table_name + ";"; 
+else
+    query = "select subjectidnumber,tasktypedone,story_prefs,reward_prefs,cost_prefs,reward_level,cost_level,decision_made,trial_start,trial_end,hungry,tired,in_pain,gender,age_range,trial_elapsed from " + table_name + ";"; 
+end
 results = fetch(conn,query);
 
 reload_python('ingest_helper');
@@ -17,10 +22,17 @@ for i = 1:length(unique_ids)
     
     for s = 1:length(unique_stories)
         story = unique_stories(s);
-        story_breakdown = strsplit(string(story),"/");
-        task_type = story_breakdown(2);
 
-        story_table = id_table(id_table.tasktypedone == string(story), :);
+        if contains(table_name, "utep")
+            story_breakdown = strsplit(string(story),"/");
+            task_type = story_breakdown(2);
+            story_table = id_table(id_table.tasktypedone == string(story), :);
+        else
+            % to put into same format as utep data
+            story_table = id_table(id_table.tasktypedone == string(story), :);
+            task_type = "old_approach_avoid";
+            story_table.tasktypedone = repelem("/old_approach_avoid/story_" + string(story), height(story_table))';
+        end
 
         if height(story_table) < 15
             continue

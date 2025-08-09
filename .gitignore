@@ -1,0 +1,5 @@
+# ignore all .mat files
+*.fig
+*.zip
+/test_run/*
+/test_run/*.zip

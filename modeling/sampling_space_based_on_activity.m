@@ -14,8 +14,8 @@ max_activity = 5;
 
 % find the the advantages by space
 
-for j=1:16
-    individual_space_advantage_coefs = zeros(16,1);
+for j=1:4
+    individual_space_advantage_coefs = zeros(4,1);
     % for this loop, only this space is valued
     individual_space_advantage_coefs(j) = 1; 
     advantages{j} = ...

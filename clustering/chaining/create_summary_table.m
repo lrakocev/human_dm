@@ -14,14 +14,12 @@ for t1 = 1:length(tasks)
                     total_table.c1 == c1 & total_table.c2 == c2, :);
                 if ~isempty(c_table)
                     sample_vals = c_table.general_c2_given_c1;
-                    sample_mean = mean(sample_vals);
-                    std_dev = std(sample_vals);
+                    sample_mean = mean(sample_vals,'omitnan');
                     row.t1 = task1;
                     row.t2 = task2; 
                     row.c1 = c1;
                     row.c2 = c2;
                     row.sample_mean = sample_mean;
-                    row.std_dev = std_dev;
                     summary_table = [summary_table; row];
                 end
             end
@@ -33,33 +31,11 @@ summary_table = struct2table(summary_table);
     
 summary_table.t1c1 = summary_table.t1  + "_" + summary_table.c1;
 summary_table.t2c2 = summary_table.t2  + "_" + summary_table.c2;
-summary_table.std_devs_from_mean = zeros(height(summary_table),1);
 
-avgd = 1;
-num_clusters = 5;
-tasks = ["approach_avoid","social","moral","probability"];
-for t = 1:length(tasks)
-    t1 = tasks(t);
-    for s = 1:length(tasks)
-        t2 = tasks(s);
-        for c1 = 1:num_clusters
-            sub_table = summary_table(summary_table.t1 == t1 & ...
-                summary_table.t2 == t2 & summary_table.c1 == c1, :);
-            if ~isempty(sub_table)
-                mean_prob = mean(sub_table.sample_mean);
-                if ~avgd
-                    new_vals = (sub_table.sample_mean - mean_prob) / sub_table.std_dev;
-                    summary_table(summary_table.t1 == t1 & ...
-                    summary_table.t2 == t2 & summary_table.c1 == c1, :).std_devs_from_mean = new_vals(:,5);
-                else
-                    mean_std = mean(sub_table.std_dev);
-                    new_vals = (sub_table.sample_mean - mean_prob) / mean_std;
-                    summary_table(summary_table.t1 == t1 & ...
-                    summary_table.t2 == t2 & summary_table.c1 == c1, :).std_devs_from_mean = new_vals;
-                end
+all_vals = summary_table.sample_mean;
+total_mean = mean(all_vals,'omitnan');
+total_std_dev = std(all_vals,'omitnan');
 
-            end
-        end
-    end
-end
+summary_table.dist_from_mean = (summary_table.sample_mean - total_mean) / total_std_dev;
+
 end

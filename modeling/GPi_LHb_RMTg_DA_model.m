@@ -1,4 +1,4 @@
-clear; close all
+%clear; close all
 
 GPi_dim_combination_rules = .2*[1 1 1 1];
 
