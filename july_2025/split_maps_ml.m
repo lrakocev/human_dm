@@ -5,16 +5,6 @@ augmentedImds = transform(imds, @(data) ({data, data}));
 
 imageDataCellArray = readall(imds);
 
-%%  cnn attempt
-net = alexnet; %pre-trained cnn
-
-inputSize = net.Layers(1).InputSize;
-augmentedImds = transform(inputSize(1:2), imds, @(data) ({data, data}));
-
-featureLayer = 'fc7'; 
-
-features = activations(net, augimds, featureLayer, 'OutputAs', 'rows');
-
 %% autoencoder attempt 
 
 hiddenSize = 25;

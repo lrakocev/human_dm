@@ -18,7 +18,7 @@ function [table_of_data_dirs] = get_dirs_with_data(dir_with_all_sigmoid_data, va
     
     for i=1:length(all_directories_within_this_one)
         cd(all_directories_within_this_one(i))
-        directory_with_sigmoid_data = ls(strcat(pwd,directory_type));
+        directory_with_sigmoid_data = strcat(pwd,directory_type);
         cd(directory_with_sigmoid_data);
         all_absolute_dirs{i} = pwd;
         cd(directory_which_contains_subdirectories_of_data);

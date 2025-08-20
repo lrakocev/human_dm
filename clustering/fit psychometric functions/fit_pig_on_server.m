@@ -32,18 +32,19 @@ create_sigmoids_by_subject(home_dir, story_types, session_data, by_session, sig_
 
 %% if you want to check validity after (especially discreteness / clustering)
 
-%{
+
 num_clusters = 10;
 
 colors = distinguishable_colors(num_clusters);
-dir = "C:\Users\lrako\OneDrive\Documents\human dm\clustering\fit psychometric functions\pig_on_server\"; % wherever your home_dir was set to above 
+dir = "C:\Users\lrako\OneDrive\Documents\human dm\pig_on_server_2d"; % wherever your home_dir was set to above 
 
 save_to = "C:\Users\lrako\OneDrive\Documents\human dm\clustering\fit psychometric functions\"; % wherever you want to save
 mkdir(save_to)
-file_name = "all_clusters";
-directory_type = "\pupil*";
+
+fit_type = "tiredness";
+directory_type = "\" + fit_type;
 table_of_human_dir = get_dirs_with_data(dir, directory_type);
 is_big = 0;
 isolate_task = "";
 [table_of_data, all_rs] = call_spectral_clustering_pig(table_of_human_dir,save_to,0,num_clusters,colors,'euclidean',is_big,file_name,isolate_task);
-%}
+

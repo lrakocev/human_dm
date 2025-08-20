@@ -6,14 +6,9 @@ load("C:\Users\lrako\OneDrive\Documents\human dm\ingest helpers\human data.mat")
 
 %% find session-cost sigmoids
 
-story_types = ["approach_avoid", "social", "probability", "moral","super"];
-data{1} = appr_avoid_sessions;
-data{2} = social_sessions;
-data{3} = probability_sessions;
-data{4} = moral_sessions;
-data{5} = super_sessions;
+story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
 
-sig_table = run_alt_fit(data,story_types, 0);
+sig_table = run_alt_fit(session_data,story_types, 0);
 sig_table.clusterLabels = sig_table.subjectidnumber + "_" + sig_table.story_num + ".mat";
 
 %poly_table = run_alt_fit(data,story_types, 1);
@@ -24,7 +19,7 @@ sig_table.clusterLabels = sig_table.subjectidnumber + "_" + sig_table.story_num 
 colors = distinguishable_colors(30);
 save_to = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025";
 mkdir(save_to)
-file_name = "super_alt_clusters";
+file_name = "2d_clustering_0810";
 feats = ["a_R","b_R","b_C"];
 centers = [0.5 0.2 -116;
     -1.5 -.9 -70;
@@ -33,8 +28,7 @@ centers = [0.5 0.2 -116;
     77 19.5 -2.4;
     155 42 -2.3];
 
-super_table = sig_table(sig_table.experiment == "super", :);
-spectral_clustering_2D_sig(super_table, feats, colors, centers, save_to, file_name)
+spectral_clustering_2D_sig(sig_table, feats, colors, centers, save_to, file_name)
 
 %% dec making plot per "cluster"
 

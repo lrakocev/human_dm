@@ -1,0 +1,22 @@
+function [mdl,p,p_rsq] = predict_appr_entropy(entropy_table,measure)
+
+rew = entropy_table.rew;
+cost = entropy_table.cost;
+measure = entropy_table.(measure+"_lvl");
+appr_entropy = entropy_table.appr_entropy;
+appr_mean = entropy_table.appr_mean;
+
+% rew(:) cost(:) 
+xs = [measure(:)];
+y = [appr_entropy];
+
+%  b(1).*x(:,1) + b(2).*x(:,2) + 
+func = @(b,x) b(1).*x(:,1).^2 + b(2).*x(:,1) + b(3);
+
+%u-shaped
+beta0=[1;1;1];
+mdl = fitnlm(xs,y,func,beta0);
+
+[P,S] = polyfit(xs,y,5);
+p_ = 1 - (S.normr/norm(y - mean(y)))^2;
+end

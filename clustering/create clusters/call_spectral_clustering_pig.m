@@ -21,10 +21,10 @@ if isempty(isolate_task)
 else 
     task = isolate_task;
 end
-filter_rs = all_rs > 0.5;
+filter_rs = all_rs >= 0.5;
 raw_xVsYVsZ = [table_of_data.D,table_of_data.B,table_of_data.C];
 filtered_xVsYVsZ = raw_xVsYVsZ(filter_rs, :);
-xVsYVsZ = str2double(filtered_xVsYVsZ); %log(abs(
+xVsYVsZ = str2double(raw_xVsYVsZ); %filtered_xVsYVsZ); %log(abs(
 labels = [table_of_data.E,table_of_data.E];
 
 % [~,V_temp,D_temp] = spectralcluster(xVsYVsZ,5);
@@ -54,12 +54,14 @@ for j=1:length(unique_indexes)
     hold on;
 end
 
+mean_r = mean(all_rs(abs(all_rs) <= 1))
+
 % validity = dbcv(xVsYVsZ,index);
 legend(string(unique_indexes));
 ylabel("log(abs(Shift))");
 xlabel("log(Abs(Max))");
 zlabel("log(abs(slope))");
-title("spectral clustering")
+title("spectral clustering with mean r-squared: " + mean_r)
 subtitle("Created by call_spectral_clustering_combine_all_human_data")
 % subtitle(strcat(task," DBCV:",string(validity)," Created by call_spectral_clustering_combine_all_human_data"))
 hold off;

@@ -39,12 +39,12 @@ for i = 1:N
             "pupil_diameter", "OutputVariableNames", "mean");
         sub_results.pupil_diameter = pupil_diameter.mean;
 
-        heart_rate = rowfun(@clean_pupil_diam, sub_results, "InputVariables", ...
-            "heart_rate_data", "OutputVariableNames", "mean");
-        sub_results.heart_rate_data = heart_rate.mean;
+        heart_rate = rowfun(@clean_hr, sub_results, "InputVariables", ...
+            "raw_heart_rate", "OutputVariableNames", "mean");
+        sub_results.heart_rate = heart_rate.mean;
     else
         sub_results.pupil_diameter = zeros(height(sub_results),1);
-        sub_results.heart_rate_data = zeros(height(sub_results),1);
+        sub_results.heart_rate= zeros(height(sub_results),1);
     end
     
     subject_prefs(i) = {sub_prefs};
@@ -58,5 +58,15 @@ function mean_diam = clean_pupil_diam(row)
     lvl2 = str2double(split(lvl1,','));
     filtered = lvl2(lvl2 > 0);
     mean_diam = mean(filtered, 'omitnan');
+
+end
+
+function mean_hr = clean_hr(row)
+
+lvl1 = replace(string(row),'[','');
+lvl2 = replace(lvl1,']','');
+hr_list = str2double(lvl2);
+mean_hr = mean(hr_list);
+
 
 end

@@ -26,4 +26,15 @@ add COLUMN left_pupil_diameter type varchar
 update human_dec_making_table_utep
 set left_pupil_diameter = jsonb_path_query_array(eye_tracker_data, '$.gaze_data.left_pupil_diameter') 
 
+-- HR
+select heart_rate_data from human_dec_making_table_utep limit 100; 
 
+ALTER TABLE human_dec_making_table_utep
+ALTER COLUMN heart_rate_data TYPE JSONB
+USING heart_rate_data::JSONB;
+
+alter table human_dec_making_table_utep 
+add COLUMN heart_rate type text
+
+update human_dec_making_table_utep
+set heart_rate_arr = jsonb_path_query_array(heart_rate_data, '$.hr') 
