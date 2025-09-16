@@ -1,0 +1,6 @@
+1) obtain better terrain scans
+2) provide stealth navigation
+3) visualize enemy movements
+4) be able to upload data to the base
+5) acquire intelligence
+6) provide real-time mapping of the area

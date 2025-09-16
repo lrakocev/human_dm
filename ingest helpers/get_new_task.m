@@ -1,12 +1,5 @@
-function [adj_results, r_ratings, c_ratings] = get_new_task(datasource,username,password,table_name)
+function [adj_results, r_ratings, c_ratings] = get_new_task(query, conn, table_name)
 
-conn = database(datasource,username,password); %creates the database connection
-
-if contains(table_name,"utep")
-    query = "select subjectidnumber,tasktypedone,story_prefs,reward_prefs,cost_prefs,reward_level,cost_level,decision_made,trial_start,trial_end,hunger,tired,pain,sex,age,trial_elapsed,pupil_diameter,raw_heart_rate from " + table_name + ";"; 
-else
-    query = "select subjectidnumber,tasktypedone,story_prefs,reward_prefs,cost_prefs,reward_level,cost_level,decision_made,trial_start,trial_end,hungry,tired,in_pain,gender,age_range,trial_elapsed from " + table_name + ";"; 
-end
 results = fetch(conn,query);
 
 reload_python('ingest_helper');

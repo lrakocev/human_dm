@@ -1,4 +1,4 @@
-function [r_table] = param_v_appr_entropy_per_cluster(merged_table,num_bins)
+function [r_table] = param_v_appr_entropy_per_cluster(merged_table,num_bins,save_to)
 
 existing_groups = groupcounts(merged_table, ["idx_clusters_2d","idx_clusters_1d"]);
 valid_groups = existing_groups(~isnan(existing_groups.idx_clusters_2d) ...
@@ -8,7 +8,7 @@ valid_groups.index = [1:48]';
 
 all_rows = [];
 r_table.cluster_combo = [1:48]';
-measures = ["pupil_diameter", "heart_rate", "pain", "hunger", "tiredness", "story_prefs", "cost", "rew"];
+measures = ["pupil_diameter", "pain", "hunger", "tiredness", "story_prefs"];
 for i = 1:length(measures)
     measure = measures(i);
 
@@ -26,12 +26,17 @@ for i = 1:length(measures)
         if ~isempty(appr_entropy_table)
             hold on
             [prsq] = predict_appr_entropy(appr_entropy_table,measure,"cluster " + string(j));
+            
         else
             prsq = 0;
         end
         rs = [rs; prsq];
        
     end
+    set(gcf,'renderer','Painters')
+    saveas(gcf,save_to + "/" + measure + "_v_appr_entropy_per_cluster","fig")
+    saveas(gcf,save_to + "/" + measure + "_v_appr_entropy_per_cluster","svg")
+    close all 
     hold off
     r_table.(measure+"r_sq") = rs;
 

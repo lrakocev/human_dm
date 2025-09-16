@@ -1,4 +1,4 @@
-function param_v_appr_entropy_per_task(merged_table,num_bins)
+function param_v_appr_entropy_per_task(merged_table,num_bins,save_to)
 
 tasks = unique(merged_table.experiment);
 
@@ -36,6 +36,10 @@ for i = 1:length(measures)
             [prsq] = predict_appr_entropy(appr_entropy_table,measure,task);
         end
     end
+    set(gcf,'renderer','Painters')
+    saveas(gcf,save_to + "/" + measure + "_v_appr_entropy_per_task","fig")
+    saveas(gcf,save_to + "/" + measure + "_v_appr_entropy_per_task","svg")
+    close all 
     hold off
 
 end

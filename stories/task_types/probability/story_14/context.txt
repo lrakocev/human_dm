@@ -1,0 +1,1 @@
+A group of coworkers are trying to decide which car is best for both off-road and on-road. One coworker thinks that a SUV is the best for off-road, while another coworker thinks that a pickup is best. They both have different opinions on the probability of the car's success off-road or on-road, and this creates a conflict in their decision-making process.

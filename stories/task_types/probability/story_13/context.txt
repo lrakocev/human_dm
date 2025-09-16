@@ -1,0 +1,1 @@
+Two friends who are trying to decide which movie to watch. One friend thinks that the movie they've chosen will be a hit, while the other friend thinks that the movie is likely to be a flop. They both have different opinions on the probability of the movie's success, and this creates a conflict in their decision-making process.

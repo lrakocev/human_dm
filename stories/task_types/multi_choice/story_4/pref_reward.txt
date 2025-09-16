@@ -1,0 +1,12 @@
+1) Complete the mission
+2) Abort the mission
+3) Capture the target for interrogation
+4) Attempt to persuade the high-ranking official to cooperate voluntarily
+5) Neutralize the target non-lethally
+6) Establish a negotiation with the target
+7) Gather intel and withdraw
+8) Collaborate with local authorities
+9) Extract the high-ranking official without confrontation
+10) Gather evidence of the target's actions for future legal prosecution
+11) Seek approval from higher authorities for an alternative course of action
+12) Establish a diversion to distract the enemy forces and create an opportunity for the mission

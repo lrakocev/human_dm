@@ -1,0 +1,47 @@
+%% get a single subject's appr data
+
+unique_ids = unique(all_data.subjectidnumber);
+%for i = 1:length(unique_ids)
+i = 1;
+curr_id = unique_ids(i);
+subject_table = all_data(all_data.subjectidnumber == curr_id, :);
+subject_table = subject_table(~isnan(subject_table.approach_rate), :);
+subject_data = [subject_table.rew subject_table.cost subject_table.approach_rate];
+%end
+
+%% rnn per each person / story / cluster
+
+numObservations = length(subject_data);
+
+idx = randperm(numObservations);
+numTrain = floor(0.8 * numObservations);
+
+XTrain = subject_data(idx(1:numTrain),1:2);
+YTrain = subject_data(idx(1:numTrain),3);
+
+XTest = subject_data(idx(numTrain+1:end),1:2);
+YTest = subject_data(idx(numTrain+1:end),3);
+
+%%
+numFeatures = 2; % Number of features in each time step
+numHiddenUnits = 5; % Number of hidden units in the LSTM layer
+outputSize = 1;
+
+layers = [
+    sequenceInputLayer(numFeatures)
+    lstmLayer(numHiddenUnits,'OutputMode','sequence','Name','lstm1') % 'last' for sequence-to-one
+    fullyConnectedLayer(outputSize,'Name','fc') % Output layer for a single regression value
+    regressionLayer
+];
+
+options = trainingOptions('adam', ...
+    'InitialLearnRate', 0.005, ...
+    'MaxEpochs', 250, ...
+    'InitialLearnRate', 0.005, ...
+    'Plots', 'training-progress', ...
+    'Verbose', false);
+
+net = trainNetwork(XTrain',YTrain',layers, options);
+
+YPred = predict(net, XTest');
+

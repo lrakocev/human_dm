@@ -1,33 +1,16 @@
 %% compare distant clusters
 
-cluster_table = readtable("all_clusters.xlsx");
-
-[group, ID] = findgroups(cluster_table.cluster_number);
-meanX = splitapply(@mean, cluster_table.clusterX, group);
-meanY = splitapply(@mean, cluster_table.clusterY, group);
-meanZ = splitapply(@mean, cluster_table.clusterZ, group);
-
-coords = [meanX meanY meanZ];
-all_pairs = nchoosek(1:15,2);
-%%
-dist_table = [];
-for i = 1:length(all_pairs)
-    cluster1 = all_pairs(i,1);
-    cluster2 = all_pairs(i,2);
-    dist = norm(coords(cluster1,:) - coords(cluster2,:));
-    row.cluster1 = cluster1;
-    row.cluster2 = cluster2;
-    row.dist = dist;
-    dist_table = [dist_table; row];
-end
-    
-dist_table = struct2table(dist_table);
-
-dist_table = sortrows(dist_table, 'dist','descend');
+[fin_table,dist_table] = get_most_distant_cluster_pairs(cluster_table);
 top_diff = head(dist_table, 1);
 
+writetable(dist_table, "distant_cluster_pairs.csv")
 
-%% how to compare the most distant clusters? need to link them to their behavioral data -- have i done this before.. 
+%% clusters per story + stories per cluster
+
+all_stories = get_stories_per_cluster(fin_table);
+all_clusters = get_clusters_per_story(fin_table);
+
+%% how to compare the most distant clusters? need to link them to their behavioral data
 
 load('C:\Users\lrako\OneDrive\Documents\human dm\test_run\no_filter_full_07_11.mat');
 

@@ -45,17 +45,8 @@ for i = 1:N
             subid = results.subjectidnumber(1);
             story_num = results.story_num(1);
     
-    
-            syms R C %just variables to be solved for later on, x and y values 
-            
-            g = fittype( @(a_R,b_R,a_C,b_C,R,C) 1./(1+exp(-a_R.*R+b_R))*1./(1+exp(a_C.*C+b_C)), ...
-                'coefficients', {'a_R','b_R','a_C','b_C'}, 'independent', {'R', 'C'}, ...
-                'dependent', 'z' );
-        
-            % Call fit and specify the value of c.
-    
-            f = fit([rs, cs], ps', g, 'StartPoint', [1; 0; 1; 0]); 
-            
+            f = fit_2d_sig_helper(reward_levels, cost_levels, ps');
+
             row.subjectidnumber = subid;
             row.story_num = story_num;
             row.experiment = story_type;

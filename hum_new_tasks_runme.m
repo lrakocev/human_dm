@@ -1,11 +1,14 @@
 %% Human New Tasks Run Me
 
-datasource = 'PostgreSQL30'; %ENTER YOUR DATASOURCE NAME HERE, default should be "live_database" or "PostgreSQL30"
+datasource = 'PostgresJDBC'; %ENTER YOUR DATASOURCE NAME HERE, default should be "live_database" or "PostgreSQL30"
 username = 'postgres'; %ENTER YOUR USERNAME HERE, default should be "postgres"
 password = '1234'; %ENTER YOUR PASSWORD HERE, default should be "1234"
 
-[new_trial_data, r_ratings, c_ratings] = prep_session_data(datasource, username, password, "human_dec_making_table_utep");
-[old_trial_data, ~, ~] = prep_session_data(datasource, username, password, "human_dec_making_table");
+ trial_word_length = create_trial_length_table("C:\Users\lrako\OneDrive\Documents\human dm\stories\task_types");
+%trial_word_length = load("trial_word_length.mat");
+
+[new_trial_data, r_ratings, c_ratings] = prep_session_data(datasource, username, password, "human_dec_making_table_utep", trial_word_length);
+[old_trial_data, ~, ~] = prep_session_data(datasource, username, password, "human_dec_making_table", trial_word_length_table);
 
 all_trial_data = [new_trial_data old_trial_data];
 
@@ -98,17 +101,22 @@ run_dec_making_plot_loop(story_data,story_types,path_to_save,want_bdry,want_scal
 want_bdry = 0;
 want_scale = 0;
 want_save = 1;
+for_ml = 0;
 story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
-path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\dec_making_maps";
+type = "reaction_time";
+path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025\dec_making_maps" + "_" + type;
+mkdir(path_to_save)
 
-run_dec_making_plot_loop(combined_data,story_types,path_to_save,want_bdry,want_scale,want_save)
+run_dec_making_plot_loop(combined_data,story_types,path_to_save,want_bdry,want_scale,want_save,for_ml,type)
 
 %% avg map per task
 
-story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
-path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025\dec_making_maps";
+type = "reaction_time";
 
-run_dec_making_plot_loop(combined_data,story_types,path_to_save,want_bdry,want_scale,want_save,for_ml)
+story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
+path_to_save = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025\dec_making_maps" + "_" + type;
+
+run_dec_making_plot_loop(combined_data,story_types,path_to_save,want_bdry,want_scale,want_save,for_ml,type)
 
 %% plotting summary stats
 

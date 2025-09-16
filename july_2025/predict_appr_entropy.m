@@ -40,5 +40,7 @@ end
 f = polyval(p,xs); 
 plot(xs,y,'o',xs,f,'-') 
 title("rsq of poly fit for " + measure + " vs appr entropy in " + sub_tit + " = " + P_rsq)
+xlabel(measure)
+ylabel("appr entropy")
 hold off 
 end

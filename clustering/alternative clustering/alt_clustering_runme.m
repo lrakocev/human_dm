@@ -2,7 +2,7 @@
 
 % to get session data, need to run the hum_new_tasks_runme 
 
-load("C:\Users\lrako\OneDrive\Documents\human dm\ingest helpers\human data.mat")
+load("C:\Users\lrako\OneDrive\Documents\human dm\for_dirk_updated.mat")
 
 %% find session-cost sigmoids
 

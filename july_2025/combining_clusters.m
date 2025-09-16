@@ -40,9 +40,11 @@ all_corrs = eng_corr_by_cluster_combo(behavior_merged, want_plot);
 
 %% clusters vs parameters
 
+save_to = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025\cluster_params";
+mkdir(save_to)
 measure_cluster_table = parameters_per_cluster(behavior_merged);
 
-plot_per_cluster_params(measure_cluster_table)
+plot_per_cluster_params(measure_cluster_table,save_to)
 
 %% appr rate vs parameters
 
@@ -55,34 +57,31 @@ plot_per_appr_lvl_params(appr_lvl_table)
 
 measures = ["pupil_diameter", "heart_rate", "pain", "hunger", "tiredness", "story_prefs", "cost", "rew"];
 
+save_to = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025\task_entropy_v_params";
 num_bins = 12;
 prsqs = [];
 for i = 1:length(measures)
     measure = measures(i);
     appr_entropy_table = parameters_per_appr_entropy(all_data,num_bins,measure);
 
-    %{
-    figure
-    scatter(appr_entropy_table.(measure+"_lvl"), appr_entropy_table.appr_entropy)
-    title(measure + " vs appr entropy")
-    ylabel("appr entropy")
-    xlabel(measure)
-        
-    figure
-    scatter(appr_entropy_table.(measure+"_lvl"), appr_entropy_table.appr_mean)
-    title(measure + " vs appr mean")
-    ylabel("appr mean")
-    xlabel(measure)
-    %}
-    
-    [prsq] = predict_appr_entropy(appr_entropy_table,measure);
+    [prsq] = predict_appr_entropy(appr_entropy_table,measure,[]);
+    set(gcf,'renderer','Painters')
+    saveas(gcf,save_to + "/" + measure + "_v_entropy_all_tasks","fig")
+    saveas(gcf,save_to + "/" + measure + "_v_entropy_all_tasks","svg")
+    close all 
     prsqs = [prsqs; prsq];
 end
 
 %% parameters vs appr rate per cluster entropy 
 
-r_table = param_v_appr_entropy_per_cluster(behavior_merged,num_bins)
+save_to = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025\cluster_entropy_v_params";
+mkdir(save_to)
+num_bins = 12;
+r_table = param_v_appr_entropy_per_cluster(behavior_merged,num_bins,save_to);
 
 %% parameters vs appr rate per task entropy 
 
-param_v_appr_entropy_per_task(all_data,num_bins)
+save_to = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025\task_entropy_v_params";
+mkdir(save_to)
+num_bins = 12;
+param_v_appr_entropy_per_task(all_data,num_bins,save_to)

@@ -1,0 +1,6 @@
+1) Has your friend
+2) has the least number of people
+3) has the shortest tour time
+4) has the most knowledgeable tour guide
+5) has a summary at the end of the tour 
+6) gets a free souvenir

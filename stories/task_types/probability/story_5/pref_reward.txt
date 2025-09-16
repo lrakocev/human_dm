@@ -1,0 +1,6 @@
+1)Take the job
+2)Decline the job
+3)Look for more job options
+4)Networking opportunities
+5)High earning potential
+6)Skill development

@@ -9,7 +9,9 @@ for i = 3:length(variable_names)
     figure
     measure_name = variable_names{i};
     current_col = appr_lvl_table.(measure_name);
-    scatter(current_col,appr_lvl_top)
+    scatter(appr_lvl_top,current_col)
+    ylabel(measure_name)
+    xlabel("approach rate")
    
     title("appr lvl vs " + measure_name)
 

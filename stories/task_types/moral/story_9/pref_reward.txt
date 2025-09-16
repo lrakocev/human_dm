@@ -1,0 +1,6 @@
+1) take the job and leave your partner
+2) stay with your partner and don’t take the job
+3) stay with your partner and take the job
+4) leave your partner and don’t take the job
+5) Stay with your partner and find another job
+6) take the job and find another partner

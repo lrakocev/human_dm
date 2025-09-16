@@ -1,4 +1,4 @@
-function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, want_scale, want_save,subtit,for_ml)
+function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, want_scale, want_save,subtit,for_ml, varargin)
 
     subid = appr_table.subjectidnumber(1);
     story_num = appr_table.story_num(1);
@@ -17,7 +17,12 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
 
             r_c_table =  appr_table(appr_table.cost == c & appr_table.rew == r,:);
             if ~isempty(r_c_table)
-                ps(i) = r_c_table.approach_rate;  %get the approach rate when cost = c and rew =r, and store it in ps
+                if isempty(varargin{1})
+                    ps(i) = r_c_table.approach_rate;  %get the approach rate when cost = c and rew =r, and store it in ps
+                else
+                    variable = varargin{1};
+                    ps(i) = r_c_table.(variable{1});
+                end
             else
                 ps(i) = NaN;
             end

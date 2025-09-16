@@ -1,0 +1,35 @@
+Would you like to cheat on the exam and risk getting caught or talk to the teacher and ask for help during the exam and risk the teacher embarrassing you? (R1C1, R2C2)
+Would you like to cheat on the exam and risk being expelled from school or talk to the teacher and ask for help during the exam but risk getting a bad grade? (R1C3, R2C4)
+Would you like to cheat on the exam and risk failing the class or talk to the teacher and ask for help during the exam and risk still receiving a bad grade? (R1C5, R2C6)
+Would you like to cheat on the exam and risk not graduating on schedule or talk to the teacher and risk getting a zero on the exam? (R1C7, R2C8)
+Would you like to cheat on the exam and risk having detention or talk to the teacher and ask for help during the exam and risk making your GPA lower? (R1C9, R2C10)
+Would you like to cheat on the exam and risk having to repeat the course or talk to the teacher and ask for help during the exam and risk the teacher saying no? (R1C11, R2C12)
+Would you like to ask a friend for answers during the exam and risk getting caught or take a cheat sheet with you to the exam and risk having the teacher embarrass you for trying to cheat? (R3C1, R4C2)
+Would you like to ask a friend for answers during the exam and risk being expelled from school or take a cheat sheet with you to the exam and risk getting a bad grade? (R3C3, R4C4)
+Would you like to ask a friend for the answers during the exam and risk failing the class or take a cheat sheet with you to the exam and risk still receiving a bad grade on the exam? (R3C5, R4C6)
+Would you like to ask a friend for the answers during the exam and risk Getting detention or take a cheat sheet with you to the exam and risk making your GPA lower? (R3C7, R4C8)
+Would you like to ask a friend for the answers during the exam and risk having to repeat the course or take a cheat sheet with you to the exam and risk the teacher saying you can't have a cheat sheet? (R3C9, R4C10)
+Would you like to skip class to avoid the exam and risk getting caught or not cheat and risk the teacher embarrassing you for getting a poor grade? (R3C11, R4C12)
+Would you like to skip class to avoid the exam and risk being expelled from school or not cheat and risk getting a bad grade in the class? (R5C1, R6C2)
+Would you like to skip class to avoid the exam and risk failing the class or not cheat and risk still receiving a bad grade on the exam? (R5C3, R6C4)
+Would you like to skip class to avoid the exam and risk not graduating on schedule or not cheat and risk getting a zero on the exam? (R5C5, R6C6)
+Would you like to skip class to avoid the exam and risk having detention or not cheat and risk making your GPA lower? (R5C7, R6C8)
+Would you like to skip class to avoid the exam and risk having to repeat the course or not cheat and risk the teacher failing you? (R5C9, R6C10)
+Would you like to look up the answers on your phone and risk getting caught or ask the teacher for an extension to take the exam and risk being embarrassed by the teacher? (R5C11, R6C12)
+Would you like to look up the answers on your phone and risk being expelled from school or ask the teacher for an extension and risk getting a bad grade in the class? (R7C1, R8C2)
+Would you like to look up the answers on your phone and risk failing the class or ask the teacher for an extension to take the exam and risk still receiving a bad grade on the exam?
+Would you like to look up the answers on your phone and risk not graduating or ask the teacher for an extension to take the exam and risk getting a zero on the exam?
+Would you like to look up the answers on your phone and risk having detention or ask the teacher for an extension to take the exam and risk making your GPA low?
+Would you like to look up the answers on your phone and risk having to repeat the course or ask the teacher for an extension to take the exam and risk the teacher saying no?
+Would you like to drop the course and risk getting caught trying to leave the class or study the material that you can in 2 days and risk the teacher embarrassing you for not studying for longer?
+Would you like to drop the course and risk being expelled from school or study the material that you can in 2 days and risk getting a bad grade in the class?
+Would you like to drop the course and risk failing your class or study the material you can in 2 days and risk still receiving a bad grade on the exam?
+Would you like to drop the course and risk not graduating on schedule or study the material that you can and risk getting a zero on the exam?
+Would you like to drop the course and risk having detention or study the material you can in 2 days and risk making your GPA Lowe?
+Would you like to drop the course and risk having to repeat the course or study the material you can in 2 days and risk the teacher saying you can't take the exam?
+Would you like to write the answers on your hand and risk getting caught or ask for extra credit and risk being embarrassed by the teacher?
+Would you like to write the answers on your hand and risk being expelled from the school or ask for extra credit and risk getting a bad grade in the class?
+Would you like to write the answers on your hand and risk failing the class or ask for extra credit and risk still receiving a bad grade on the exam?
+Would you like to write the answers on your hand and risk not graduating or ask for extra credit and risk getting a zero on the exam?
+Would you like to write the answers on your hand and risk having detention or ask for extra credit and making your GPA low?
+Would you like to write the answers on your hand and risk having to repeat the course or ask for extra credit and risk the teacher saying no
