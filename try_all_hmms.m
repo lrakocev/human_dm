@@ -1,5 +1,5 @@
 %% data 
-home_dir = "human_dm";
+home_dir = "";
 filtered_behavior_table = prep_data_for_hmm(home_dir);
 
 %% get all combos 
