@@ -1,12 +1,12 @@
 function filtered_behavior_table = prep_data_for_hmm(home_dir)
 
 load(home_dir + "for_dirk_updated.mat");
-load(home_dir + "clustering\alternative clustering\2d_sig_real.mat");
+load(home_dir + "clustering/alternative clustering/2d_sig_real.mat");
 sig_table = renamevars(sig_table, "experiment", "story_type");
 
 behavior_2d_sig_join = outerjoin(all_data, sig_table, "MergeKeys", 1, "Keys", {'subjectidnumber','story_num','story_type'});
 
-table_name = home_dir + "july_2025\human_clusters.xlsx";
+table_name = home_dir + "july_2025/human_clusters.xlsx";
 sig_table_1d_messy = readtable(table_name);
 
 sig_table_1d = psychs_in_spec_cluster(sig_table_1d_messy,1);
