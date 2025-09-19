@@ -4,11 +4,11 @@ datasource = 'PostgresJDBC'; %ENTER YOUR DATASOURCE NAME HERE, default should be
 username = 'postgres'; %ENTER YOUR USERNAME HERE, default should be "postgres"
 password = '1234'; %ENTER YOUR PASSWORD HERE, default should be "1234"
 
- trial_word_length = create_trial_length_table("C:\Users\lrako\OneDrive\Documents\human dm\stories\task_types");
+% trial_word_length = create_trial_length_table("C:\Users\lrako\OneDrive\Documents\human dm\stories\task_types");
 %trial_word_length = load("trial_word_length.mat");
 
-[new_trial_data, r_ratings, c_ratings] = prep_session_data(datasource, username, password, "human_dec_making_table_utep", trial_word_length);
-[old_trial_data, ~, ~] = prep_session_data(datasource, username, password, "human_dec_making_table", trial_word_length_table);
+[new_trial_data, r_ratings, c_ratings] = prep_session_data(datasource, username, password, "human_dec_making_table_utep", trial_word_length,1);
+[old_trial_data, ~, ~] = prep_session_data(datasource, username, password, "human_dec_making_table", trial_word_length_table),0;
 
 all_trial_data = [new_trial_data old_trial_data];
 

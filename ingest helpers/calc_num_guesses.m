@@ -63,4 +63,10 @@ end
 hold off
 title("num guessing periods: " + string(num_guesses))
 
+figure 
+plot(gaze_data(:,1),gaze_data(:,2),'--')
+
+figure
+scatter(gaze_data(:,1),gaze_data(:,2)) 
+
 end

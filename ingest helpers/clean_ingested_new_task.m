@@ -1,4 +1,4 @@
-function [adj_approach_data,subject_prefs] = clean_ingested_new_task(adj_results,table_name,trial_word_length)
+function [adj_approach_data,subject_prefs] = clean_ingested_new_task(adj_results,table_name,trial_word_length,want_gaze)
 
 adj_results.reward_level = string(adj_results.reward_level);
 adj_results.cost_level = string(adj_results.cost_level);
@@ -53,7 +53,9 @@ for i = 1:N
         sub_results.reaction_time = gaze_data.reaction;
         sub_results.num_guesses = gaze_data.num_guesses;
 
-        sub_results.left_gaze_coords = [];
+        if ~want_gaze
+            sub_results.left_gaze_coords = [];
+        end
         
     else
         sub_results.pupil_diameter = zeros(height(sub_results),1);

@@ -22,7 +22,7 @@ unique_ids = unique(behavior_sig_clean.subjectidnumber);
 for i = 1:length(unique_ids)
     id = unique_ids(i);
     subject_table = behavior_sig_clean(behavior_sig_clean.subjectidnumber == id, :);
-    if height(subject_table) > num_trials_for_thresh;
+    if height(subject_table) > num_trials_for_thresh
         filtered_behavior_table = [filtered_behavior_table; subject_table];
     end
 end

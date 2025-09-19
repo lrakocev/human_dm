@@ -37,19 +37,24 @@ for i = 1:height(all_combos)
 
     for j = 1:num_tries
         [states, bic, mpcs, t, e] = run_complete_hmm_process(filtered_behavior_table, curr_data_type, curr_granularity, curr_features, curr_num_states);
-        hmm_row.state = states;
+       % hmm_row.state = states;
         hmm_row.bic = bic;
-        hmm_row.mpcs = mpcs;
-        hmm_row.t = t;
-        hmm_row.e = e;
+        hmm_row.mpcs = {mpcs};
+        hmm_row.t = {t};
+        hmm_row.e = {e};
         hmm_row.granularity = curr_granularity;
         hmm_row.num_states = curr_num_states;
         hmm_row.features = curr_features;
         hmm_row.data_type = curr_data_type;
 
+        hmm_row = struct2table(hmm_row, 'AsArray',1);
+        writetable(hmm_row, 'hmm_data.csv', 'WriteMode', 'append');
+
         hmm_table = [hmm_table; hmm_row];
+        clear hmm_row
     end
 end
 
 hmm_table = struct2table(hmm_table,'AsArray',1);
+
 save("hmm_workspace.mat")
