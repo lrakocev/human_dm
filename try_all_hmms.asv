@@ -29,8 +29,8 @@ all_combos = combinations(granularities, num_states, data_type, all_feature_comb
 hmm_table = [];
 num_tries = 1000;
 row_count = 0;
-doc_num = 1;
 excel_limit = 1000000;
+
 for i = 1:height(all_combos)
     combo = all_combos(i, :);
     curr_granularity = combo.granularities;
@@ -57,13 +57,13 @@ for i = 1:height(all_combos)
             writetable(hmm_row, 'hmm_data_' + doc_num + '.csv', 'WriteMode', 'append');
         else
             row_count = 0;
-            doc_num = doc_num + 1;
-            writetable(hmm_row, 'hmm_data_' + doc_num + '.csv', 'WriteMode', 'append');
-        end
+            doc_num = 
 
         hmm_table = [hmm_table; hmm_row];
         clear hmm_row
     end
 end
+
+hmm_table = struct2table(hmm_table,'AsArray',1);
 
 save("hmm_workspace.mat")
