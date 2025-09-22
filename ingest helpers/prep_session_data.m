@@ -1,4 +1,4 @@
-function [N_trial_data, r_ratings, c_ratings] = prep_session_data(datasource, username, password, table_name, trial_word_length_table,want_gaze)
+function [N_trial_data, r_ratings, c_ratings] = prep_session_data(datasource, username, password, table_name, trial_word_length_table)
 
 if contains(table_name,"utep")
     query = "select subjectidnumber,tasktypedone,story_prefs,reward_prefs,cost_prefs,reward_level,cost_level,decision_made,trial_start,trial_end,hunger,tired,pain,sex,age,trial_elapsed,pupil_diameter,raw_heart_rate,left_gaze_coords from " + table_name + ""; 
@@ -17,10 +17,10 @@ clean_approach_data = [];
 subject_prefs = [];
 r_ratings = [];
 c_ratings = [];
-for i = 1:5%length(querybasket)
+for i = 1:length(querybasket)
     %conn = c.Value;
     [init_approach_data, curr_r_ratings, curr_c_ratings]  = get_new_task(querybasket(i), conn, table_name);
-    [curr_approach_data, curr_prefs] = clean_ingested_new_task(init_approach_data,table_name,trial_word_length_table,want_gaze);
+    [curr_approach_data, curr_prefs] = clean_ingested_new_task(init_approach_data,table_name,trial_word_length_table);
     clean_approach_data = [clean_approach_data curr_approach_data];
     subject_prefs = [subject_prefs curr_prefs];
     r_ratings = [r_ratings; curr_r_ratings];

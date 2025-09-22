@@ -1,4 +1,4 @@
-function [adj_approach_data,subject_prefs] = clean_ingested_new_task(adj_results,table_name,trial_word_length,want_gaze)
+function [adj_approach_data,subject_prefs] = clean_ingested_new_task(adj_results,table_name,trial_word_length)
 
 adj_results.reward_level = string(adj_results.reward_level);
 adj_results.cost_level = string(adj_results.cost_level);
@@ -49,19 +49,17 @@ for i = 1:N
         sub_results.heart_rate = heart_rate.mean;
 
         gaze_data = rowfun(@clean_gaze, sub_results, "InputVariables", ...
-            ["left_gaze_coords", "q_length"], "NumOutputs",2, "OutputVariableNames", {'reaction','num_guesses'});
+            ["left_gaze_coords", "q_length"], "NumOutputs",3, "OutputVariableNames", {'reaction','num_guesses','saccads'});
         sub_results.reaction_time = gaze_data.reaction;
         sub_results.num_guesses = gaze_data.num_guesses;
+        sub_results.num_saccads = gaze_data.saccads;
 
-        if ~want_gaze
-            sub_results.left_gaze_coords = [];
-        end
+        sub_results.left_gaze_coords = [];
         
     else
         sub_results.pupil_diameter = zeros(height(sub_results),1);
         sub_results.heart_rate = zeros(height(sub_results),1);
-        sub_results.gaze_data = zeros(height(sub_results),1);
-        
+        sub_results.gaze_data = zeros(height(sub_results),1);  
     end
     
     subject_prefs(i) = {sub_prefs};
@@ -85,10 +83,9 @@ lvl2 = replace(lvl1,']','');
 hr_list = str2double(lvl2);
 mean_hr = mean(hr_list);
 
-
 end
 
-function [reaction,guesses] = clean_gaze(coords, length)
+function [reaction,guesses,saccads] = clean_gaze(coords, length)
 
 lvl1 = replace(string(coords),'[','');
 lvl2 = replace(lvl1,']','');
@@ -100,13 +97,16 @@ if ~isnan(gaze_list)
     try
        % [~,location] = calc_reaction_time(reshaped, length);
         [reaction,guesses] = calc_num_guesses(reshaped,length);
+        [saccads] = calc_num_saccads(reshaped);       
     catch
         reaction = 0;
         guesses = 0;
+        saccads = 0;
     end
 else
     guesses = 0;
     reaction = 0;
+    saccads = 0;
 end
 
 end

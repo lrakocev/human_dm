@@ -1,6 +1,6 @@
 %% load gaze data
 
-% load("gaze_data_for_debugging.mat")
+load("gaze_data_for_debugging.mat")
 
 gaze_table = [];
 for i = 1:length(new_trial_data)
@@ -35,4 +35,37 @@ for j = 1:height(gaze_table)
         hmm_table = [hmm_table; row];
     end
 end
+
 hmm_table = struct2table(hmm_table, "AsArray", 1);
+
+%%
+
+%load('gaze_hmm_midway_results.mat')
+
+%hmm_table = struct2table(hmm_table);
+
+x = 5000;
+randidx = randi(length(mpcs), x, 1);
+
+hmm_rows = hmm_table(randidx, :);
+
+bics = hmm_rows.bic;
+
+figure
+histogram(bics)
+title('gaze bics')
+
+table_mpcs = hmm_rows.mpcs;
+mpcs = cell2mat(table_mpcs);
+reshaped = reshape(mpcs, 2, [])';
+max_mpc = min(reshaped, [], 2);
+
+figure
+histogram(mpcs(1,:), 'NumBins',20)
+title('gaze mpcs')
+
+figure
+scatter(mpcs(1,:), bics)
+xlabel('mpcs')
+ylabel('bics')
+title('gaze mpcs vs bics')

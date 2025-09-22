@@ -19,8 +19,9 @@ for i = 3
 end
 
 unique_ids = unique(filtered_behavior_table.subjectidnumber);
+sessions = "session_" + unique_ids;
 tasks = unique(filtered_behavior_table.story_type);
-data_type = [unique_ids; tasks; "all"];
+data_type = [unique_ids; tasks; sessions; "all"];
 
 all_combos = combinations(granularities, num_states, data_type, all_feature_combos);
 
