@@ -1,0 +1,21 @@
+function compare_to_og_seq(hmm_row, input_data_table)
+
+num_t_states = hmm_row.num_states;
+t_names = "t_" + (1:num_t_states);
+t_matrix = hmm_row(:, ismember(hmm_row.Properties.VariableNames, t_names));
+
+
+selected_columns = T(:, ismember(T.Properties.VariableNames, desired_names));
+
+mat_size = num_states**2; 
+
+t = hmm_row.t_1; 
+e = hmm_row.e;
+fea
+symbols = string(1:num_states);
+
+[states, p_states] = HMM_decode(input_seq, t, e, symbols);
+
+
+
+end

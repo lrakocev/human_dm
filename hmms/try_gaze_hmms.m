@@ -53,6 +53,8 @@ for k = 1:length(all_data)
             hmm_row.id = id;
             hmm_row.sesh = sesh;
             hmm_row.task = task;
+            hmm_row.actual_data_idx = k;
+
                 
             hmm_row = struct2table(hmm_row, 'AsArray',1);
     

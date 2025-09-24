@@ -76,7 +76,7 @@ for k = 1:length(average_data)
             hmm_row.hunger = hunger;
             hmm_row.tiredness = tiredness;
             hmm_row.interest = story_pref;
-
+            hmm_row.actual_data_idx = k;
     
             hmm_row = struct2table(hmm_row, 'AsArray',1);
     
