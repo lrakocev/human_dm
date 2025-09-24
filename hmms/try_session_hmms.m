@@ -14,6 +14,10 @@ interest_data = group_by_continuous_feature(filtered_behavior_table, "story_pref
 
 average_data = [task_data sex_data hunger_data interest_data tiredness_data];
 
+labels = [repelem("task", 1, length(task_data)) repelem("sex", 1, length(sex_data))...
+    repelem("hunger", 1, length(hunger_data)) repelem("interest", 1, length(interest_data)) ...
+    repelem("tiredness", 1, length(task_data)) ];
+
 %% get all combos 
 
 granularities = 2:10;
@@ -43,6 +47,13 @@ file_name = "hmm_average_data";
 
 for k = 1:length(average_data)
     input_table = average_data{k};
+    curr_label = labels(k);
+    task = input_table.story_type(1);
+    sex = input_table.sex(1);
+    hunger = input_table.hunger(1);
+    story_pref = input_table.story_prefs(1);
+    tiredness = input_table.tiredness(1);
+    
 
     for i = 1:height(all_combos)
         combo = all_combos(i, :);
@@ -59,6 +70,13 @@ for k = 1:length(average_data)
             hmm_row.granularity = curr_granularity;
             hmm_row.num_states = curr_num_states;
             hmm_row.features = curr_features;
+            hmm_row.label = curr_label;
+            hmm_row.sex = sex;
+            hmm_row.task = task;
+            hmm_row.hunger = hunger;
+            hmm_row.tiredness = tiredness;
+            hmm_row.interest = story_pref;
+
     
             hmm_row = struct2table(hmm_row, 'AsArray',1);
     

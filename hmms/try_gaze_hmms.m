@@ -9,6 +9,7 @@ session_data = group_same_day_stories(filtered_behavior_table);
 id_data = group_by_feature(filtered_behavior_table, "subjectidnumber");
 
 all_data = [id_data session_data];
+labels = [repelem("session",1,length(session_data)) repelem("id",1,length(id_data))];
 
 %% get all combos 
 
@@ -27,6 +28,10 @@ file_name = "hmm_gaze_data";
 
 for k = 1:length(all_data)
     input_table = all_data{k};
+    id = input_table.subjectidnumber(1);
+    sesh = input_table.trial_end(1);
+    task = input_table.story_type(1);
+    curr_label = labels(k);
 
     for i = 1:height(all_combos)
         combo = all_combos(i, :);
@@ -44,7 +49,11 @@ for k = 1:length(all_data)
             hmm_row.granularity = curr_granularity;
             hmm_row.num_states = curr_num_states;
             hmm_row.features = curr_features;
-    
+            hmm_row.label = curr_label;
+            hmm_row.id = id;
+            hmm_row.sesh = sesh;
+            hmm_row.task = task;
+                
             hmm_row = struct2table(hmm_row, 'AsArray',1);
     
             row_count = row_count + 1;
