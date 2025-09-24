@@ -1,6 +1,7 @@
 %% data ytggfvvb
 home_dir = "";
-filtered_behavior_table = prep_data_for_hmm(home_dir);
+base_file_name = "for_dirk_updated.mat";
+filtered_behavior_table = prep_data_for_hmm(home_dir,base_file_name);
 
 id_data = group_by_feature(filtered_behavior_table, "subjectidnumber");
 session_data = group_same_day_stories(filtered_behavior_table);

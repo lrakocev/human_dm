@@ -1,8 +1,9 @@
-function filtered_behavior_table = prep_data_for_hmm(home_dir)
+function filtered_behavior_table = prep_data_for_hmm(home_dir,base_file_name)
 
-load(home_dir + "for_dirk_updated.mat");
 load(home_dir + "clustering/alternative clustering/2d_sig_real.mat");
 sig_table = renamevars(sig_table, "experiment", "story_type");
+
+load(home_dir + base_file_name);
 
 behavior_2d_sig_join = outerjoin(all_data, sig_table, "MergeKeys", 1, "Keys", {'subjectidnumber','story_num','story_type'});
 
