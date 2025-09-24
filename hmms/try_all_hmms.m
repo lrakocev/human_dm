@@ -13,7 +13,7 @@ labels = [repelem("session",1,length(session_data)) repelem("id",1,length(id_dat
 %% get all combos 
 
 granularities = 2:10;
-num_states = 2:15;
+num_states = flip(2:15);
 all_features = ["clusterX", "clusterY", "clusterZ", "a_R","b_R", "a_C", ...
     "b_C", "approach_rate", "pupil_diameter", "rew", "cost", "heart_rate", ...
     "hunger", "tiredness", "pain", "story_prefs"];
