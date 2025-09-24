@@ -21,7 +21,11 @@ function [num_guesses,reaction_time] = calc_num_guesses(gaze_data,word_length)
     shifted_full = [diffs_of_shift; 0];
 
     potential_streak_start_idx = find(shifted_full == 1);
-    end_idx = [find(shifted_full == -1); length(green_idx)];
+    end_idx = [find(shifted_full == -1)];
+
+    if length(end_idx) < length(potential_streak_start_idx)
+        end_idx = [end_idx;  length(green_idx)];
+    end
     streak_lengths = [abs(potential_streak_start_idx - end_idx)];
 
     min_streak_length = 5;
