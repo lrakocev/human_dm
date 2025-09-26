@@ -10,23 +10,25 @@ task_data = group_by_feature(filtered_behavior_table, "story_type");
 all_data = [id_data session_data task_data];
 labels = [repelem("session",1,length(session_data)) repelem("id",1,length(id_data)) repelem("task",1,length(id_data))];
 
-% get all combos 
 
-granularities = 2:5;
+%% get all combos 
+
+granularities = 2:10;
 all_features = ["clusterX", "clusterY", "clusterZ", "a_R","b_R", "a_C", ...
     "b_C", "approach_rate", "pupil_diameter", "rew", "cost", "heart_rate", ...
     "hunger", "tiredness", "pain", "story_prefs"];
 
-% running the hmm combos
+%% running the hmm combos
 
+hmm_table = [];
 num_tries = 100;
 row_count = 0;
 doc_num = 1;
 excel_limit = 1000000;
-file_name = "hmm_1d_data_states_" + string(num_states) +"_";
+file_name = "hmm_data";
 
 for m = 1:length(all_features)
-    curr_features = all_features(m);
+    feature = all_features(m);
 
     for i = 1:length(granularities)
         curr_granularity = granularities(i);
@@ -39,13 +41,13 @@ for m = 1:length(all_features)
             curr_label = labels(k);
         
             for j = 1:num_tries
-                [states, bic, mpcs, t, e] = run_complete_hmm_process(input_table, curr_granularity, curr_features, num_states);
+                [states, bic, mpcs, t, e] = run_complete_hmm_process(input_table, curr_granularity, curr_features, curr_num_states);
                 hmm_row.bic = bic;
                 hmm_row.mpcs = {mpcs};
                 hmm_row.t = {t};
                 hmm_row.e = {e};
                 hmm_row.granularity = curr_granularity;
-                hmm_row.num_states = num_states;
+                hmm_row.num_states = curr_num_states;
                 hmm_row.features = curr_features;
                 hmm_row.label = curr_label;
                 hmm_row.id = id;
@@ -57,17 +59,16 @@ for m = 1:length(all_features)
         
                 row_count = row_count + 1;
                 if row_count < excel_limit
-                    writetable(hmm_row, file_name + string(doc_num) + ".xlsx", 'WriteMode', 'append');
+                    writetable(hmm_row, file_name + string(doc_num) + ".csv", 'WriteMode', 'append');
                 else
                     row_count = 0;
                     doc_num = doc_num + 1;
-                    writetable(hmm_row, file_name + string(doc_num) + '.xlsx', 'WriteMode', 'append');
+                    writetable(hmm_row, file_name + string(doc_num) + '.csv', 'WriteMode', 'append');
                 end
         
+                hmm_table = [hmm_table; hmm_row];
                 clear hmm_row
             end
         end
     end
-end
-
 end

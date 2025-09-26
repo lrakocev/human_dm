@@ -15,7 +15,7 @@ M = length(estimate_e);
 
 symbols = string(1:granularity);
 
-[t, e, logliks] = hmmtrain(seqs, estimate_t, estimate_e, 'Symbols', symbols, 'MAXITERATIONS', 1000);
+[t, e, logliks] = hmmtrain(seqs, estimate_t, estimate_e, 'Symbols', symbols, 'MAXITERATIONS', 300);
 
 num_params = (N-1) + N*(N-1) + N*(M-1);
 [~,bic] = aicbic(logliks(end), num_params, length(seqs));
