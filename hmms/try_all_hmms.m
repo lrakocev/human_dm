@@ -12,10 +12,17 @@ labels = [repelem("session",1,length(session_data)) repelem("id",1,length(id_dat
 
 % get all combos 
 
-granularities = num_states:num_states+4;
+granularities = 2:8;
+
+%{
 all_features = ["clusterX", "clusterY", "clusterZ", "a_R","b_R", "a_C", ...
     "b_C", "approach_rate", "pupil_diameter", "rew", "cost", "heart_rate", ...
     "hunger", "tiredness", "pain", "story_prefs"];
+%}
+features_1d = ["clusterX", "clusterY", "clusterZ"];
+features_2d = ["a_R","b_R","a_C", "b_C"];
+
+combo_features = combinations(features_1d, features_2d);
 
 % running the hmm combos
 
@@ -23,10 +30,10 @@ num_tries = 100;
 row_count = 0;
 doc_num = 1;
 excel_limit = 1000000;
-file_name = "hmm_1d_data_states_" + string(num_states) +"_";
+file_name = "hmm_2d_data_states_" + string(num_states) +"_";
 
-for m = 1:length(all_features)
-    curr_features = all_features(m);
+for m = 1:height(combo_features)
+    curr_features = combo_features{m,:};
 
     for i = 1:length(granularities)
         curr_granularity = granularities(i);

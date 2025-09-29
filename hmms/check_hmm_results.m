@@ -10,8 +10,9 @@ task_data = group_by_feature(filtered_behavior_table, "story_type");
 all_data = [id_data session_data task_data];
 %% viz of current space
 
+
 midway_hmm_table = readtable("C:\Users\lrako\OneDrive\Documents\server_output\1d\hmm_1d_data_states_7_1.xlsx");
-viz = 0;
+viz = 1;
 
 x = min(height(midway_hmm_table), 10000);
 randidx = randi(height(midway_hmm_table), x, 1);

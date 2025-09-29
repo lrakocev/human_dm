@@ -17,10 +17,16 @@ labels = [repelem("task", 1, length(task_data)) repelem("sex", 1, length(sex_dat
     repelem("hunger", 1, length(hunger_data)) repelem("interest", 1, length(interest_data)) ...
     repelem("tiredness", 1, length(task_data)) ];
 
-granularities = num_states:num_states+4;
+granularities = 2:8;
+features_1d = ["clusterX", "clusterY", "clusterZ"];
+features_2d = ["a_R","b_R","a_C", "b_C"];
+
+combo_features = combinations(features_1d, features_2d);
+%{
 all_features = ["clusterX", "clusterY", "clusterZ", "a_R","b_R","a_C", ...
     "b_C", "approach_rate", "pupil_diameter", "rew", "cost", "heart_rate", ...
     "hunger", "tiredness", "pain", "story_prefs"];
+%}
 
 % running the hmm combos
 
@@ -28,11 +34,11 @@ num_tries = 100;
 row_count = 0;
 doc_num = 1;
 excel_limit = 1000000;
-file_name = "hmm_average_1d_states_" + string(num_states) +"_";
+file_name = "hmm_average_2d_states_" + string(num_states) +"_";
 
 
-for m = 1:length(all_features)
-    curr_features = all_features(m);
+for m = 1:height(combo_features)
+    curr_features = combo_features{m,:};
 
     for i = 1:length(granularities)
         curr_granularity = granularities(i);
