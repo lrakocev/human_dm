@@ -1,4 +1,4 @@
-function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, want_scale, want_save,subtit,for_ml, varargin)
+function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, want_scale, want_save,subtit, for_ml, varargin)
 
     subid = appr_table.subjectidnumber(1);
     story_num = appr_table.story_num(1);
@@ -107,7 +107,7 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
         if ~for_ml
             saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_', string(subid), '_', string(story_num),'.fig'),"fig")
         end
-        saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_', string(subid), '_', string(story_num),'.svg'),"svg")
+        saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_', string(subid), '_', string(story_num),'.png'),"png")
         close all
         end
 

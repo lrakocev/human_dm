@@ -1,7 +1,6 @@
 function try_all_hmms(num_states)
 
-home_dir = "";
-filtered_behavior_table = prep_data_for_hmm(home_dir, "for_dirk_updated.mat");
+load("filtered_behavior_table.mat")
 
 id_data = group_by_feature(filtered_behavior_table, "subjectidnumber");
 session_data = group_same_day_stories(filtered_behavior_table);
@@ -21,8 +20,9 @@ all_features = ["clusterX", "clusterY", "clusterZ", "a_R","b_R", "a_C", ...
 %}
 features_1d = ["clusterX", "clusterY", "clusterZ"];
 features_2d = ["a_R","b_R","a_C", "b_C"];
+features_auto = ["auto_x", "auto_y", "auto_z"];
 
-combo_features = combinations(features_1d, features_2d);
+combo_features = combinations(features_1d, features_2d, features_auto);
 
 % running the hmm combos
 
@@ -30,7 +30,7 @@ num_tries = 100;
 row_count = 0;
 doc_num = 1;
 excel_limit = 1000000;
-file_name = "hmm_2d_data_states_" + string(num_states) +"_";
+file_name = "hmm_3d_data_states_" + string(num_states) +"_";
 
 for m = 1:height(combo_features)
     curr_features = combo_features{m,:};

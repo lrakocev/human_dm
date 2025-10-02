@@ -1,59 +1,58 @@
-imageDir = 'C:\Users\lrako\OneDrive\Documents\human dm\july_2025\dec_making_maps';
+%% pre
+
+load("for_dirk_updated.mat")
+story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
+
+for i = 1:length(story_types)
+    story = story_types(i);
+    task_combined_data = combine_for_map(all_trial_data, story);
+    combined_data{i} = task_combined_data;
+end
+
+%% get the maps
+
+want_bdry = 0;
+want_scale = 0;
+want_save = 1;
+for_ml = 1;
+story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
+type = "approach_rate";
+path_to_save = "C:\Users\lrako\OneDrive\Documents\human_dm\hmms\dec_making_maps";
+mkdir(path_to_save)
+
+run_dec_making_plot_loop(combined_data,story_types,path_to_save,want_bdry,want_scale,want_save,for_ml,type)
+
+%% resizing the maps (might need to run twice)
+
+dir_name = "C:\Users\lrako\OneDrive\Documents\human_dm\hmms\dec_making_maps";
+save_to = "C:\Users\lrako\OneDrive\Documents\human_dm\hmms\small_dec_making_maps";
+resizing_images(dir_name,save_to)
+
+%% convert to data cell array
+
+imageDir = 'C:\Users\lrako\OneDrive\Documents\human_dm\hmms\small_dec_making_maps';
 
 imds = imageDatastore(imageDir, 'IncludeSubfolders', true);
 augmentedImds = transform(imds, @(data) ({data, data}));
 
 imageDataCellArray = readall(imds);
 
-%% autoencoder attempt 
+%% autoencoder training 
 
+training_size = 75;
+train_idx = randi(length(imageDataCellArray),1,training_size);
+trainingImgs = imageDataCellArray(train_idx);
 hiddenSize = 25;
-autoenc = trainAutoencoder(imageDataCellArray,hiddenSize,...
+autoenc = trainAutoencoder(trainingImgs,hiddenSize,...
         'MaxEpochs', 400,...
         'L2WeightRegularization',0.004,...
         'SparsityRegularization',4,...
         'SparsityProportion',0.15);
 
-%{
-ex_im = imread('C:\Users\lrako\OneDrive\Documents\human dm\july_2025\dec_making_maps\approach_avoid\map_11464_story_10.png');
-[rows, columns, numberOfColorChannels] = size(ex_im);
-imageSize = [rows, columns, numberOfColorChannels]; % Adjust based on your image size
-
-encoderLayers = [
-    imageInputLayer(imageSize, 'Name', 'input')
-    convolution2dLayer(3, 16, 'Padding', 'same', 'Name', 'conv1')
-    reluLayer('Name', 'relu1')
-    maxPooling2dLayer(2, 'Stride', 2, 'Name', 'pool1')
-    convolution2dLayer(3, 32, 'Padding', 'same', 'Name', 'conv2')
-    reluLayer('Name', 'relu2')
-    maxPooling2dLayer(2, 'Stride', 2, 'Name', 'pool2')
-];
-
-decoderLayers = [
-    transposedConv2dLayer(2, 32, 'Stride', 2, 'Name', 'tconv1')
-    reluLayer('Name', 'relu3')
-    transposedConv2dLayer(2, 16, 'Stride', 2, 'Name', 'tconv2')
-    reluLayer('Name', 'relu4')
-    convolution2dLayer(3, imageSize(3), 'Padding', 'same', 'Name', 'conv3') % Output layer matching input
-    %regressionLayer('Name', 'output')
-];
-
-layers = [encoderLayers; decoderLayers];
-
-options = trainingOptions('adam', ...
-    'InitialLearnRate', 0.001, ...
-    'MaxEpochs', 20, ...
-    'MiniBatchSize', 32, ...
-    'Shuffle', 'every-epoch', ...
-    'Plots', 'training-progress');
-
-net = trainnet(augmentedImds, layers, 'mse', options);
-%}
-
 encodedData = encode(autoenc, imageDataCellArray);
-%%
-% Use t-SNE to reduce the data to 2 dimensions for visualization
-encoded2D = tsne(encodedData);
+%% Use t-SNE to reduce the data to 2 dimensions for visualization
+
+encoded2D = tsne(encodedData');
 
 % Plot the 2D visualization
 figure;
@@ -61,9 +60,10 @@ scatter(encoded2D(:,1), encoded2D(:,2));
 title('2D Visualization of Encoded Data');
 xlabel('Dimension 1');
 ylabel('Dimension 2');
-%%
+
+%% 3D viz
 % Use t-SNE to reduce the data to 2 dimensions for visualization
-encoded3D = tsne(encodedData, 'NumDimensions',3);
+encoded3D = tsne(encodedData', 'NumDimensions',3);
 
 % Plot the 2D visualization
 figure;
@@ -72,16 +72,21 @@ title('3D Visualization of Encoded Data');
 xlabel('Dimension 1');
 ylabel('Dimension 2');
 
-%{
-softnet = trainSoftmaxLayer(feat2,tTrain,'MaxEpochs',400);
+autoencoder_feat_table = array2table(encoded3D, 'VariableNames', {'auto_x', 'auto_y', 'auto_z'});
 
-stackednet = stack(autoenc1,autoenc2,softnet);
 
-xTrain = zeros(inputSize,numel(xTrainImages));
-for i = 1:numel(xTrainImages)
-    xTrain(:,i) = xTrainImages{i}(:);
-end
+%% combine feature coords w/ their respective sessions
 
-% Perform fine tuning
-stackednet = train(stackednet,xTrain,tTrain);
-%}
+image_dir = "C:\Users\lrako\OneDrive\Documents\human_dm\hmms\small_dec_making_maps";
+fileList = get_all_filenames(image_dir);
+info_table = parse_filenames(fileList);
+full_autoencoder_table = [autoencoder_feat_table info_table];
+
+%%
+options = fcmOptions(NumClusters=2);
+[~, U] = fcm(encoded3D, options);
+[~, max_row_indices] = max(U);
+
+full_autoencoder_table.auto_cluster = max_row_indices';
+
+%scatter3(full_autoencoder_table.auto_x, full_autoencoder_table.auto_y, full_autoencoder_table.auto_z, 20, full_autoencoder_table.auto_cluster)

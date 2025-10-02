@@ -72,7 +72,7 @@ single_table = consolidate_metadata(results, all_ids);
 sex = groupcounts(single_table,'sex');
 age = groupcounts(single_table,'age');
 race = groupcounts(single_table,'race');
-ethnicity =groupcounts(single_table,'ethnicity'); 
+ethnicity = groupcounts(single_table,'ethnicity'); 
 
 %% normalization bar plots
 

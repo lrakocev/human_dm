@@ -4,6 +4,7 @@ totals = setup_for_avgs(all_data,story_types);
 sesh_data = totals{1};
 sesh_data = renamevars(sesh_data, 'story_type','experiment');
 
+
 psych_to_cluster = psychs_in_spec_cluster(spectral_table, use_cost);
 
 if use_cost
