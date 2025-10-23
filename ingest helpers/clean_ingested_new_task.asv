@@ -5,7 +5,7 @@ adj_results.cost_level = string(adj_results.cost_level);
 joined_results = outerjoin(adj_results, trial_word_length, 'MergeKeys', 1, 'Keys', ["reward_level","cost_level","tasktypedone"]);
 filtered_join = joined_results(joined_results.subjectidnumber ~= "" & joined_results.rew ~= 0, :);
 
-filtered_join = removevars(filtered_join,{'trial_start','reward_level','cost_level'});
+filtered_join = removevars(filtered_join,{'reward_level','cost_level'});
 filtered_join = renamevars(filtered_join,["decision_made","tasktypedone","trial_elapsed","tired"]...
     ,["approach_rate","story_num","timing","tiredness"]);
 
@@ -45,21 +45,23 @@ for i = 1:N
         sub_results.pupil_diameter = pupil_diameter.mean;
 
         heart_rate = rowfun(@clean_hr, sub_results, "InputVariables", ...
-            "raw_heart_rate", "OutputVariableNames", "mean");
-        sub_results.heart_rate = heart_rate.mean;
+            "raw_heart_rate", "NumOutputs", 3, "OutputVariableNames", {'mean_hr', 'max_hr', 'min_hr'});
+        sub_results.mean_hr = heart_rate.mean_hr;
+        sub_results.max_hr = heart_rate.max_hr;
+        sub_results.min_hr = heart_rate.min_hr;
 
         gaze_data = rowfun(@clean_gaze, sub_results, "InputVariables", ...
-            ["left_gaze_coords", "q_length"], "NumOutputs",2, "OutputVariableNames", {"reaction","num_guesses"});
+            ["left_gaze_coords", "q_length"], "NumOutputs",3, "OutputVariableNames", {'reaction','num_guesses','saccads'});
         sub_results.reaction_time = gaze_data.reaction;
-        sub_results.num_guesses = gaze_data.guesses;
+        sub_results.num_guesses = gaze_data.num_guesses;
+        sub_results.num_saccads = gaze_data.saccads;
 
         sub_results.left_gaze_coords = [];
         
     else
         sub_results.pupil_diameter = zeros(height(sub_results),1);
         sub_results.heart_rate = zeros(height(sub_results),1);
-        sub_results.gaze_data = zeros(height(sub_results),1);
-        
+        sub_results.gaze_data = zeros(height(sub_results),1);  
     end
     
     subject_prefs(i) = {sub_prefs};
@@ -76,17 +78,20 @@ function mean_diam = clean_pupil_diam(row)
 
 end
 
-function mean_hr = clean_hr(row)
+function [mean_hr, max_hr, min_hr] = clean_hr(row)
 
 lvl1 = replace(string(row),'[','');
 lvl2 = replace(lvl1,']','');
-hr_list = str2double(lvl2);
-mean_hr = mean(hr_list);
-
+split_list = split(lvl2, ",");
+hr_list = str2double(split_list);
+mean_hr = mean(hr_list, 'omitnan');
+max_hr = (max(hr_list) - mean_hr) / mean_hr;
+min_hr = (min(hr_list) - mean_hr) / mean_hr;
+direction = 
 
 end
 
-function [reaction] = clean_gaze(coords, length)
+function [reaction,guesses,saccads] = clean_gaze(coords, length)
 
 lvl1 = replace(string(coords),'[','');
 lvl2 = replace(lvl1,']','');
@@ -96,15 +101,18 @@ gaze_list = str2double(split_list);
 if ~isnan(gaze_list)
     reshaped = reshape(gaze_list, 2, [])'; 
     try
-        [~,location] = calc_reaction_time(reshaped, length);
-        [reaction,guesses] = calc_num_guesses(reshaped, location);
+       % [~,location] = calc_reaction_time(reshaped, length);
+        [reaction,guesses] = calc_num_guesses(reshaped,length);
+        [saccads] = calc_num_saccads(reshaped);       
     catch
         reaction = 0;
         guesses = 0;
+        saccads = 0;
     end
 else
     guesses = 0;
     reaction = 0;
+    saccads = 0;
 end
 
 end

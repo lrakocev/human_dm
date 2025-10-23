@@ -1,6 +1,7 @@
 function combined_data = combine_for_map(approach_data, story_type)
 
 combined_data = cell(1,length(approach_data));
+counter = 1;
 for N = 1:length(approach_data)
     appr_table = approach_data{N};
     combined_table = [];
@@ -25,7 +26,10 @@ for N = 1:length(approach_data)
             end
         end
     end
-    combined_data{N} = combined_table;
+    if ~isempty(combined_table)
+        combined_data{counter} = combined_table;
+        counter = counter + 1;
+    end
 end
 
 end

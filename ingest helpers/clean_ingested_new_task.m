@@ -45,8 +45,12 @@ for i = 1:N
         sub_results.pupil_diameter = pupil_diameter.mean;
 
         heart_rate = rowfun(@clean_hr, sub_results, "InputVariables", ...
-            "raw_heart_rate", "OutputVariableNames", "mean");
-        sub_results.heart_rate = heart_rate.mean;
+            "raw_heart_rate", "NumOutputs", 4, "OutputVariableNames", {'mean_hr', 'max_hr', 'min_hr','direction'});
+        sub_results.mean_hr = heart_rate.mean_hr;
+        sub_results.max_hr = heart_rate.max_hr;
+        sub_results.min_hr = heart_rate.min_hr;
+        sub_results.direction = heart_rate.direction;
+
 
         gaze_data = rowfun(@clean_gaze, sub_results, "InputVariables", ...
             ["left_gaze_coords", "q_length"], "NumOutputs",3, "OutputVariableNames", {'reaction','num_guesses','saccads'});
@@ -58,8 +62,16 @@ for i = 1:N
         
     else
         sub_results.pupil_diameter = zeros(height(sub_results),1);
-        sub_results.heart_rate = zeros(height(sub_results),1);
-        sub_results.gaze_data = zeros(height(sub_results),1);  
+        sub_results.raw_heart_rate = zeros(height(sub_results),1);
+
+        sub_results.reaction_time = zeros(height(sub_results),1);
+        sub_results.num_saccads = zeros(height(sub_results),1);
+        sub_results.num_guesses = zeros(height(sub_results),1);  
+
+        sub_results.mean_hr = zeros(height(sub_results),1);
+        sub_results.max_hr = zeros(height(sub_results),1);
+        sub_results.min_hr = zeros(height(sub_results),1);
+        sub_results.direction = zeros(height(sub_results),1);
     end
     
     subject_prefs(i) = {sub_prefs};
@@ -76,13 +88,25 @@ function mean_diam = clean_pupil_diam(row)
 
 end
 
-function mean_hr = clean_hr(row)
+function [mean_hr, max_hr, min_hr, direction] = clean_hr(row)
 
 lvl1 = replace(string(row),'[','');
 lvl2 = replace(lvl1,']','');
-hr_list = str2double(lvl2);
-mean_hr = mean(hr_list);
+split_list = split(lvl2, ",");
+hr_list = str2double(split_list);
+mean_hr = mean(hr_list, 'omitnan');
+max_hr = (max(hr_list) - mean_hr) / mean_hr;
+min_hr = (min(hr_list) - mean_hr) / mean_hr;
 
+if ~isempty(hr_list)
+    if hr_list(end) > hr_list(1)
+        direction = 1;
+    else
+        direction = -1;
+    end
+else
+    direction = 0;
+end
 end
 
 function [reaction,guesses,saccads] = clean_gaze(coords, length)
@@ -96,7 +120,7 @@ if ~isnan(gaze_list)
     reshaped = reshape(gaze_list, 2, [])'; 
     try
        % [~,location] = calc_reaction_time(reshaped, length);
-        [reaction,guesses] = calc_num_guesses(reshaped,length);
+        [guesses,reaction] = calc_num_guesses(reshaped,length);
         [saccads] = calc_num_saccads(reshaped);       
     catch
         reaction = 0;

@@ -11,6 +11,7 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
     cs = repmat(cost_levels,1,length(cost_levels))'; %repeat the cost_levels array 4 times (1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4)
     ps = zeros(length(cost_levels)*length(reward_levels),1); %create a 16x1 array which will be populated later
     
+    try
     i = 1;
     for r=1:length(reward_levels)
         for c=1:length(cost_levels)
@@ -30,6 +31,9 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
             observed_p_appr(c,r) = ps(i); %each row represents the reward level and each column is the cost 
             i = i+1;
         end
+    end
+    catch 
+        return 
     end
 
     mean_p = mean(ps,'omitnan'); %calculate the mean of the ps array 
@@ -52,6 +56,7 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
         'coefficients', {'a_R','b_R','a_C','b_C'}, 'independent', {'R', 'C'}, ...
         'dependent', 'z' );
 
+    try
     % Call fit and specify the value of c.
     f = fit( [rs, cs], ps, g, 'StartPoint', [1; 0; 1; 0]); 
     
@@ -59,7 +64,9 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
     frc = 1/(1+exp(-f.a_R*R+f.b_R))*1/(1+exp(f.a_C*C+f.b_C)); %plug the found sigmoid parameters into the sigmoid formula (its a 2d sigmoid)
     boundary_line = solve(frc==.5, C); %the boundary line is supposed to be when there's 50% approach and 50% avoid
     %line 49 puts .5 on the left hand side of 48, we substitute .5 for frc gives a line which is a reward as a function of cost
-
+    catch
+        return
+    end
     % B = tiledlayout(1,2);
     
     [the_min,the_max] = bounds(observed_p_appr,"all");
@@ -105,9 +112,9 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
     set(gcf,'renderer','Painters')
     if want_save
         if ~for_ml
-            saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_', string(subid), '_', string(story_num),'.fig'),"fig")
+            saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_', story_type, '_', string(subid), '_', string(story_num),'.fig'),"fig")
         end
-        saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_', string(subid), '_', string(story_num),'.png'),"png")
+        saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_',  story_type, '_', string(subid), '_', string(story_num),'.png'),"png")
         close all
         end
 

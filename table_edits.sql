@@ -1,5 +1,3 @@
-select * from human_dec_making_table_utep limit 10; 
-
 alter TABLE human_dec_making_table_utep
 add COLUMN eye_tracker_data_json text;
 
@@ -38,17 +36,19 @@ update human_dec_making_table_utep
 set left_gaze_coords = jsonb_path_query_array(eye_tracker_data_json, '$.gaze_data.left_gaze_point_on_display_area') 
 
 -- HR
-select heart_rate_data from human_dec_making_table_utep limit 100; 
+
+alter TABLE human_dec_making_table_utep
+add COLUMN heart_rate_json text;
+
+UPDATE human_dec_making_table_utep
+SET heart_rate_json  = heart_rate_data;
 
 ALTER TABLE human_dec_making_table_utep
-ALTER COLUMN heart_rate_data TYPE JSONB
+ALTER COLUMN heart_rate_json TYPE JSONB
 USING heart_rate_data::JSONB;
 
-alter table human_dec_making_table_utep 
-add COLUMN heart_rate type text
-
 update human_dec_making_table_utep
-set heart_rate_arr = jsonb_path_query_array(heart_rate_data, '$.hr') 
+set raw_heart_rate = jsonb_path_query_array(heart_rate_json, '$.hr') 
 
 -- afterwards 
 
@@ -57,3 +57,5 @@ ALTER COLUMN heart_rate_data TYPE text;
 
 ALTER TABLE human_dec_making_table_utep
 ALTER COLUMN eye_tracker_data TYPE text;
+
+select * from human_dec_making_table_utep limit 5;

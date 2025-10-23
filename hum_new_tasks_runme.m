@@ -4,13 +4,19 @@ datasource = 'PostgresJDBC'; %ENTER YOUR DATASOURCE NAME HERE, default should be
 username = 'postgres'; %ENTER YOUR USERNAME HERE, default should be "postgres"
 password = '1234'; %ENTER YOUR PASSWORD HERE, default should be "1234"
 
-% trial_word_length = create_trial_length_table("C:\Users\lrako\OneDrive\Documents\human dm\stories\task_types");
-%trial_word_length = load("trial_word_length.mat");
+trial_word_length = create_trial_length_table("C:\Users\lrako\OneDrive\Documents\human_dm\ingest helpers\stories\task_types");
 
 [new_trial_data, r_ratings, c_ratings] = prep_session_data(datasource, username, password, "human_dec_making_table_utep", trial_word_length);
-[old_trial_data, ~, ~] = prep_session_data(datasource, username, password, "human_dec_making_table", trial_word_length_table);
+[old_trial_data, ~, ~] = prep_session_data(datasource, username, password, "human_dec_making_table", trial_word_length);
 
 all_trial_data = [new_trial_data old_trial_data];
+
+all_data = [];
+for i = 1:length(new_trial_data)
+    all_data = [all_data; new_trial_data{i}];
+end
+
+%%
 
 story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
 
@@ -19,6 +25,7 @@ for i = 1:length(story_types)
     task_session_data = sessions_by_tasktype(all_trial_data, story);
     session_data{i} = task_session_data;
 end
+
 
 %% 
 

@@ -1,10 +1,10 @@
-function new_table = get_mse(sesh_table)
+function new_table = get_mse(sesh_table, clusterLabel)
 
-labels = unique(sesh_table.clusterLabels);
+labels = unique(sesh_table.(clusterLabel));
 new_table = [];
 for i = 1:length(labels)
     label = labels(i);
-    label_table = sesh_table(sesh_table.clusterLabels == label, :);
+    label_table = sesh_table(sesh_table.(clusterLabel) == label, :);
     mse = calc_mse(label_table);
     label_table.mse = repelem(mse, height(label_table), 1);
     new_table = [new_table; label_table];

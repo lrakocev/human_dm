@@ -1,5 +1,9 @@
 # ignore all .mat files
 *.fig
 *.zip
+*.png
+hmms/*/*.png
 /test_run/*
 /test_run/*.zip
+hmms/autoenc*mat
+*autoenc*mat

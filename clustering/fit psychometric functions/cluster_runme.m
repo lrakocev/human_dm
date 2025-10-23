@@ -1,8 +1,8 @@
 %% create new directory for data
 
-new_dir = 'C:\Users\lrako\OneDrive\Documents\human dm\test_run\no_filter_full_07';
+new_dir = 'C:\Users\lrako\OneDrive\Documents\human_dm\test_run\subject_lvl_oct2025';
 mkdir(new_dir)
-story_types = ["old_approach_avoid", "super", "approach_avoid", "social", "probability", "moral"];
+story_types = ["approach_avoid","obvious_supersense", "social", "probability", "moral", "old_approach_avoid"]; 
 for i = 1:length(story_types)
     sub_dir = new_dir + "/" + story_types(i);
     mk_new_dir_for_clusters(sub_dir) 
@@ -11,37 +11,30 @@ end
 
 %% get behavioral data
 
-load("C:\Users\lrako\OneDrive\Documents\human dm\ingest helpers\human data.mat")
+load("C:\Users\lrako\OneDrive\Documents\human dm\hum_data_oct25.mat")
 
 %% find session-cost sigmoids
 
-home_dir = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\no_filter_full_07\";
-story_types = ["approach_avoid", "social", "probability", "moral", "super"]; %, "old_approach_avoid"];
-data{1} = appr_avoid_sessions;
-data{2} = social_sessions;
-data{3} = probability_sessions;
-data{4} = moral_sessions;
-data{5} = super_sessions;
-
+home_dir = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\october_2025\";
+story_types = ["approach_avoid","obvious_supersense", "social", "probability", "moral", "old_approach_avoid"]; 
 by_session = 0;
-sig_type = "reward"; %% sigh - this should be "cost" for cost-lvl psychs, need to re-run
+sig_type = "cost"; 
 
 thresh = 0;
 is_sigmoidal = 1;
-create_sigmoids(home_dir, story_types, data, by_session, sig_type, thresh, is_sigmoidal);
+create_sigmoids(home_dir, story_types, session_data, by_session, sig_type, thresh, is_sigmoidal);
 
 %% find session sigmoids
 
-home_dir = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\sessions_oct_27\";
-story_types = ["approach_avoid", "social", "probability", "moral"];
-data{1} = appr_avoid_sessions;
-data{2} = social_sessions;
-data{3} = probability_sessions;
-data{4} = moral_sessions;
+home_dir = "C:\Users\lrako\OneDrive\Documents\human_dm\test_run\subject_lvl_oct2025\";
+story_types = ["approach_avoid","obvious_supersense", "social", "probability", "moral", "old_approach_avoid"]; 
+
+input_data = combined_data;
 by_session = 1;
 sig_type = "cost";
+is_sigmoidal = 1;
 thresh = 0.4;
-total_fit = create_sigmoids(home_dir, story_types, data, by_session, sig_type, thresh);
+total_fit = create_sigmoids(home_dir, story_types, input_data, by_session, sig_type, thresh, is_sigmoidal);
 
 %% get % sigmoidal vs non sigmoidal
 

@@ -13,7 +13,7 @@ function [table_of_data_dirs] = get_dirs_with_data(dir_with_all_sigmoid_data, va
     if nargin > 1
         directory_type = varargin{1};
     else
-        directory_type = "\*Sigmoid*Data";
+        directory_type = "\Sigmoid Data";
     end
     
     for i=1:length(all_directories_within_this_one)

@@ -8,7 +8,12 @@ for j = 1:length(file_array)
     actual_file = path_info(end);
     file_info = split(actual_file, "_");
     id = file_info(2);
-    story = file_info(4);
+    try
+        story = file_info(6); %4
+    catch
+        story = file_info(5);
+    end
+      
 
     story_list = split(story, ".");
     clean_story = story_list(1);

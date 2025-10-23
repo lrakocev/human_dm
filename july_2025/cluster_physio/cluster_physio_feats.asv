@@ -1,0 +1,22 @@
+load("new_trial_data.mat")
+
+all_data = [];
+for i = 1:length(new_trial_data)
+    all_data = [all_data; new_trial_d]
+
+%% eye-tracking viz
+
+figure
+scatter3(all_data.num_guesses, all_data.num_saccads, all_data.reaction_time)
+zlabel("num guessing periods")
+ylabel("num saccads")
+xlabel("reaction time")
+
+figure
+scatter3(all_data.reaction_time, all_data.num_saccads, all_data.pupil_diameter)
+xlabel("num guessing periods")
+ylabel("num saccads")
+zlabel("pupil diameter")
+
+%% heart-rate - need to re-run + re-calc features
+

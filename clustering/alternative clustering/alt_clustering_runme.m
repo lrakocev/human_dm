@@ -2,13 +2,26 @@
 
 % to get session data, need to run the hum_new_tasks_runme 
 
-load("C:\Users\lrako\OneDrive\Documents\human dm\for_dirk_updated.mat")
+load("C:\Users\lrako\OneDrive\Documents\human_dm\for_dirk_updated.mat")
 
-%% find session-cost sigmoids
+
+%% get subject-task level data
 
 story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
 
-sig_table = run_alt_fit(session_data,story_types, 0);
+for i = 1:length(story_types)
+    story = story_types(i);
+    task_combined_data = combine_for_map(all_trial_data, story);
+    combined_data{i} = task_combined_data;
+end
+
+
+%% find session-cost sigmoids
+
+input_data = combined_data;
+story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
+
+sig_table = run_alt_fit(input_data,story_types, 0);
 sig_table.clusterLabels = sig_table.subjectidnumber + "_" + sig_table.story_num + ".mat";
 
 %poly_table = run_alt_fit(data,story_types, 1);
@@ -17,9 +30,9 @@ sig_table.clusterLabels = sig_table.subjectidnumber + "_" + sig_table.story_num 
 %% clustering 2d sigs 
 
 colors = distinguishable_colors(30);
-save_to = "C:\Users\lrako\OneDrive\Documents\human dm\july_2025";
+save_to = "C:\Users\lrako\OneDrive\Documents\human_dm\july_2025";
 mkdir(save_to)
-file_name = "2d_clustering_0810";
+file_name = "2d_clustering_subject_lvl_all_data_oct25";
 feats = ["a_R","b_R","b_C"];
 centers = [0.5 0.2 -116;
     -1.5 -.9 -70;

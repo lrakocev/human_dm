@@ -1,13 +1,14 @@
-function [Mdl] = create_decision_tree(state_table, input_features, state_num, want_anova)
+function [Mdl] = create_decision_tree(state_table, input_features, state_var, want_anova, want_view)
 
-state_var = "state_" + state_num;
 feature_seqs = state_table(:, input_features);
 output_state = state_table.(state_var);
 
-Mdl = fitctree(feature_seqs, output_state);
+Mdl = fitctree(feature_seqs, output_state, 'MaxNumSplits', 25);
 
-view(Mdl)
-view(Mdl,'mode','graph')
+if want_view
+    view(Mdl)
+    view(Mdl,'mode','graph')
+end
 
 imp = predictorImportance(Mdl);
 

@@ -1,10 +1,15 @@
-function new_table = get_appr_bias(sesh_table)
+function new_table = get_appr_bias(sesh_table, clusterLabel)
 
-labels = unique(sesh_table.clusterLabels);
+labels = unique(sesh_table.(clusterLabel));
 new_table = [];
 for i = 1:length(labels)
     label = labels(i);
-    label_table = sesh_table(sesh_table.clusterLabels == label, :);
+    label_table = sesh_table(sesh_table.(clusterLabel) == label, :);
+
+    % removing repetitions
+    [~, unique_indices] = unique([label_table.rew,label_table.cost], 'stable','rows');
+    label_table = label_table(unique_indices, :);
+
     if ~isempty(label_table)
         mean_appr = mean(label_table.approach_rate, 'omitnan');
         max_appr = max(label_table.approach_rate);
