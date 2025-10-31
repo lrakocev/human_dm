@@ -1,7 +1,10 @@
-function input_table = compare_to_og_seq(hmm_row, all_data)
+function [input_table,states] = compare_to_og_seq(hmm_row, all_data)
 
-data_idx = hmm_row.actual_data_idx;
-input_table = all_data{data_idx};
+id = hmm_row.id;
+input_table = all_data(all_data.subjectidnumber == id, :);
+
+%data_idx = hmm_row.actual_data_idx;
+%input_table = all_data{data_idx};
 
 num_states = hmm_row.num_states;
 granularity = hmm_row.granularity;
@@ -10,7 +13,7 @@ t = get_matrix_from_row(hmm_row, "t", num_states*num_states, num_states);
 e = get_matrix_from_row(hmm_row, "e", num_states*granularity, granularity);
 symbols = string(1:granularity);
 
-features = string([hmm_row.features_1 hmm_row.features_2]);
+features = string([hmm_row.features_1 hmm_row.features_4]);
 
 seq_table = get_sequence_for_hmm(input_table, features, granularity);
 

@@ -116,13 +116,13 @@ full_autoencoder_table.auto_cluster = max_row_indices';
 
 %%
 
-scatter3(full_autoencoder_table.auto_x, full_autoencoder_table.auto_y, full_autoencoder_table.auto_z, 20, full_autoencoder_table.auto_cluster)
+scatter3(full_autoencoder_table.auto_x, full_autoencoder_table.auto_y, full_autoencoder_table.auto_z, 1)
 
 xlabel("auto x")
 ylabel("auto y")
 zlabel("auto z")
-title("auto-encoder clusters on decision-making maps")
-savefig("auto_encoder_clusters_7.fig")
+title("auto-encoder clusters on session decision-making maps")
+%savefig("auto_encoder_clusters_7.fig")
 
 %% separate clusters
 

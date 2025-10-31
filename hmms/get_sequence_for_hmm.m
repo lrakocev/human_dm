@@ -21,15 +21,6 @@ end
 seq_table = struct2table(seq_table);
 end
 
-function output = clean_date(row)
-
-char_date = char(row);
-strip = char_date(5:end-4);
-inputFormat = 'MMM dd HH:mm:ss.SSSSSS yyyy';
-output = datetime(strip, "InputFormat", inputFormat);
-
-end
-
 function abbrs = get_abbrs(str, num_lvls, want_abbr)
 
     if want_abbr

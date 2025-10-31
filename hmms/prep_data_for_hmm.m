@@ -1,9 +1,9 @@
-function [filtered_behavior_table, prim_table] = prep_data_for_hmm(home_dir,base_file_name,session_level)
+function [filtered_behavior_table, prim_table] = prep_data_for_hmm(home_dir,base_file_name,session_lvl)
 
 if ~session_lvl
-    load(home_dir + "clustering/july_2025/2d_clustering_subject_lvl_all_data_oct25.mat");
+    load(home_dir + "july_2025/2d_clustering_subject_lvl_all_data_oct25.mat");
 else
-    load(home_dir + "clustering/july_2025/2d_clustering_0810.mat");
+    load(home_dir + "clustering/alternative clustering/2d_sig_real.mat");
 end
 
 sig_table = renamevars(sig_table, "experiment", "story_type");
@@ -20,10 +20,15 @@ end
 
 sig_table_1d_messy = readtable(table_name);
 
-sig_table_1d = psychs_in_spec_cluster(sig_table_1d_messy,1);
+sig_table_1d = psychs_in_spec_cluster(sig_table_1d_messy,session_lvl);
 sig_table_1d = renamevars(sig_table_1d, "experiment", "story_type");
 
-behavior_sig_full = outerjoin(behavior_2d_sig_join, sig_table_1d, "MergeKeys", 1, "Keys", {'subjectidnumber','story_num','story_type','cost'});
+if ~session_lvl
+    behavior_sig_full = outerjoin(behavior_2d_sig_join, sig_table_1d, "MergeKeys", 1, "Keys", {'subjectidnumber','story_num','story_type'});
+
+else
+    behavior_sig_full = outerjoin(behavior_2d_sig_join, sig_table_1d, "MergeKeys", 1, "Keys", {'subjectidnumber','story_num','story_type','cost'});
+end
 
 if ~session_lvl
     load(home_dir + "autoencoder_table.mat");
@@ -47,13 +52,7 @@ end
 
 
 filtered_behavior_table = renamevars(filtered_behavior_table, "clusterLabels_sig_table_1d", "clusterLabels");
-range = get_interactions(filtered_behavior_table, "clusterLabels_behavior_2d_sig_join");
-%subj_var = get_subj_var(cluster_mse);
-sesh_var = get_sesh_var(range,"clusterLabels_behavior_2d_sig_join");
-impulse = get_impulsivity(sesh_var,"clusterLabels_behavior_2d_sig_join");
-prim_table = get_appr_bias(impulse,"clusterLabels_behavior_2d_sig_join");
-%cluster_mse = get_cluster_mse(appr_bias);
-%prim_table = get_mse(cluster_mse,"clusterLabels_behavior_2d_sig_join");
+prim_table = add_prims_to_table(filtered_behavior_table, "clusterLabels_behavior_2d_sig_join");
 
 
 end

@@ -3,6 +3,11 @@ function [adj_approach_data,subject_prefs] = clean_ingested_new_task(adj_results
 adj_results.reward_level = string(adj_results.reward_level);
 adj_results.cost_level = string(adj_results.cost_level);
 joined_results = outerjoin(adj_results, trial_word_length, 'MergeKeys', 1, 'Keys', ["reward_level","cost_level","tasktypedone"]);
+
+% deleting these to avoid redundancy - they came from the merge above
+joined_results.task = [];
+joined_results.story = [];
+
 filtered_join = joined_results(joined_results.subjectidnumber ~= "" & joined_results.rew ~= 0, :);
 
 filtered_join = removevars(filtered_join,{'reward_level','cost_level'});
@@ -41,8 +46,10 @@ for i = 1:N
 
     if contains(table_name, "utep")
         pupil_diameter = rowfun(@clean_pupil_diam, sub_results, "InputVariables",...
-            "pupil_diameter", "OutputVariableNames", "mean");
+            "pupil_diameter",  "NumOutputs", 2, "OutputVariableNames", ["mean", "timesteps"]);
         sub_results.pupil_diameter = pupil_diameter.mean;
+        sub_results.num_et_timesteps = pupil_diameter.timesteps;
+
 
         heart_rate = rowfun(@clean_hr, sub_results, "InputVariables", ...
             "raw_heart_rate", "NumOutputs", 4, "OutputVariableNames", {'mean_hr', 'max_hr', 'min_hr','direction'});
@@ -72,6 +79,8 @@ for i = 1:N
         sub_results.max_hr = zeros(height(sub_results),1);
         sub_results.min_hr = zeros(height(sub_results),1);
         sub_results.direction = zeros(height(sub_results),1);
+        sub_results.num_et_timesteps = zeros(height(sub_results),1);
+
     end
     
     subject_prefs(i) = {sub_prefs};
@@ -79,12 +88,13 @@ for i = 1:N
 end
 end
 
-function mean_diam = clean_pupil_diam(row)
+function [mean_diam,timesteps] = clean_pupil_diam(row)
 
     lvl1 = replace(string(row),'[','');
     lvl2 = str2double(split(lvl1,','));
     filtered = lvl2(lvl2 > 0);
     mean_diam = mean(filtered, 'omitnan');
+    timesteps = length(filtered);
 
 end
 

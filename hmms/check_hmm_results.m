@@ -1,19 +1,20 @@
 %% init table
 
-[filtered_behavior_table,prim_table] = prep_data_for_hmm("", "for_dirk_updated.mat");
+[filtered_behavior_table,prim_table] = prep_data_for_hmm("", "hum_data_oct25.mat");
 %gaze_behavior_table = prep_data_for_hmm("", "human_gaze_data.mat");
 
 id_data = group_by_feature(prim_table, "subjectidnumber");
 session_data = group_same_day_stories(prim_table);
 task_data = group_by_feature(prim_table, "story_type");
 
-all_data = [id_data session_data task_data];
+hmm_data = [id_data session_data task_data];
 
 
 %% viz of current space
 
+%midway_hmm_table = readtable("C:\Users\lrako\OneDrive\Documents\human_dm\hmm_trial_lvl_2_1.xlsx");
 
-midway_hmm_table = readtable("C:\Users\lrako\OneDrive\Documents\server_output\2d\hmm_2d_data_states_5_1.xlsx");
+midway_hmm_table = readtable("C:\Users\lrako\OneDrive\Documents\server_output\trials\hmm_trial_lvl_4_1.xlsx");
 viz = 1;
 
 x = min(height(midway_hmm_table), 10000);
@@ -51,11 +52,11 @@ filter_t_matrices = sortrows(filter_t_matrices,"bic","ascend");
 ex_row = filter_t_matrices(1,:);
 state_table = compare_to_og_seq(ex_row, all_data);
 
-created_features = ["r_interact","cluster_mse","r_impulse","mean_appr","max_appr","min_appr","mse" ];
+created_features = ["r_interact","r_impulse","mean_appr", "c_impulse", "c_interact", "sesh_var" ];
 
-all_features = ["r_interact","cluster_mse","r_impulse","mean_appr","max_appr",...
-    "min_appr","mse", "clusterY", "clusterZ", "a_R","b_R", "a_C", ...
+all_features = ["r_interact","r_impulse","mean_appr","max_appr",...
+    "min_appr", "clusterY", "clusterZ", "a_R","b_R", "a_C", ...
     "b_C", "approach_rate", "pupil_diameter", "rew", "cost", "heart_rate", ...
     "hunger", "tiredness", "pain", "story_prefs"];
-state_num = 1;
-[imp, kfoldloss] =  create_decision_tree(state_table, created_features, state_num);
+state_name = "state_2";
+[Mdl] =  create_decision_tree(state_table, all_features, state_name, 0, 1);

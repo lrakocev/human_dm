@@ -23,7 +23,7 @@ category = story_category(story_category.story_type == type & ...
 try
     category = category(1);
 catch
-    category = "okay";
+    category = "unlabeled";
 end
 
 end
