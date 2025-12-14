@@ -18,8 +18,12 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
 
             r_c_table =  appr_table(appr_table.cost == c & appr_table.rew == r,:);
             if ~isempty(r_c_table)
-                if isempty(varargin{1})
-                    ps(i) = r_c_table.approach_rate;  %get the approach rate when cost = c and rew =r, and store it in ps
+                if isempty(varargin)
+                    if height(r_c_table) > 1
+                        ps(i) = mean(r_c_table.approach_rate,'omitnan'); 
+                    else
+                         ps(i) = r_c_table.approach_rate; 
+                    end
                 else
                     variable = varargin{1};
                     ps(i) = r_c_table.(variable{1});

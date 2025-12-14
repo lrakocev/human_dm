@@ -1,4 +1,4 @@
-function [func,r] = fit_eng_model(x,y,c,story_pref, pupil_diam, hunger, tiredness, pain);
+function [func,r] = fit_eng_model(x,y,c,story_pref, pupil_diam, hunger, tiredness, pain)
 
 f1 = @(b,x) 100./(1+exp(-(b(1) + b(4) .* hunger) .* (b(2).*x - b(3)*c)));
 mdl1 = fitnlm(x.', y.', f1, [1 1 1 1]);

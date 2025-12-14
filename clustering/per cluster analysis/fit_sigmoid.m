@@ -10,15 +10,17 @@ function [func,r] = fit_sigmoid(x,y,c)
 
 [fitobject5, gof5] = fit(x.',y.','a*(x-b)^(2)+c');
 
-if gof3.rsquare >= .6
+thresh = 0.7; 
+
+if gof3.rsquare >= thresh
     plot(fitobject3,c,x.',y.')
     r = gof3.rsquare;
     func = fitobject3;
-elseif gof4.rsquare >= .6
+elseif gof4.rsquare >= thresh
     plot(fitobject4,c,x.',y.')
     r = gof4.rsquare;
     func = fitobject4;
-elseif gof2.rsquare >= .6
+elseif gof2.rsquare >= thresh
     plot(fitobject2,c,x.',y.')
     r = gof2.rsquare;
     func = fitobject4;

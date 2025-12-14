@@ -1,13 +1,13 @@
 function all_state_mean = define_states_via_spider(state_table, input_features, state_var, want_view)
 
-num_states = length(unique(state_table.(state_var)));
+unique_states = unique(state_table.(state_var));
 
 all_state_mean = [];
 all_state_std = {};
 state_names = [];
-for j = 1 : num_states
-    
-    curr_state_table = state_table(state_table.(state_var) == j, :);
+for j = 1 : length(unique_states)
+    state = unique_states(j);
+    curr_state_table = state_table(state_table.(state_var) == state, :);
 
     feature_seqs = curr_state_table(:, input_features);
 
@@ -19,7 +19,7 @@ for j = 1 : num_states
 
     all_state_mean = [all_state_mean; mean_arr];
     all_state_std{j} = [std_arr; std_arr];
-    state_names = [state_names; "state " + j];
+    state_names = [state_names; "state " + state];
     
 end
 

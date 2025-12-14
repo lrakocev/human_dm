@@ -1,0 +1,63 @@
+function viz_state_blocks(best_hmms, all_data)
+
+for j = 1:length(best_hmms)
+    hmm_row = best_hmms{j};
+
+    if ~isempty(hmm_row)
+        [state_table,~] = compare_to_og_seq(hmm_row, all_data);
+       
+
+        id = hmm_row.id;
+        state_var = hmm_row.plausible_states{1};
+
+        if length(state_var) > 1
+            state_var = state_var(1);
+        end
+
+        state_var_name = "state_" + state_var;
+
+        state_table.trial_index = [1:height(state_table)]';
+        unique_tasks = unique(state_table.story_type);
+        unique_tasks = unique_tasks(~ismissing(unique_tasks));
+        colors = distinguishable_colors(length(unique_tasks));
+
+
+        figure
+        cols = [];
+        for i = 1:length(unique_tasks)
+            task = unique_tasks(i);
+            task_table = state_table(state_table.story_type == task, :);
+            color = colors(i,:);
+            
+            col = bar(task_table.trial_index, task_table.(state_var_name), 'FaceColor', color);
+            cols = [cols; col];
+            hold on
+        end
+       
+        [up, lo] = envelope(state_table.(state_var_name), 10, 'analytic');
+
+        plot(up)
+        
+        title("states for subj=" + id)
+        legend(cols,unique_tasks)
+        xlabel("trials")
+        ylabel("states")
+
+         states_in_task_table = groupcounts(state_table, ["story_type",state_var_name]);
+
+        figure
+        tiledlayout(1,length(unique_tasks))
+        for j = 1:length(unique_tasks)
+            task = unique_tasks(j);
+            task_rows = states_in_task_table(states_in_task_table.story_type == task, :);
+            nexttile
+            bar(task_rows.(state_var_name),task_rows.GroupCount)
+            xticklabels(task_rows.(state_var_name))
+            title(unique_tasks(j))
+
+        end
+        sgtitle("states in tasks for subject = " + id )
+    end
+end
+
+end

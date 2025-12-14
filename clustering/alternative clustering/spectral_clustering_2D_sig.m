@@ -1,9 +1,13 @@
-function spectral_clustering_2D_sig(data_table, feats, colors, centers, save_to, file_name)
+function spectral_clustering_2D_sig(data_table, feats, colors, centers, num_clusters, save_to, file_name, type)
 
-xVsYVsZ = [data_table.a_R,data_table.b_R, data_table.b_C];
+xVsYVsZ = [data_table.(feats(1)),data_table.(feats(2)), data_table.(feats(3))];
 labels = [data_table.clusterLabels,data_table.clusterLabels];
 
-opt = fcmOptions(ClusterCenters=centers,NumClusters = size(centers,1));
+if ~isempty(centers)
+    opt = fcmOptions(ClusterCenters=centers,NumClusters = size(centers,1));
+else
+    opt = fcmOptions(NumClusters = num_clusters);
+end
 [centers_determined_by_fcm,U,~,info] = fcm(xVsYVsZ,opt);
 mpc = calculate_mpc(U);
 maxU = max(U);
@@ -39,14 +43,14 @@ legend(scatters,string(1:optimum_number_of_clusters)); % string(unique_indexes)
 xlabel(feats(1));
 ylabel(feats(2));
 zlabel(feats(3))
-title("clustering for 2d sig fit, mpc = " + string(mpc))
+title("clustering for " + type + " fit, mpc = " + string(mpc))
 subtitle("Created by 2d clustering")
 hold off;
 xlim([-100 170])
 ylim([-100 120])
 zlim([-140 70])
 set(gcf,'renderer','Painters')
-saveas(gcf,save_to + "\2d_spec_clustering" + file_name, "fig")
-saveas(gcf,save_to + "\2d_spec_clustering" + file_name, "svg")
+saveas(gcf,save_to + "\" + file_name, "fig")
+saveas(gcf,save_to + "\" + file_name, "svg")
 
 end

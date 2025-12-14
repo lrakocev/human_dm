@@ -1,152 +1,144 @@
 %% compare hmms across people 
 
-%[filtered_behavior_table,prim_table] = prep_data_for_hmm("", "for_dirk_updated.mat");
-%gaze_behavior_table = prep_data_for_hmm("", "human_gaze_data.mat");
+init_table = "hum_data_oct25.mat"; 
 
-load("hum_data_oct25.mat")
-%prim_table = add_prims_to_table(all_data);
-
-%joined_data = outerjoin(all_data, prim_table, "MergeKeys", 1, "Keys",  {'subjectidnumber','story_num','story_type'});
+% for trial feats data is nov25 - new_human_data_nov25.mat
+% for trial data is oct 25 - hum_data_oct25.mat
+load(init_table)
 
 id_data = group_by_feature(all_data, "subjectidnumber");
 
+filtered_behavior_table = prep_data_for_hmm("",init_table,0);
 
-%%
 
+%% get hmm tables
+
+state_options = 2:7;
 base_dir = "C:\Users\lrako\OneDrive\Documents\server_output\trials";
-%table_3d = readtable(base_dir + "\hmm_trial_lvl_3_1.xlsx");
-%able_4d = readtable(base_dir + "\hmm_trial_lvl_4_1.xlsx");
-table_5d = readtable(base_dir + "\hmm_trial_lvl_5_1.xlsx");
-table_6d = readtable(base_dir + "\hmm_trial_lvl_6_1.xlsx");
-table_7d = readtable(base_dir + "\hmm_trial_lvl_7_1.xlsx");
-
-%%
-table_5d = table_5d(~isnan(table_5d.id) & table_5d.id > 1, :);
-table_6d = table_6d(~isnan(table_6d.id) & table_6d.id > 1, :);
-table_7d = table_7d(~isnan(table_7d.id) & table_7d.id > 1, :);
-
-hmm_tables = { table_5d; table_6d; table_7d};
-
-%% step 1: pick best hmm for each person based on bic, mpc, dead states
-% + fit of the states (fit of the states is difficult)
-%% step 2: get definition of states per each hmm using ctree 
-
-created_features = ["pupil_diameter", "approach_rate",...
-    "rew", "cost", "reaction_time", "num_guesses", "num_saccads"]; 
-
-%    "r_interact","r_impulse"];
-
-all_features = ["r_interact","cluster_mse","r_impulse","mean_appr","max_appr",...
-    "min_appr","mse", "clusterY", "clusterZ", "a_R","b_R", "a_C", ...
-    "b_C", "approach_rate", "pupil_diameter", "rew", "cost", "heart_rate", ...
-    "hunger", "tiredness", "pain", "story_prefs"];
-
-state_var = "state_1";
-
-all_people_state_table = [];
-ids = unique(table_5d.id);
-best_hmms = {};
-for j = 1 : length(ids)
-    id = ids(j);
+hmm_filename = "\hmm_trial_lvl_"; 
+counter = 1;
+for s = state_options
     try
-        best_hmm_row = get_best_subj_row_by_bic(hmm_tables, all_data, id);
-        best_hmms{j} = best_hmm_row;
-    
-        state_table = compare_to_og_seq(best_hmm_row, all_data);
-
-        state_1_num_states = length(unique(state_table.state_1));
-        state_2_num_states = length(unique(state_table.state_2));
-
-        if state_2_num_states < state_1_num_states
-            state_var = "state_1";
-        else 
-            state_var = "state_2";
-        end
-
-        define_states_via_spider(state_table, created_features, state_var, 1)
-        %[Mdl] = create_decision_tree(state_table, created_features, state_var, 0, 1);
-        %state_description_table = describe_leaf_nodes(Mdl);
-        %all_people_state_table = [all_people_state_table; state_description_table];
+        curr_table =  readtable(base_dir + hmm_filename + string(s) + "_1.xlsx","ReadVariableNames",1);
     catch
         continue
     end
+    hmm_tables{counter} = curr_table;
+    counter = counter + 1;
 end
 
-%% best hmms
+%% get best hmms + viz
 
-num_states = [];
-bics = [];
-mpcs = [];
-for i = 1:length(best_hmms)
-    curr_hmm = best_hmms{i};
-    if ~isempty(curr_hmm)
-        bics = [bics; curr_hmm.bic];
-        mpcs = [mpcs; curr_hmm.mpcs_1];
-        num_states = [num_states; curr_hmm.num_states];
+
+current_features = ["pupil_diameter", "approach_rate",...
+    "rew", "cost", "reaction_time", "num_guesses", "num_saccads"]; 
+
+all_people_state_table = [];
+all_ids = hmm_tables{1}.id;
+ids = unique(all_ids(all_ids > 1000));
+best_hmms = {};
+best_funcs = {};
+state_tables = {};
+all_hmm_states = [];
+all_state_funcs = [];
+for j = 1 : length(ids)
+    id = ids(j);
+
+    try
+        [best_hmm_row, state_table, state_var, spider_outcome] = viz_states_in_best_hmm([], id, hmm_tables, all_data, filtered_behavior_table, current_features, 0);  
+        [state_funcs] = create_state_psychs(state_table,state_var,0);
+        all_state_funcs = [all_state_funcs state_funcs];
+        best_funcs{j} = state_funcs;
+        best_hmms{j} = best_hmm_row;
+        state_tables{j} = state_table;
+        all_hmm_states = [all_hmm_states; spider_outcome];
+        close all
+    catch
+        continue
     end
+
 end
 
-figure
-histogram(bics)
-title("bics of best hmms")
+compare_state_psychs_to_existing_clusters("all_clusters_subject.xlsx",all_state_funcs)
+compare_state_psychs_to_existing_clusters("all_clusters.xlsx",all_state_funcs)
+
+%% 
 
 figure
-histogram(mpcs)
-title("mpcs of best hmms")
 
-figure
-scatter(mpcs, bics)
-xlabel("mpc")
-ylabel("bic")
+unique_tasks = unique(all_clusters.experiment);
+colors = distinguishable_colors(length(unique_tasks));
+
+for j = 1:length(unique_tasks)
+    task = unique_tasks(j);
+    task_sessions = all_clusters(string(all_clusters.experiment) == task, :);
+    c = colors(j,:);
+    scatter3(task_sessions.clusterX, task_sessions.clusterY, task_sessions.clusterZ, 20, c)
+    hold on
+end
+
+legend(unique_tasks)
 
 %%
 
-all_hmm_states = [];
-for k = 1 : length(best_hmms)
-    curr_hmm = best_hmms{k};
-    if ~isempty(curr_hmm)
-        state_table = compare_to_og_seq(curr_hmm, all_data);
-    
-        state_1_num_states = length(unique(state_table.state_1));
-            state_2_num_states = length(unique(state_table.state_2));
-    
-            if state_2_num_states < state_1_num_states
-                state_var = "state_1";
-            else 
-                state_var = "state_2";
+current_features = ["pupil_diameter", "approach_rate",...
+    "rew", "cost", "reaction_time", "num_guesses", "num_saccads"]; 
+
+no_good_fit = 0;
+relaxed_state_funcs = [];
+for i = 1:length(best_hmms)
+    curr_best_hmms = best_hmms{i};
+    if ~isempty(curr_best_hmms)
+        [best_hmm_row, state_tables, state_vars, spider_outcome] = viz_states_in_best_hmm(curr_best_hmms, id, hmm_tables, all_data, filtered_behavior_table, current_features, 0);   
+        for k = 1:length(state_tables)
+            state_table = state_tables{k};
+            state_var = state_vars{k};
+            try
+                [state_funcs] = create_state_psychs(state_table,state_var,0);
+                close all
+            catch
+                continue
+                no_good_fit = no_good_fit + 1;
             end
-    
-        all_state_mean = define_states_via_spider(state_table, created_features, state_var, 0);
-        all_hmm_states = [all_hmm_states; all_state_mean];
+            relaxed_state_funcs = [relaxed_state_funcs state_funcs];
+        end
     end
 end
 
-all_hmm_states_table = array2table(all_hmm_states, 'VariableNames', created_features);
+compare_state_psychs_to_existing_clusters("all_clusters_subject.xlsx",relaxed_state_funcs)
 
-%% find clusters 
+%%
 
-graphed_feats = ["num_guesses", "reaction_time", "approach_rate"];
-clustered_feats = {'pupil_diameter','approach_rate','reaction_time','num_guesses'};
-all_mpcs = [];
+num_clusters = 4;
 
-non_nan_hmm_tble = all_hmm_states_table(~isnan(all_hmm_states_table.pupil_diameter), :);
+coords = [all_trial_table.x_coord,all_trial_table.y_coord,all_trial_table.z_coord];
 
-combos = nchoosek(all_hmm_states_table.Properties.VariableNames, 2);
-for j = 1:length(combos) % 3: 40
-    combo = combos(j,:);
-    feat1 = combo{1};
-    feat2 = combo{2};
+figure
+scatter3(coords(:,1), coords(:,2), coords(:,3))
 
+[index,V,D] = spectralcluster(coords,num_clusters,'Method','euclidean');
+unique_indexes = unique(index);
 
-    figure
-    scatter(non_nan_hmm_tble.(feat1),non_nan_hmm_tble.(feat2) )
-    xlabel(feat1)
-    ylabel(feat2)
-    
-     %mpc = try_clustering_hmm_states(all_hmm_states_table, j, clustered_feats, graphed_feats, 1);
-     %all_mpcs = [all_mpcs; mpc];
+all_trial_table.dm_space_id = index;
+
+figure
+for k = 1:length(unique_indexes)
+    dm_space_table = all_trial_table(all_trial_table.dm_space_id == k, :);
+
+    nexttile
+    make_dec_making_plots(dm_space_table,"","",1,0,0,"",0)
+    title("map for cluster " + k)
+
 end
 
+figure
+colors = distinguishable_colors(num_clusters);
+scats = [];
+for m = 1:length(unique_indexes)
+    dm_space_table = all_trial_table(all_trial_table.dm_space_id == m, :);
 
-%figure
-%bar(3:40, all_mpcs)
+    scat = scatter3(dm_space_table.x_coord, dm_space_table.y_coord, dm_space_table.z_coord, 100, colors(m,:), 'X');
+    scats = [scats; scat];
+    hold on
+end
+legend(scats)
