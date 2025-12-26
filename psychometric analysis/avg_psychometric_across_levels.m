@@ -1,4 +1,4 @@
-function [h,all,lvl_lens] = avg_psychometric_across_levels(approach_data, type, constant, story_type, path_to_save,want_save)
+function [h,all,lvl_lens] = avg_psychometric_across_levels(approach_data, type, constant, story_type, color, path_to_save,want_save)
 
 if want_save
     figure
@@ -56,9 +56,9 @@ num_subjects = length(unique(id_list));
 hold on
 means = mean(all,2, 'omitnan');
 s = std(all, 0, 2) / sqrt(length(all));
-plot(means,'LineWidth',5);
+plot(means,'LineWidth',5,'Color',color);
 hold on
-h = errorbar(1:4,means,s,'LineWidth',5);
+h = errorbar(1:length(means),means,s,'LineWidth',5);
 hold off
 xlabel(xlabel_str)
 ylabel(ylabel_str)

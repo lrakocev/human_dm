@@ -1,5 +1,5 @@
 curr_sheet = "avg_data"; % "win_money"
-imt_table = readtable("all_k_subject_imt_data.xlsx","Sheet",curr_sheet,"NumHeaderLines",0);
+imt_table = readtable("C:\Users\lrako\OneDrive\Documents\human_dm_data\all_k_subject_imt_data.xlsx","Sheet",curr_sheet,"NumHeaderLines",0);
 
 rew = imt_table.Rew;
 cost = imt_table.Cost;
@@ -63,9 +63,10 @@ mt_sinai_trial_table = struct2table(mt_sinai_trial_table);
 %%
 
 num_clusters = 4;
-mt_sinai_cluster_table = sinai_ghrelin_per_cluster(mt_sinai_trial_table, num_clusters);
+k01_home_folder = "C:/Users/lrako/OneDrive/Documents/human_dm_data";
+mt_sinai_cluster_table = sinai_ghrelin_per_cluster("mt_sinai_clusters_2.xlsx",[], num_clusters, k01_home_folder);
 
-writetable(mt_sinai_clusters,"mt_sinai_clusters.xlsx","WriteMode","append")
+%writetable(mt_sinai_cluster_table,"mt_sinai_clusters_2.xlsx","WriteMode","append")
 
 %%
 

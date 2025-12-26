@@ -3,7 +3,7 @@ function compare_state_psychs_to_existing_clusters(cluster_filename,state_funcs)
 cluster_table = readtable(cluster_filename);
 
 figure
-scatter3(cluster_table.clusterX, cluster_table.clusterY, cluster_table.clusterZ,1,'b','o')
+scatter3(cluster_table.clusterX, cluster_table.clusterY, cluster_table.clusterZ,1,'r','o')
 
 hold on
 scatters = [];

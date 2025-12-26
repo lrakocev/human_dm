@@ -1,4 +1,4 @@
-function [func, type] = cell_data_single_psych(trial_table)
+function [func] = cell_data_single_psych(trial_table)
 
 rews = unique(trial_table.Solenoid);
 costs = unique(trial_table.LED);
@@ -19,8 +19,6 @@ for r = 1:length(rews)
 end
 
 summary_table = struct2table(summary_table);
-summary_table = summary_table(~isnan(summary_table.licks),:);
-
 rew_table = summary_table(summary_table.c == 0, :);
 
 x = rew_table.r;
@@ -33,7 +31,5 @@ while counter < 20 && gof_sig.rsquare < .7
     [func, gof_sig] = fit(x,y,'(a/(1+b*exp(-c*(x))))');
     counter = counter+1;
 end 
-
-type = "sigmoid";
 
 end

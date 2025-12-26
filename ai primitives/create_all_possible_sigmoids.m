@@ -1,13 +1,13 @@
 excel_limit = 100000;
-file_name = "sigmoid_excel_file";
+file_name = "sigmoids_by_5s_excel_file";
 row_count = 0;
 doc_num = 1;
 
 x = [1 2 3 4];
 
-%all_combos = combinations(1:100, 1:100, 1:100, 1:100);
+all_combos = combinations(1:5:100, 1:5:100, 1:5:100, 1:5:100);
 
-for j = 8761:height(all_combos)
+for j = 1:height(all_combos)
     row = [];
     combo = all_combos(j,:);
     lvl1 = combo.Var1;
