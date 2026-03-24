@@ -25,8 +25,8 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
                          ps(i) = r_c_table.approach_rate; 
                     end
                 else
-                    variable = varargin{1};
-                    ps(i) = r_c_table.(variable{1});
+                    variable = string(varargin{1});
+                    ps(i) = mean(r_c_table.(variable),'omitnan');
                 end
             else
                 ps(i) = NaN;
@@ -43,8 +43,10 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
     mean_p = mean(ps,'omitnan'); %calculate the mean of the ps array 
     ps = fillmissing(ps,'constant',mean_p);%fill in any missing values with the mean of the rest
 
-    ps = ps/100; %make the approach percentages in a decimal instead of a whole number
-    observed_p_appr = observed_p_appr / 100; %make the matrix of approach_rate a decimal instead of a whole number
+    if variable == "approach_rate"
+        ps = ps/100; %make the approach percentages in a decimal instead of a whole number
+        observed_p_appr = observed_p_appr / 100; %make the matrix of approach_rate a decimal instead of a whole number
+    end
 
     if want_scale
         min_p = min(ps);
@@ -76,7 +78,7 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
     [the_min,the_max] = bounds(observed_p_appr,"all");
     imagesc(observed_p_appr);%original
     % imagesc(flipud(observed_p_appr)) 
-    colormap("default");
+    colormap default
     if ~for_ml
         cb = colorbar;
         try
@@ -116,8 +118,12 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
     set(gcf,'renderer','Painters')
     if want_save
         if ~for_ml
+            new_dir = strcat(path_to_save,'\',story_type);
+            mkdir(new_dir)
+
             saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_', story_type, '_', string(subid), '_', string(story_num),'.fig'),"fig")
         end
+        
         saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_',  story_type, '_', string(subid), '_', string(story_num),'.png'),"png")
         close all
         end

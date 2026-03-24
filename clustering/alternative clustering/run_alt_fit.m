@@ -1,4 +1,4 @@
-function full_table = run_alt_fit(data, story_types, want_poly)
+function full_table = run_alt_fit(data, story_types, want_poly, want_sig)
 
 full_table = [];
 for s = 1:length(story_types)
@@ -7,8 +7,10 @@ for s = 1:length(story_types)
             
     if want_poly
         curr_table = get_poly_fit(combined_data, story_type);
-    else
+    elseif want_sig
         curr_table = get_2d_sig_fit(combined_data, story_type);
+    else
+        curr_table = fit_nnmf(combined_data);
     end
     full_table = [full_table; curr_table];
         

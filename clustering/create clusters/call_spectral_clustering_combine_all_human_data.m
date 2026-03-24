@@ -1,4 +1,4 @@
-function table_of_data = call_spectral_clustering_combine_all_human_data(table_of_dir,directory_where_cluster_table_should_be_saved,epsilon,given_number_of_clusters,colors,method,is_big,file_name,isolate_task)
+function table_of_data = call_spectral_clustering_combine_all_human_data(table_of_dir,directory_where_cluster_table_should_be_saved,epsilon,given_number_of_clusters,colors,method,is_big,file_name,isolate_task,use_sign)
 table_of_data = cell2table(cell(0,5),"VariableNames",["A","B","C","D","E"]);
 directory_where_cluster_table_should_be_saved = create_a_file_if_it_doesnt_exist_and_ret_abs_path(directory_where_cluster_table_should_be_saved);
 
@@ -19,8 +19,14 @@ if isempty(isolate_task)
 else 
     task = isolate_task;
 end
+
 raw_xVsYVsZ = [table_of_data.A,table_of_data.B,table_of_data.C];
-xVsYVsZ = log(abs(raw_xVsYVsZ));
+if use_sign
+    xVsYVsZ = [log(abs(table_of_data.A)) .* sign(table_of_data.A),...
+        log(abs(table_of_data.B)) .* sign(table_of_data.B), log(abs(table_of_data.C)) .* sign(table_of_data.C) ];
+else
+    xVsYVsZ = log(abs(raw_xVsYVsZ));
+end
 labels = [table_of_data.D,table_of_data.D];
 
 % [~,V_temp,D_temp] = spectralcluster(xVsYVsZ,5);
@@ -57,6 +63,7 @@ xlabel("log(Abs(Max))");
 zlabel("log(abs(slope))");
 title("spectral clustering")
 subtitle("Created by call_spectral_clustering_combine_all_human_data")
+saveas(gcf,directory_where_cluster_table_should_be_saved + "\" + file_name + ".fig")
 % subtitle(strcat(task," DBCV:",string(validity)," Created by call_spectral_clustering_combine_all_human_data"))
 hold off;
 

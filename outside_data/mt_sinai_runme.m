@@ -34,6 +34,10 @@ for j = 1:length(var_names)
     end
 end
 
+%% can just load the existing fit sigmoid data - this is fit to avg_data
+
+load("C:\Users\lrako\OneDrive\Documents\human_dm\outside_data\mt_sinai_trial_table.mat")
+
 %% fitting sigmoids to the imt data
 
 want_plot = 0;
@@ -44,16 +48,10 @@ for j = 1:length(unique_ids)
     [func,type] = create_psychs_for_mt_sinai(imt_formatted, id, want_plot);
     row.id = id; 
     row.type = type;
-    if type == "sigmoid"
-        row.x_coord = log(abs(func.a));
-        row.y_coord = log(abs(func.b));
-        row.z_coord = log(abs(func.c));
-    else
-        row.x_coord = func.a;
-        row.y_coord = func.b;
-        row.z_coord = func.c;
-    end
-
+    
+    row.x_coord = func.a;
+    row.y_coord = func.b;
+    row.z_coord = func.c;
 
     mt_sinai_trial_table = [mt_sinai_trial_table; row];
 end
@@ -63,28 +61,19 @@ mt_sinai_trial_table = struct2table(mt_sinai_trial_table);
 %%
 
 num_clusters = 4;
+want_sign = 0;
 k01_home_folder = "C:/Users/lrako/OneDrive/Documents/human_dm_data";
-mt_sinai_cluster_table = sinai_ghrelin_per_cluster("mt_sinai_clusters_2.xlsx",[], num_clusters, k01_home_folder);
+save_to = "C:\Users\lrako\OneDrive\Documents\human_dm\dec_2025\mt_sinai_original";
+mkdir(save_to)
 
-%writetable(mt_sinai_cluster_table,"mt_sinai_clusters_2.xlsx","WriteMode","append")
+existing_table = "C:\Users\lrako\OneDrive\Documents\human_dm\dec_2025\mt_sinai_original\mt_sinai_clusters_original.xlsx";
+mt_sinai_cluster_table = sinai_ghrelin_per_cluster...
+    (existing_table, mt_sinai_trial_table, num_clusters, k01_home_folder, want_sign, save_to);
+
+%writetable(mt_sinai_cluster_table,save_to + "\mt_sinai_clusters_original.xlsx","WriteMode","append")
 
 %%
 
-%400s = MDD
-disorder_sinai = mt_sinai_trial_table(contains(mt_sinai_trial_table.id, "K4"),:);
-healthy_sinai = mt_sinai_trial_table(contains(mt_sinai_trial_table.id, "K5"),:);
-
-cluster_table = readtable("all_clusters_subject.xlsx");
-
-figure
-scatter3(cluster_table.clusterX, cluster_table.clusterY, cluster_table.clusterZ,1,'b','o')
-
-hold on 
-scatter3(healthy_sinai.x_coord, healthy_sinai.y_coord, healthy_sinai.z_coord,'g','x')
-
-hold on 
-scatter3(disorder_sinai.x_coord, disorder_sinai.y_coord, disorder_sinai.z_coord,'r','x')
-
-legend(["our task"; "healthy mt sinai"; "mdd mt sinai"])
-
-title("mt sinai: " + curr_sheet + " vs our task - including poorly fit sigmoids")
+save_to = "C:\Users\lrako\OneDrive\Documents\human_dm\dec_2025\mt_sinai_original";
+want_sign = 0;
+mt_sinai_healthy_v_disorder_plot(mt_sinai_trial_table, want_sign, save_to)

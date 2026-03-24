@@ -2,38 +2,66 @@
 
 % to get session data, need to run the hum_new_tasks_runme 
 
-load("C:\Users\lrako\OneDrive\Documents\human_dm\new_human_data_nov25.mat")
-
-
-%% get subject-task level data
-
-story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
-
-for i = 1:length(story_types)
-    story = story_types(i);
-    task_combined_data = combine_for_map(all_trial_data, story);
-    combined_data{i} = task_combined_data;
-end
+load("C:\Users\lrako\OneDrive\Documents\human_dm\final_hum_data_dec25.mat")
 
 
 %% find session-cost sigmoids
 
-input_data = combined_data;
-story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
+input_data = session_data;
+story_types = unique(r_ratings.tasktype);
 
-sig_table = run_alt_fit(input_data,story_types, 0);
+sig_table = run_alt_fit(input_data,story_types, 0, 1);
 sig_table.clusterLabels = sig_table.subjectidnumber + "_" + sig_table.story_num + ".mat";
 
-poly_table = run_alt_fit(input_data,story_types, 1);
-poly_table.clusterLabels = poly_table.subjectidnumber + "_" + poly_table.story_num + ".mat";
+%poly_table = run_alt_fit(input_data,story_types, 1, 0);
+%poly_table.clusterLabels = poly_table.subjectidnumber + "_" + poly_table.story_num + ".mat";
+
+%% using nnmf
+
+story_types = unique(r_ratings.tasktype);
+nnmf_table = run_alt_fit(session_data,story_types, 0, 0);
+nnmf_table = struct2table(nnmf_table);
+nnmf_table.clusterLabels = nnmf_table.subjectidnumber + "_" + nnmf_table.story_num + ".mat";
+%%
+
+hs = nnmf_table.h;
+ws = nnmf_table.w;
+figure
+scatter3(hs(:,1), hs(:,2), hs(:,3))
+title("hs 1 2 3")
+xlabel("1")
+ylabel("2")
+zlabel("3")
+
+figure
+scatter3(hs(:,4), hs(:,2), hs(:,3))
+title("hs 4 2 3")
+xlabel("4")
+ylabel("2")
+zlabel("3")
+
+figure
+scatter3(ws(:,1), ws(:,2), ws(:,3))
+title("ws 1 2 3")
+xlabel("1")
+ylabel("2")
+zlabel("3")
+
+figure
+scatter3(ws(:,4), ws(:,2), ws(:,3))
+title("ws 4 2 3")
+xlabel("4")
+ylabel("2")
+zlabel("3")
+
 
 %% clustering 2d sigs 
 
 input_table = sig_table;
 colors = distinguishable_colors(30);
-save_to = "C:\Users\lrako\OneDrive\Documents\human_dm\october_2025";
+save_to = "C:\Users\lrako\OneDrive\Documents\human_dm\dec_2025";
 mkdir(save_to)
-file_name = "2d_sig_clustering_subject_lvl_all_data_oct25";
+file_name = "2d_sig_clustering_subject_lvl_all_dec_2025";
 feats = ["a_R","b_R","b_C"];
 type = "2d sig"; 
 %{

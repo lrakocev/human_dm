@@ -1,4 +1,4 @@
-function result_str = physio_clusters_anova(merged_table, num_clusters, is_hr, use_both)
+reafunction result_str = physio_clusters_anova(merged_table, num_clusters, is_hr, use_both)
 
 xs = [];
 ys = [];

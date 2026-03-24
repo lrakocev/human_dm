@@ -1,30 +1,4 @@
-
-all_story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
-
-for i = 1:length(all_story_types)
-    story = all_story_types(i);
-    task_session_data = sessions_by_tasktype(all_trial_data, story);
-    session_data{i} = task_session_data;
-end
-
-
-%% for maps for each task type
-
-all_story_types =  unique(r_ratings.tasktype);
-for i = 1:length(all_story_types)
-    story = all_story_types(i);
-    task_combined_data = combine_for_map(all_trial_data_w_story, story);
-    combined_data{i} = task_combined_data;
-end
-
-%%
-
-all_story_types = unique(r_ratings.tasktype);
-for i = 1:length(all_story_types)
-    story = all_story_types(i);
-    story_session_data = combine_stories_for_map(all_trial_data_w_story, story);
-    story_data{i} = story_session_data;
-end
+%% first run human_data_ingest.m or load("final_hum_data_dec25.mat")
 
 %% get counts
 
@@ -102,103 +76,52 @@ run_dec_making_plot_loop(combined_data,all_story_types,path_to_save,want_bdry,wa
 
 %% avg map per task
 
-type = "approach_rate";
+type = "min_hr";
 want_bdry = 1;
-want_scale = 0;
+want_scale = 1;
 want_save = 1;
 for_ml = 0;
 all_story_types = unique(r_ratings.tasktype);
 path_to_save = "C:\Users\lrako\OneDrive\Documents\human_dm\final_run_2026\dec_making_maps\" + type;
 mkdir(path_to_save)
 
-run_dec_making_plot_loop(combined_data,all_story_types,path_to_save,want_bdry,want_scale,want_save,for_ml,type)
+run_dec_making_plot_loop(physio_split_by_task,all_story_types,path_to_save,want_bdry,want_scale,want_save,for_ml,type)
 
 %% plotting summary stats
 
-all_story_types = ["approach_avoid", "obvious_supersense", "social", "probability", "moral", "old_approach_avoid"];
+all_story_types = unique(r_ratings.tasktype);
 consts = ["reward", "cost"];
 type = "approach rate";
 
-path_to_save = 'C:\Users\lrako\OneDrive\Documents\human dm\july_2025\';
+path_to_save = 'C:\Users\lrako\OneDrive\Documents\human_dm\final_run_2026\';
 
 for s = 1:length(all_story_types)
     story_type = all_story_types(s);
     story_dir = path_to_save + story_type;
     mkdir(story_dir)
-    task_combined_data = combined_data{s};
+    
+   % avg_task = avg_task_combined{s};
+    all_task = combined_for_indiv_map_data{s};
     for c = 1:length(consts)
         constant = consts(c);
         story_type = all_story_types(s);
 
         % this plots all the individual results + the average - one plot per level
-        avg_psychometric_plot_per_level(task_combined_data, type, constant, story_type, path_to_save)
+        avg_psychometric_plot_per_level(all_task, type, constant, story_type, path_to_save)
         
         % this plots average results for each level - one plot total
-        avg_psychometric_across_levels(task_combined_data,  type, constant, story_type, path_to_save,1)
+        avg_psychometric_across_levels(all_task,  type, constant, story_type,[1, 0, 0], path_to_save,1)
         
         % this plots average result for reward vs cost - one plot per level
-        avg_rew_v_cost_comparison_per_lvl(task_combined_data, type, constant, story_type, path_to_save)
+        avg_rew_v_cost_comparison_per_lvl(all_task, type, constant, story_type, path_to_save)
         
         % this plots the 4 individual psychometric functions keeping constant r/c
-        plot_individual_psychs_across_lvls(task_combined_data, constant, story_type, path_to_save)
+        % plot_individual_psychs_across_lvls(task_combined_data, constant, story_type, path_to_save)
     end
 end
 
-%% overlapped for fig 3
+%% overlapped for fig 
 
-all_story_types = unique(r_ratings.tasktype);
-story_idx = find(contains(all_story_types,["approach_avoid","positive","negative"]));
-consts = ["reward", "cost"];
-type = "approach rate";
-
-path_to_save = 'C:\Users\lrako\OneDrive\Documents\human_dm\final_run_2026\psych_stats\';
-colors = distinguishable_colors(length(all_story_types));
-actual_story_types = [];
-for c = 1:length(consts)
-    constant = consts(c);
-    figure
-    hs = [];
-    task_anova = [];
-    ls = [];
-    lvls = [];
-    for idx = 1:length(story_idx)
-        s = story_idx(idx);
-        story_type = all_story_types(s);
-        story_dir = path_to_save + story_type;
-        mkdir(story_dir)
-        task_combined_data = combined_data{s};
-    
-        story_type = all_story_types(s);
-
-        actual_story_types = [actual_story_types; story_type];
-        % this plots all the individual results + the average - one plot per level
-        color = colors(s,:);
-        [h,avg,lvl_lens] = avg_psychometric_across_levels(task_combined_data,  type, constant, story_type, color, path_to_save, 0);
-        avg = reshape(avg,1,4*length(avg));
-        task_anova = [task_anova avg];
-        ls = [ls; length(avg)];
-        hs = [hs; h];
-        hold on
-
-        for j = 1:length(lvl_lens)
-            lvl_len = lvl_lens(j);
-            lvls = [lvls repelem(j, lvl_len)];
-        end
-    end
-
-    tasks = [];
-    for l = 1:length(ls)
-        len = ls(l);
-        tasks = [tasks repelem(l, len)];
-    end
-
-    %{
-    [p,t,stats,terms] =  anovan(task_anova, {tasks;lvls},'model','interaction','varnames',{'task','lvl'});
-    title("comparison of avg approach rates for tasks, with constant " + constant + ", two-way anova btwn tasks: p=" + string(p));
-    %}
-    legend(hs,actual_story_types)
-    hold off
-    set(gcf,'renderer','Painters')
-    saveas(gcf,strcat(path_to_save,'/overlapped_avg_psych_constant',constant,'_across_lvls'),'fig')
-    saveas(gcf,strcat(path_to_save,'/overlapped_avg_psych_constant',constant,'_across_lvls'),'svg')
-end
+save_to = "C:\Users\lrako\OneDrive\Documents\human_dm\final_run_2026\dec_making_maps";
+wanted_tasks = ["approach_avoid","social","probability","moral"];
+c = comparison_btwn_tasks(split_by_task, r_ratings, wanted_tasks, save_to);

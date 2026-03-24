@@ -1,11 +1,11 @@
 excel_limit = 100000;
-file_name = "sigmoids_by_5s_excel_file";
+file_name = "sigmoids_by_10s_excel_file";
 row_count = 0;
 doc_num = 1;
 
 x = [1 2 3 4];
-
-all_combos = combinations(1:5:100, 1:5:100, 1:5:100, 1:5:100);
+inc = 10;
+all_combos = combinations(1:inc:100, 1:inc:100, 1:inc:100, 1:inc:100);
 
 for j = 1:height(all_combos)
     row = [];

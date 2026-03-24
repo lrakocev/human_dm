@@ -65,6 +65,10 @@ for i = 1:N
     end
 end
 
-sig_table = struct2table(sig_table);
+try
+    sig_table = struct2table(sig_table);
+catch
+    return
+end
 
 end

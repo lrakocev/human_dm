@@ -40,8 +40,12 @@ for i = 1 : num_clusters
     y = [mean_lvl_1, mean_lvl_2, mean_lvl_3, mean_lvl_4];
 
     ax(i) = subplot(1,num_clusters,i);
-    [func, r] = fit_eng_model(x,y, mean_cost, mean_story_pref, mean_pupil_diam, mean_hunger, mean_tiredness, mean_pain);
-    %fit_sigmoid(x,y,"r");
+   % [func, r] = fit_eng_model(x,y, mean_cost, mean_story_pref, mean_pupil_diam, mean_hunger, mean_tiredness, mean_pain);
+    try
+        [func, r] = fit_sigmoid(x,y,"r");
+    catch
+       continue
+    end
     yl = get(gca, 'YLim');
     curr_y_min = yl(1);
     curr_y_max = yl(2);

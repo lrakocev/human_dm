@@ -1,11 +1,12 @@
 %% simulation of the 2d sig fit
 
 size_of_grid = 4; 
-M = 5000;
-
-sim_table = [];
+M = 1000;
+want_order = 1;
+order_dir = "desc";
+sim_table_desc_ordered = [];
 for i = 1:M
-    random_appr_data = create_random_grid(size_of_grid);
+    random_appr_data = create_random_grid(size_of_grid,want_order,order_dir);
     
     reward_lvls = 1/size_of_grid:1/size_of_grid:1;
     cost_lvls = 1/size_of_grid:1/size_of_grid:1;
@@ -17,10 +18,26 @@ for i = 1:M
     row.a_C = f.a_C;
     row.b_C = f.b_C;
           
-    sim_table = [sim_table; row];
+    sim_table_desc_ordered = [sim_table_desc_ordered; row];
+    clear row
     
 end
 
-sim_table = struct2table(sim_table);
+sim_table_desc_ordered = struct2table(sim_table_desc_ordered);
 
-scatter3(sim_table.a_R, sim_table.a_C, sim_table.b_R)
+%%
+
+%load("2d_sig_real.mat")
+
+figure
+scatter3(sim_table_ordered.a_R, sim_table_ordered.b_R, sim_table_ordered.b_C,'b','o')
+hold on
+scatter3(sim_table_desc_ordered.a_R, sim_table_desc_ordered.b_R, sim_table_desc_ordered.b_C,'b','o')
+hold on
+scatter3(sim_table.a_R, sim_table.b_R, sim_table.b_C,'b','o')
+hold on
+scatter3(sig_table.a_R, sig_table.b_R, sig_table.b_C,'r','x')
+xlabel("a_R")
+ylabel("b_R")
+zlabel("b_C")
+title("2d sigmoid simulated vs real data - including ordered in desc+asc + random")

@@ -1,8 +1,8 @@
 %% create new directory for data
 
-new_dir = 'C:\Users\lrako\OneDrive\Documents\human_dm\test_run\subject_lvl_oct2025';
+new_dir = 'C:\Users\lrako\OneDrive\Documents\human_dm\test_run\dec_2025';
 mkdir(new_dir)
-story_types = ["approach_avoid","obvious_supersense", "social", "probability", "moral", "old_approach_avoid"]; 
+story_types = unique(r_ratings.tasktype);
 for i = 1:length(story_types)
     sub_dir = new_dir + "/" + story_types(i);
     mk_new_dir_for_clusters(sub_dir) 
@@ -15,12 +15,12 @@ load("C:\Users\lrako\OneDrive\Documents\human dm\hum_data_oct25.mat")
 
 %% find session-cost sigmoids
 
-home_dir = "C:\Users\lrako\OneDrive\Documents\human dm\test_run\october_2025\";
-story_types = ["approach_avoid","obvious_supersense", "social", "probability", "moral", "old_approach_avoid"]; 
+home_dir = "C:\Users\lrako\OneDrive\Documents\human_dm\test_run\dec_2025\";
+story_types = unique(r_ratings.tasktype);
 by_session = 0;
 sig_type = "cost"; 
 
-thresh = 0;
+thresh = 0.7;
 is_sigmoidal = 1;
 create_sigmoids(home_dir, story_types, session_data, by_session, sig_type, thresh, is_sigmoidal);
 

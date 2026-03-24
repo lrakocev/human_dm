@@ -48,13 +48,22 @@ for lvl = 1:4
     means = mean(avg,2,'omitnan');
     plot(means,'LineWidth',5)
 
-    [lvl_p, ~, ~, ~] = psychometric_anova(lvl_table, xlabelstr);
+    try
+        [lvl_p, ~, ~, ~] = psychometric_anova(lvl_table, xlabelstr);
+    catch
+        lvl_p = "NaN";
+    end
+      
     lvl_ps = [lvl_ps; "lvl" + string(lvl) + ": " + string(lvl_p)];
 end
 
 all_ps = strjoin(lvl_ps, ", ");
 
-[p,t,stats,terms] = psychometric_anova(all_trials, constant);
+try
+    [p,t,stats,terms] = psychometric_anova(all_trials, constant);
+catch
+    p = "NaN";
+end
 
 num_subjects = length(unique(id_list));
 title(constant + " constant across levels, # trials = " + num_trials + "# sessions = " + num_sessions + " # subjects = " + num_subjects)

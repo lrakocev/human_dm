@@ -20,21 +20,21 @@ function was_fit = createSigmoidFigures(results,dirName,thresh,sig_type)
        
             counter = 1;
             [fitobject2, gof2] = fit(x.', y.', '1 / (1 + (b*exp(-c * x)))');
-            while counter <20 && gof2.rsquare < .4
+            while counter <20 && gof2.rsquare < thresh
                 [fitobject2, gof2] = fit(x.', y.', '1 / (1 + (b*exp(-c * x)))');
                 counter = counter+1;
             end
 
             counter = 1;
             [fitobject3, gof3] = fit(x.',y.','(a/(1+b*exp(-c*(x))))');
-            while counter <20 && gof3.rsquare < .4
+            while counter <20 && gof3.rsquare < thresh
                 [fitobject3, gof3] = fit(x.',y.','(a/(1+b*exp(-c*(x))))');
                 counter = counter+1;
             end
 
             counter = 1;
             [fitobject4, gof4] = fit(x.', y.', '(a/(1+(b*(exp(-c*(x-d))))))');
-            while counter <20 && gof4.rsquare < .4
+            while counter <20 && gof4.rsquare < thresh
                 [fitobject4, gof4] = fit(x.', y.', '(a/(1+(b*(exp(-c*(x-d))))))');
                 counter = counter+1;
             end

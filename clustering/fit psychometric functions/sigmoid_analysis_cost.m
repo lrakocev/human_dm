@@ -16,21 +16,21 @@ function sigmoid_analysis_cost(approach_data, dirName, sig_type, thresh)
     
             counter = 1;
             [fitobject2, gof2] = fit(x.', y.', '1 / (1 + (b*exp(-c * x)))');
-            while counter <20 && gof2.rsquare < .4
+            while counter <20 && gof2.rsquare < thresh
                 [fitobject2, gof2] = fit(x.', y.', '1 / (1 + (b*exp(-c * x)))');
                 counter = counter+1;
             end
 
             counter = 1;
             [fitobject3, gof3] = fit(x.',y.','(a/(1+b*exp(-c*(x))))');
-            while counter <20 && gof3.rsquare < .4
+            while counter <20 && gof3.rsquare < thresh
                 [fitobject3, gof3] = fit(x.',y.','(a/(1+b*exp(-c*(x))))');
                 counter = counter+1;
             end
 
             counter = 1;
             [fitobject4, gof4] = fit(x.', y.', '(a/(1+(b*(exp(-c*(x-d))))))');
-            while counter <20 && gof4.rsquare < .4
+            while counter <20 && gof4.rsquare < thresh
                 [fitobject4, gof4] = fit(x.', y.', '(a/(1+(b*(exp(-c*(x-d))))))');
                 counter = counter+1;
             end
@@ -103,10 +103,16 @@ end
           
 N = length(approach_data);
 for i = 1:N
-    results = approach_data{i};
-    maxc = max(results.cost);
-    for c = 1:maxc
-        createSigmoidFigures(results, c, thresh, dirName, sig_type)
+    try
+        results = approach_data{i};
+        if ~isempty(results)
+            maxc = max(results.cost);
+            for c = 1:maxc
+                createSigmoidFigures(results, c, thresh, dirName, sig_type)
+            end
+        end
+    catch
+        continue
     end
 end
 

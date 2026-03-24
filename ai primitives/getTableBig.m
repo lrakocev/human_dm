@@ -37,7 +37,12 @@ for k = 1:length(myFiles)
                    C = {final_obj.a, final_obj.b, final_obj.c, baseFileName};
                     T = cell2table(C,'VariableNames',{'A','B', 'C', 'D'});
                catch
-                   continue
+                    try
+                       C = {fitobject5.a, fitobject5.b, fitobject5.c, baseFileName};
+                       T = cell2table(C,'VariableNames',{'A','B', 'C', 'D'});
+                    catch
+                       continue
+                    end
                end
 
             end

@@ -1,0 +1,54 @@
+%% human parabolic
+
+num_clusters = 5;
+colors = distinguishable_colors(num_clusters);
+dir = 'C:\Users\lrako\OneDrive\Documents\human_dm\test_run\dec_2025';
+
+save_to = 'C:\Users\lrako\OneDrive\Documents\human_dm\dec_2025';
+mkdir(save_to)
+file_name = "parabolic";
+table_of_human_dir = get_dirs_with_data(dir,"\Parabola Data");
+is_big = 0;
+use_sign = 1;
+isolate_task = "";
+table_of_data = call_spectral_clustering_combine_all_human_data(table_of_human_dir,...
+    save_to,0,num_clusters,colors,'euclidean',is_big,file_name,isolate_task,use_sign);
+
+scatter3(table_of_data.A, table_of_data.B, table_of_data.C)
+
+%% number of stories, people, etc that are parabolic
+
+story_data_of_parabolas = split(table_of_data.D,"_");
+table_of_data.subjectidnumber = story_data_of_parabolas(:,1);
+table_of_data.story_num = story_data_of_parabolas(:,3);
+parabolic_stories_tasks = groupcounts(table_of_data, ["story_num","E"]);
+parabolic_people = groupcounts(table_of_data, ["subjectidnumber"]);
+parabolic_people_in_task = groupcounts(table_of_data, ["E"]);
+
+%% dm maps for parabolic people
+
+path_to_save = "C:\Users\lrako\OneDrive\Documents\human_dm\final_run_2026\dec_making_maps\parabolic_people\approach_rate";
+for j = 1:height(parabolic_people)
+    row = parabolic_people(j,:);
+    if row.GroupCount >= 10
+        parab_subj = row.subjectidnumber;
+        parab_subj_data = all_data_w_story(all_data_w_story.subjectidnumber == str2double(parab_subj{1,1}), :);
+        make_dec_making_plots(parab_subj_data,path_to_save,"all_stories",1,0,1,"",0,"approach_rate")
+    end
+end
+
+%% each parabolic map
+
+path_to_save = "C:\Users\lrako\OneDrive\Documents\human_dm\final_run_2026\dec_making_maps\parabolic_sessions\approach_rate";
+mkdir(path_to_save)
+
+for k = 1:length(table_of_data)
+    row = table_of_data(k,:);
+    subj = row.subjectidnumber;
+
+    num_parabolic_stories_for_this_subj = parabolic_people(parabolic_people.su
+    story = "story_" + row.story_num;
+    task = row.E;
+    data = all_data_w_story(all_data_w_story.subjectidnumber == subj & all_data_w_story.story_num == story & ...
+        all_data_w_story.story_type == task, :);
+end

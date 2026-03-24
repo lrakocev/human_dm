@@ -23,9 +23,6 @@ end
     experiment_col = [human_data_table.F,human_data_table.F];
    
     called_by = "call_FCM_for_all_human_data.m";
-    if isempty(centers)
-        run_3d_fcm_analysis_for_all_human_data(xVsYVsZ,raw_xVsYVsZ,labels,xAxis,yAxis,zAxis,"all human data",called_by,[],experiment_col,cluster_table_dir_abs)
-    else
-        run_3d_fcm_analysis_for_all_human_data(xVsYVsZ,raw_xVsYVsZ,labels,xAxis,yAxis,zAxis,"all human data",called_by,centers,experiment_col,cluster_table_dir_abs)
-    end
+    run_3d_fcm_analysis_for_all_human_data(xVsYVsZ,raw_xVsYVsZ,labels,xAxis,yAxis,zAxis,"all human data",called_by,centers,experiment_col,cluster_table_dir_abs)
+    
 end
