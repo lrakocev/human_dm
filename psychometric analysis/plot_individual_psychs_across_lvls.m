@@ -1,5 +1,5 @@
 function plot_individual_psychs_across_lvls(approach_data, constant, story_type, path_to_save)
-    function  best_fit_obj = createSigmoidFigures(results,lvl,constant)
+    function  [y, best_fit_obj] = createSigmoidFigures(results,lvl,constant)
         if isequal(constant,"cost")
             constant_table = results(results.cost == lvl,:);
             x = constant_table.rew.';
@@ -10,6 +10,7 @@ function plot_individual_psychs_across_lvls(approach_data, constant, story_type,
         y = constant_table.approach_rate.';
         subid = constant_table.subjectidnumber(1);
 
+        
         [fitobject1, gof1]= fit(x.',y.','a*x+b');
  
         [fitobject2, gof2] = fit(x.', y.', '1 / (1 + (b*exp(-c * x)))');
@@ -26,7 +27,7 @@ function plot_individual_psychs_across_lvls(approach_data, constant, story_type,
 
         best_fit_ind = find(r_squares == highest_r_sq);
         best_fit_obj = fit_objects{best_fit_ind};
-
+        
     end
 
 dynamicName = path_to_save + "individual_overlays\" + story_type + "\";
@@ -42,8 +43,9 @@ for i = 1:N
         figure
         for c = 1:4
             try
-                best_fit_obj = createSigmoidFigures(results{1},c, constant);
-                plot(best_fit_obj, colors(c))
+                [y,best_fit_obj]= createSigmoidFigures(results{1},c, constant);
+                %plot(best_fit_obj, colors(c))
+                plot(y, colors(c))
             catch
             end
             hold on

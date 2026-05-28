@@ -23,6 +23,7 @@ for lvl = 1:4
         lvl_len = 0;
         for N = 1:length(approach_data)
             appr_table = approach_data{N};
+            subjectid = appr_table.subjectidnumber(1);
             if ~isempty(appr_table)
                 try 
                     id = appr_table.subjectidnumber{1};
@@ -65,7 +66,7 @@ ylabel(ylabel_str)
 if want_save
     title(constant + "s constant, # trials = " + num_trials + "# sessions = " + num_sessions + " # subjects = " + num_subjects)
     fighandle = gcf;
-    savefig(fighandle,strcat(path_to_save,story_type,'/avg_psych_constant',constant,'_across_lvls.fig'))
+    savefig(fighandle,strcat(path_to_save,'/avg_psych_constant_',string(subjectid),'_',story_type,'_',constant,'_across_lvls.fig'))
     close all
 end
 end

@@ -1,13 +1,14 @@
 %% get starting tables
 
 [merged_table, hr_table, eye_table] = get_physio_merged_tables();
+%  prim_table = add_prims_to_table(merged_table);
 
 %% feature types
 
 hr_feats = ["min_hr", "max_hr", "mean_hr"];
 eye_feats = ["num_saccads", "num_guesses", "reaction_time","pupil_diameter"];
 hormone_feats = ["aGHR", "Estradiol_pg_mL_", "TotalTestos_ng_dL_"];
-
+behavior_feats = ["r_impulse", "r_interact", "mean_appr"];
 
 %% random groupings
 
@@ -27,17 +28,31 @@ bin_by = "rawY";
 
 feats_across_naive_binning(eye_table, bin_by, num_bins, eye_feats, want_z)
 feats_across_naive_binning(hr_table, bin_by, num_bins, hr_feats, want_z)
-
+feats_across_naive_binning(prim_table, bin_by, num_bins, hr_feats, want_z)
 
 %% comparing across combination groupings
 
 num_bins = 3;
 want_z = 1;
 bin_by = ["rawX","rawY","rawZ"];
+
 combination_binning(eye_table, bin_by, num_bins, eye_feats, want_z)
 combination_binning(hr_table, bin_by, num_bins, hr_feats, want_z)
 
 %% sinai table
+
+% load("C:\Users\lrako\OneDrive\Documents\human_dm\outside_data\mt_sinai_trial_table.mat")
+
+curr_sheet = "avg_data"; % "win_money"
+imt_table = readtable("C:\Users\lrako\OneDrive\Documents\human_dm_data\all_k_subject_imt_data.xlsx","Sheet",curr_sheet,"NumHeaderLines",0);
+
+ghrelin_table = readtable(k01_home_folder + "/K01_tracking.xlsx","Sheet","ghrelin-updated","NumHeaderLines",0);
+ghrelin_table.id = "K" + ghrelin_table.K01_SUBID;
+
+mt_sinai_hormone_table = outerjoin(mt_sinai_cluster_table, ghrelin_table, "MergeKeys", 1, "Keys", {'id'});
+mt_sinai_hormone_table = mt_sinai_hormone_table(~isnan(mt_sinai_hormone_table.x_coord), :);
+
+%%
 
 want_z = 1;
 num_bins = 5;

@@ -1,7 +1,7 @@
 %% simulation of the 2d sig fit
 
 size_of_arr = 4; 
-M = 100;
+M = 1000;
 
 sig_table = [];
 for i = 1:M
@@ -29,4 +29,5 @@ end
 sig_table = struct2table(sig_table);
 log_table = log(abs(sig_table));
 
-scatter3(log_table.a, log_table.a, log_table.b)
+figure
+scatter3(sig_table.a, log(abs(sig_table.b)), sig_table.c)

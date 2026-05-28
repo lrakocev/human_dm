@@ -37,17 +37,6 @@ age = groupcounts(single_table,'age');
 race = groupcounts(single_table,'race');
 ethnicity = groupcounts(single_table,'ethnicity'); 
 
-%% normalization bar plots
-
-same_scale = 1;
-save_to = "C:\Users\lrako\OneDrive\Documents\human_dm\final_run_2026\ratings\";
-mkdir(save_to);
-all_story_types = unique(r_ratings.tasktype);
-for i = 1:length(all_story_types)
-    type = all_story_types(i);
-    get_ratings_by_subject(r_ratings,c_ratings,type,save_to,same_scale)
-end
-
 %% dec making maps by story
 
 want_bdry = 1;
@@ -72,28 +61,28 @@ type = "approach_rate";
 path_to_save = "C:\Users\lrako\OneDrive\Documents\human_dm\final_run_2026\dec_making_maps\" + type;
 mkdir(path_to_save)
 
-run_dec_making_plot_loop(combined_data,all_story_types,path_to_save,want_bdry,want_scale,want_save,for_ml,type)
+run_dec_making_plot_loop(combined_for_indiv_map_data,all_story_types,path_to_save,want_bdry,want_scale,want_save,for_ml,"indiv_examples",type)
 
 %% avg map per task
 
-type = "min_hr";
+type = "pupil_diameter";
 want_bdry = 1;
-want_scale = 1;
+want_scale = 0;
 want_save = 1;
 for_ml = 0;
 all_story_types = unique(r_ratings.tasktype);
 path_to_save = "C:\Users\lrako\OneDrive\Documents\human_dm\final_run_2026\dec_making_maps\" + type;
 mkdir(path_to_save)
 
-run_dec_making_plot_loop(physio_split_by_task,all_story_types,path_to_save,want_bdry,want_scale,want_save,for_ml,type)
+run_dec_making_plot_loop(split_by_task,all_story_types,path_to_save,want_bdry,want_scale,want_save,for_ml,type)
 
 %% plotting summary stats
 
 all_story_types = unique(r_ratings.tasktype);
-consts = ["reward", "cost"];
+consts = ["cost"];%, "cost"];
 type = "approach rate";
 
-path_to_save = 'C:\Users\lrako\OneDrive\Documents\human_dm\final_run_2026\';
+path_to_save = 'C:\Users\lrako\OneDrive\Documents\human_dm\ex_for_raquel\';
 
 for s = 1:length(all_story_types)
     story_type = all_story_types(s);
@@ -107,21 +96,22 @@ for s = 1:length(all_story_types)
         story_type = all_story_types(s);
 
         % this plots all the individual results + the average - one plot per level
-        avg_psychometric_plot_per_level(all_task, type, constant, story_type, path_to_save)
+       % avg_psychometric_plot_per_level(all_task, type, constant, story_type, path_to_save)
         
         % this plots average results for each level - one plot total
-        avg_psychometric_across_levels(all_task,  type, constant, story_type,[1, 0, 0], path_to_save,1)
+        % avg_psychometric_across_levels(all_task,  type, constant, story_type,[1, 0, 0], path_to_save,1)
         
         % this plots average result for reward vs cost - one plot per level
-        avg_rew_v_cost_comparison_per_lvl(all_task, type, constant, story_type, path_to_save)
+        % avg_rew_v_cost_comparison_per_lvl(all_task, type, constant, story_type, path_to_save)
         
         % this plots the 4 individual psychometric functions keeping constant r/c
-        % plot_individual_psychs_across_lvls(task_combined_data, constant, story_type, path_to_save)
+         plot_individual_psychs_across_lvls(task_combined_data, constant, story_type, path_to_save)
     end
 end
 
 %% overlapped for fig 
 
+type = "approach_rate";
 save_to = "C:\Users\lrako\OneDrive\Documents\human_dm\final_run_2026\dec_making_maps";
 wanted_tasks = ["approach_avoid","social","probability","moral"];
-c = comparison_btwn_tasks(split_by_task, r_ratings, wanted_tasks, save_to);
+c = comparison_btwn_tasks(split_by_task, r_ratings, wanted_tasks, type, save_to);

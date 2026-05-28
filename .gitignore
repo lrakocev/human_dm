@@ -2,6 +2,7 @@
 *.fig
 *.zip
 *.png
+*.mat
 hmms/*/*.png
 /test_run/*
 /test_run/*.zip

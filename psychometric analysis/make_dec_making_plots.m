@@ -1,7 +1,13 @@
-function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, want_scale, want_save,subtit, for_ml, varargin)
+function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, want_scale, want_save,subtit, for_ml, base_db, varargin)
 
     subid = appr_table.subjectidnumber(1);
     story_num = appr_table.story_num(1);
+    if ~isempty(varargin{1})
+        variable = string(varargin{1,1}{1,1});
+    else
+        variable = "approach_rate";
+    end
+
 
     cost_levels = 1/4:1/4:1;
     reward_levels = 1/4:1/4:1;
@@ -13,21 +19,14 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
     
     try
     i = 1;
+    lvls_for_excel = [];
     for r=1:length(reward_levels)
         for c=1:length(cost_levels)
-
+            lvls_for_excel = [lvls_for_excel; "(R" + r + ", C" + c + ")"];
             r_c_table =  appr_table(appr_table.cost == c & appr_table.rew == r,:);
             if ~isempty(r_c_table)
-                if isempty(varargin)
-                    if height(r_c_table) > 1
-                        ps(i) = mean(r_c_table.approach_rate,'omitnan'); 
-                    else
-                         ps(i) = r_c_table.approach_rate; 
-                    end
-                else
-                    variable = string(varargin{1});
-                    ps(i) = mean(r_c_table.(variable),'omitnan');
-                end
+                ps(i) = mean(r_c_table.(variable),'omitnan');
+            
             else
                 ps(i) = NaN;
             end
@@ -52,8 +51,13 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
         min_p = min(ps);
         max_p = max(ps);
     else
-        min_p = 0;
-        max_p = 1;
+        if length(varargin{1,1}) > 1
+            min_p = varargin{1,1}{1,2};
+            max_p = varargin{1,1}{1,3};
+        else
+            min_p = 0;
+            max_p = 1;
+        end
     end
 
     syms R C %just variables to be solved for later on, x and y values 
@@ -74,7 +78,8 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
         return
     end
     % B = tiledlayout(1,2);
-    
+
+
     [the_min,the_max] = bounds(observed_p_appr,"all");
     imagesc(observed_p_appr);%original
     % imagesc(flipud(observed_p_appr)) 
@@ -118,10 +123,22 @@ function make_dec_making_plots(appr_table, path_to_save, story_type, want_bdry, 
     set(gcf,'renderer','Painters')
     if want_save
         if ~for_ml
-            new_dir = strcat(path_to_save,'\',story_type);
+            new_dir = strcat(path_to_save,'\',variable);
             mkdir(new_dir)
 
-            saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_', story_type, '_', string(subid), '_', string(story_num),'.fig'),"fig")
+            saveas(fighandle,strcat(path_to_save,'\', variable,'\map_', story_type, '_', string(subid), '_', string(story_num),'.fig'),"fig")
+        
+            appr_table = appr_table(~isnan(appr_table.(variable)), :);
+            table_to_write = appr_table(:,ismember(appr_table.Properties.VariableNames, {'subjectidnumber','rew','cost',char(variable)}));
+
+            writetable(table_to_write, path_to_save + "\" + story_type + "_dec_making_maps.xlsx", ...
+                "Range", "A1", "Sheet", variable);
+            
+            code_info = ["produced by: make_dec_making_plots.m"; "db: load('" + base_db + "')"; "boundary line: frc = 1/(1+exp(-f.a_R*R+f.b_R))*1/(1+exp(f.a_C*C+f.b_C));"];
+            writematrix(code_info, path_to_save + "\" + story_type + "_dec_making_maps.xlsx", ...
+                "Range", "F1", "Sheet", variable);
+        
+                
         end
         
         saveas(fighandle,strcat(path_to_save,'\',story_type,'\map_',  story_type, '_', string(subid), '_', string(story_num),'.png'),"png")

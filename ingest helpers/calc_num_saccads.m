@@ -1,6 +1,6 @@
 function [saccads] = calc_num_saccads(gaze_data)
 
-    filtered_idx = (gaze_data(:, 1) ~= -999 & gaze_data(:, 2) ~= -990);
+    filtered_idx = (gaze_data(:, 1) ~= -999 & gaze_data(:, 2) ~= -999);
     gaze_data = gaze_data(filtered_idx, :);
 
     klist = 5:40;

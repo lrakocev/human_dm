@@ -1,4 +1,6 @@
 # ingest_helper.py
+import numpy as np
+
 def get_prefs(pref_str, trial_date):
     import time
     import ast
@@ -9,7 +11,9 @@ def get_prefs(pref_str, trial_date):
     start_date = trial_date[0];
     stripped_date = start_date.replace("\n","");
     stripped_date = stripped_date.replace("\r","");
-    
+    date_list = stripped_date.split(";");
+    stripped_date = date_list[0];
+
     try:
         trial_tup = time.strptime(stripped_date, "%a %b %d %H:%M:%S.%f %Y %Z")
     except:
@@ -29,9 +33,13 @@ def choose_prefs_new(pref_dict):
     import itertools
     import copy
 
-    pref_dict = {int(k):int(v) for k,v in pref_dict.items()}
-    vals = sorted(list(pref_dict.values()))
-    
+    if pref_dict is not None:
+        pref_dict = {int(k):int(v) for k,v in pref_dict.items()}
+        vals = sorted(list(pref_dict.values()))
+    else:
+        pref_dict = {};
+        vals = [];
+       
     max_diff = 0
     index_combos = [i for i in itertools.combinations(range(0,6), 2)]
     
@@ -39,11 +47,14 @@ def choose_prefs_new(pref_dict):
     for c in index_combos:
         ind1, ind2 = c
         copy_vals = copy.deepcopy(vals)
-        del copy_vals[ind1]
-        del copy_vals[ind2-1]
+        if len(vals) > 0:
+            del copy_vals[ind1]
+            del copy_vals[ind2-1]
         
-        new_diffs = [abs(e[1] - e[0]) for e in itertools.permutations(copy_vals, 2)]
-        new_diff = sum(new_diffs)/len(new_diffs)
+            new_diffs = [abs(e[1] - e[0]) for e in itertools.permutations(copy_vals, 2)]
+            new_diff = sum(new_diffs)/len(new_diffs)
+        else:
+            new_diff = 0;
         
         if new_diff > max_diff: 
             max_diff = new_diff
@@ -52,6 +63,7 @@ def choose_prefs_new(pref_dict):
     prefs = {k:v for (k,v) in pref_dict.items() if v in best_diff_list}
     
     return prefs
+
 
 def choose_prefs_old(pref_dict, trial_levels):
 

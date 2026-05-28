@@ -11,10 +11,14 @@ symbol_chars = num2cell(symbols); % convertStringsToChars(symbols);
 for i = 1:length(features)
     feature = features(i);
     raw_seq = input_table.(feature);
-    clean_seq = fillmissing(raw_seq, 'knn',5);
-    
-    thresholds = get_thresh_lvls(clean_seq, num_lvls);
-    seq = apply_threshold_to_seq(clean_seq, thresholds, symbol_chars);
+    if num_lvls > 0
+        clean_seq = fillmissing(raw_seq, 'knn',5);
+        
+        thresholds = get_thresh_lvls(clean_seq, num_lvls);
+        seq = apply_threshold_to_seq(clean_seq, thresholds, symbol_chars);
+    else
+        seq = raw_seq;
+    end
     seq_table.(feature) = seq; 
 end
 

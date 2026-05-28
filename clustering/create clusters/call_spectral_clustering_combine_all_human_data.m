@@ -25,7 +25,9 @@ if use_sign
     xVsYVsZ = [log(abs(table_of_data.A)) .* sign(table_of_data.A),...
         log(abs(table_of_data.B)) .* sign(table_of_data.B), log(abs(table_of_data.C)) .* sign(table_of_data.C) ];
 else
-    xVsYVsZ = log(abs(raw_xVsYVsZ));
+    xVsYVsZ = [-table_of_data.B/table_of_data.A,table_of_data.B,log(abs(table_of_data.C))];
+
+    % xVsYVsZ = log(abs(raw_xVsYVsZ));
 end
 labels = [table_of_data.D,table_of_data.D];
 

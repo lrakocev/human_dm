@@ -1,8 +1,13 @@
-function get_ratings_by_subject(r_ratings,c_ratings,type,save_to,same_scale)
+function get_ratings_by_subject(r_ratings,c_ratings,type,save_to,same_scale,base_db)
 
     xs = 1:4;
     curr_r_ratings = r_ratings(r_ratings.tasktype == type, :);
     curr_c_ratings = c_ratings(c_ratings.tasktype == type, :);
+
+    writetable(curr_r_ratings, save_to + "rew_ratings.xlsx", "Range", "A1",...
+         "Sheet", type + "_rew_ratings")
+    writetable(curr_r_ratings, save_to + "cost_ratings.xlsx", "Range", "A1",...
+         "Sheet", type + "_cost_ratings")
 
     unique_ids = unique(curr_r_ratings.subid);
 
@@ -45,6 +50,11 @@ function get_ratings_by_subject(r_ratings,c_ratings,type,save_to,same_scale)
     figname1 = save_to + type + "_" + "_lin_reg_reward_ratings_by_subj.fig";
     savefig(figname1)
 
+    r_code_info = ["linear regression (fitlm.m): r_sq = " + r_sq_r; "code: get_ratings_by_subject.m"; "db: " + base_db];
+    
+     writematrix(r_code_info, save_to + "rew_ratings.xlsx", "Range", "H1",...
+         "Sheet", type + "_rew_ratings")
+
     y_coords_c = [mean_cs(:,4); mean_cs(:,3); mean_cs(:,2); mean_cs(:,1)];
     mdl_c = fitlm(x_coords, y_coords_c);
     plot(mdl_c)
@@ -56,6 +66,11 @@ function get_ratings_by_subject(r_ratings,c_ratings,type,save_to,same_scale)
     figname2 = save_to + type + "_" + "_lin_reg_cost_ratings_by_subj.fig";
     savefig(figname2)
 
+    c_code_info = ["linear regression (fitlm.m): r_sq = "+ r_sq_c; "code: get_ratings_by_subject.m"; "db: " + base_db];
+
+    writematrix(c_code_info, save_to + "cost_ratings.xlsx", "Range", "H1",...
+         "Sheet", type + "_cost_ratings")
+    
     figure
     errorbar(xs, mean_r, std_err_r, std_err_r)
     xlabel("levels")

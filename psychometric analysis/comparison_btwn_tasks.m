@@ -1,80 +1,102 @@
-function [total_subjects] = comparison_btwn_tasks(task_data, r_ratings, wanted_tasks, save_to)
+function [subject_lvl_task_measures] = comparison_btwn_tasks(task_data, all_story_types, wanted_tasks, type, save_to, base_db)
 
-all_story_types = unique(r_ratings.tasktype);
 story_idx = find(contains(all_story_types,wanted_tasks));
 
-subject_lvl_task_apprs = {};
-subject_lvl_task_rs = {};
-subject_lvl_task_cs = {};
+subject_lvl_task_measures = {};
 subjects = [];
+story_order = [];
+num_unique_subjects_per_task = [];
 for idx = 1:length(story_idx)
     s = story_idx(idx);
     curr_task_data = task_data{s};
+    story_order = [story_order; curr_task_data.story_type(1)];
     
-    task_apprs = [];
-    task_rs = [];
-    task_cs = [];
+    task_measures = [];
     unique_subjects = unique(curr_task_data.subjectidnumber);
-    subjects = [subjects; unique_subjects];
+    %num_unique_subjects_per_task = [num_unique_subjects_per_task; length(unique_subjects)];
     for j = 1:length(unique_subjects)
         subject = unique_subjects(j);
+
         subject_data = curr_task_data(curr_task_data.subjectidnumber == subject, :);
-    
-        apprs = [];
-        rs = [];
-        cs = [];
-        for r = 1:4
-            for c = 1:4
-                appr = mean(subject_data(subject_data.rew == r & subject_data.cost == c, :).approach_rate, 'omitnan');
-                apprs = [apprs; appr];
-                rs = [rs; r];
-                cs = [cs; c];
-            end
-        end
-        task_rs = [task_rs; rs];
-        task_cs = [task_cs; cs];
-        task_apprs = [task_apprs; apprs];
+
+        subj_measure = mean(subject_data.(type), 'omitnan');
+        task_measures = [task_measures; subj_measure];
+
     end
 
-    subject_lvl_task_apprs{idx} = task_apprs;
-    subject_lvl_task_rs{idx} = task_rs;
-    subject_lvl_task_cs{idx} = task_cs;
+    num_unique_subjects_per_task = [num_unique_subjects_per_task; sum(~isnan(task_measures))];
+    subjects = [subjects; unique_subjects(~isnan(task_measures))];
+
+
+    subject_lvl_task_measures{idx} = task_measures;
 end
 
-anvova_tasks = [];
-anova_rs = [];
-anova_cs = [];
-anova_apprs = [];
-for l = 1:length(subject_lvl_task_cs)
-    story_type = wanted_tasks(l);
-    curr_task_appr = subject_lvl_task_apprs{l};
-    curr_task_r = subject_lvl_task_rs{l};
-    curr_task_c = subject_lvl_task_cs{l};
+writematrix(["subject level observations"], save_to + "task_comparisons.xlsx", "Range", "A2", "Sheet", type + "_task_comparisons");
+
+anova_tasks = [];
+anova_measures = [];
+upperAlphabet = 'B':'Z';
+for l = 1:length(subject_lvl_task_measures)
+    story_type = story_order(l);
+    curr_task_appr = subject_lvl_task_measures{l};
+
+    task_data = [story_type; curr_task_appr];
+    col_num = upperAlphabet(l) + "1";
+    writematrix(task_data, save_to + "task_comparisons.xlsx", "Range", col_num, "Sheet", type + "_task_comparisons");
 
     task_name = repelem(story_type, length(curr_task_appr), 1);
-    anvova_tasks = [anvova_tasks; task_name];
-    anova_rs = [anova_rs; curr_task_r];
-    anova_cs = [anova_cs; curr_task_c];
-    anova_apprs = [anova_apprs; curr_task_appr];
+    anova_tasks = [anova_tasks; task_name];
+    anova_measures = [anova_measures; curr_task_appr];
 end
 
 total_subjects = unique(subjects);
-[p,t,stats,terms] =  anovan(anova_apprs, {anvova_tasks;anova_rs;anova_cs},'model','interaction','varnames',{'task','rew','cost'});
+[p,t,stats,terms] =  anovan(anova_measures, {anova_tasks});
+
+cell_for_anova = length(subject_lvl_task_measures) + 2;
+writecell(t, save_to + "task_comparisons.xlsx", "Range", ...
+    upperAlphabet(cell_for_anova) + "1", "Sheet", type + "_task_comparisons");
     
 [c, m, h, gnames] = multcompare(stats, 'CType', 'tukey-kramer');
+
+post_hoc_tbl = array2table(c,"VariableNames", ...
+    ["Group","Control Group","Lower Limit","Difference","Upper Limit","P-value"]);
+post_hoc_tbl.("Group") = gnames(post_hoc_tbl.("Group"));
+post_hoc_tbl.("Control Group") = gnames(post_hoc_tbl.("Control Group"));
+
+writetable(post_hoc_tbl,  save_to + "task_comparisons.xlsx", "Range", ...
+    upperAlphabet(cell_for_anova) + "10", "Sheet", type + "_task_comparisons");
+
+code_info = ["test: one-way anova"; "post-hoc: tukey-kramer"; ...
+    "produced by: comparison_btwn_tasks.m"; "db: load('" + base_db + "')"];
+writematrix(code_info, save_to + "task_comparisons.xlsx", "Range", ...
+    upperAlphabet(cell_for_anova+8) + "1", "Sheet", type + "_task_comparisons");
 
 tbl = array2table(m,"RowNames",gnames, ...
     "VariableNames",["Mean","Standard Error"]);
 
-bar(1:height(tbl), tbl.Mean')
+boxplot(anova_measures, anova_tasks) 
 hold on
-errorbar(1:height(tbl), tbl.Mean', tbl.("Standard Error")')
-hold on
+
+empty_cells = 0;
+for j = 1:height(tbl)
+    samp = subject_lvl_task_measures{j};
+    if ~isempty(samp)
+        scatter(ones(length(samp),1)*(j - empty_cells), samp, 'filled');
+    else
+        empty_cells = empty_cells + 1;
+    end
+    hold on
+end
+
 groups = c(:,1:2);
 cell_groups = num2cell(groups,2);
 sigstar(cell_groups, c(:,end));
-xticklabels(wanted_tasks)
+title("task diffs in " + type)
+ylabel(type)
+subtitle("1 way anova across task, p-value: " + p  + " with n = " + length(total_subjects) ...
+    + " unique subjs across all tasks with " + strjoin(string(num_unique_subjects_per_task), ", ") + " per task respectively")
+
 set(gcf,'renderer','Painters')
-saveas(gcf,save_to + "task_comparisons", "fig")
-saveas(gcf,save_to + "_task_comparisons", "svg")
+saveas(gcf,save_to + "_" + type + "task_comparisons", "fig")
+saveas(gcf,save_to + "_" + type + "_task_comparisons", "svg")
 end

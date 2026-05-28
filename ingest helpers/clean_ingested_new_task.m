@@ -2,16 +2,15 @@ function [adj_approach_data,subject_prefs] = clean_ingested_new_task(adj_results
 
 adj_results.reward_level = string(adj_results.reward_level);
 adj_results.cost_level = string(adj_results.cost_level);
-joined_results = outerjoin(adj_results, trial_word_length, 'MergeKeys', 1, 'Keys', ["reward_level","cost_level","tasktypedone"]);
+adj_results = adj_results(adj_results.reward_level ~= "0", :);
+joined_results = outerjoin(adj_results, trial_word_length, 'MergeKeys', 1, 'type', 'Left');
 
 % deleting these to avoid redundancy - they came from the merge above
 joined_results.task = [];
 joined_results.story = [];
 
-filtered_join = joined_results(joined_results.subjectidnumber ~= "" & joined_results.rew ~= 0, :);
-
-filtered_join = removevars(filtered_join,{'reward_level','cost_level'});
-filtered_join = renamevars(filtered_join,["decision_made","tasktypedone","trial_elapsed","tired"]...
+filtered_join = removevars(joined_results,{'reward_level','cost_level'});
+filtered_join = renamevars(joined_results,["decision_made","tasktypedone","trial_elapsed","tired"]...
     ,["approach_rate","story_num","timing","tiredness"]);
 
 if ~contains(table_name,"utep")
@@ -46,7 +45,7 @@ for i = 1:N
 
     if contains(table_name, "utep")
         pupil_diameter = rowfun(@clean_pupil_diam, sub_results, "InputVariables",...
-            "pupil_diameter",  "NumOutputs", 2, "OutputVariableNames", ["mean", "timesteps"]);
+            "left_pupil_diameter",  "NumOutputs", 2, "OutputVariableNames", ["mean", "timesteps"]);
         sub_results.pupil_diameter = pupil_diameter.mean;
         sub_results.num_et_timesteps = pupil_diameter.timesteps;
 
@@ -58,9 +57,12 @@ for i = 1:N
         sub_results.min_hr = heart_rate.min_hr;
         sub_results.direction = heart_rate.direction;
 
+        
 
         gaze_data = rowfun(@clean_gaze, sub_results, "InputVariables", ...
             ["left_gaze_coords", "q_length"], "NumOutputs",3, "OutputVariableNames", {'reaction','num_guesses','saccads'});
+
+        
         sub_results.reaction_time = gaze_data.reaction;
         sub_results.num_guesses = gaze_data.num_guesses;
         sub_results.num_saccads = gaze_data.saccads;
@@ -133,14 +135,14 @@ if ~isnan(gaze_list)
         [guesses,reaction] = calc_num_guesses(reshaped,length);
         [saccads] = calc_num_saccads(reshaped);       
     catch
-        reaction = 0;
-        guesses = 0;
-        saccads = 0;
+        reaction = NaN;
+        guesses = NaN;
+        saccads = NaN;
     end
 else
-    guesses = 0;
-    reaction = 0;
-    saccads = 0;
+    reaction = NaN;
+    guesses = NaN;
+    saccads = NaN;
 end
 
 end

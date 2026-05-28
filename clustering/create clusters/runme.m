@@ -7,14 +7,18 @@ dir = 'C:\Users\lrako\OneDrive\Documents\human_dm\test_run\dec_2025';
 
 save_to = 'C:\Users\lrako\OneDrive\Documents\human_dm\dec_2025';
 mkdir(save_to)
-file_name = "all_clusters";
+file_name = "all_clusters_log_exp_midpt";
 table_of_human_dir = get_dirs_with_data(dir);
 is_big = 0;
-use_sign = 1;
+use_sign = 0; 
 isolate_task = "";
 table_of_data = call_spectral_clustering_combine_all_human_data(table_of_human_dir,...
     save_to,0,num_clusters,colors,'euclidean',is_big,file_name,isolate_task,use_sign);
 
+%% 
+scatter3(table_of_data.A, log(abs(table_of_data.B)), table_of_data.C)
+
+%- log(abs(table_of_data.B)) ./ 
 %%  rat
 dir = 'C:\Users\lrako\OneDrive\Documents\human dm\rat sigmoid data';
 save_to = 'C:\Users\lrako\OneDrive\Documents\human dm\primitive building';
