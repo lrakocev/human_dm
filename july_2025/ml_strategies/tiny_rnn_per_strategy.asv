@@ -8,12 +8,9 @@ features = ["story_type","rew", "cost","approach_rate"];
 
 %    "num_guesses", "reaction_time", "pupil_diameter", "norm_saccades",
 r_sqs = [];
-for j = 1 :length(id_data)
+for j = 1 % :length(id_data)
     input_table = id_data{j};
 
-    if height(input_table) < 50
-        continue
-    end
      seq_table = get_sequence_for_hmm(input_table, features, 0);
 
      % excluding story_type (first variable) here so that everything comes

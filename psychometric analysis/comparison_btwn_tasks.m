@@ -31,7 +31,10 @@ for idx = 1:length(story_idx)
     subject_lvl_task_measures{idx} = task_measures;
 end
 
-writematrix(["subject level observations"], save_to + "task_comparisons.xlsx", "Range", "A2", "Sheet", type + "_task_comparisons");
+file_name = save_to + "task_comparisons.xlsx";
+sheet_name = type + "_task_comparisons";
+
+writematrix(["subject level observations"], file_name, "Range", "A2", "Sheet", sheet_name);
 
 anova_tasks = [];
 anova_measures = [];
@@ -42,7 +45,7 @@ for l = 1:length(subject_lvl_task_measures)
 
     task_data = [story_type; curr_task_appr];
     col_num = upperAlphabet(l) + "1";
-    writematrix(task_data, save_to + "task_comparisons.xlsx", "Range", col_num, "Sheet", type + "_task_comparisons");
+    writematrix(task_data, file_name, "Range", col_num, "Sheet", sheet_name);
 
     task_name = repelem(story_type, length(curr_task_appr), 1);
     anova_tasks = [anova_tasks; task_name];
@@ -53,8 +56,8 @@ total_subjects = unique(subjects);
 [p,t,stats,terms] =  anovan(anova_measures, {anova_tasks});
 
 cell_for_anova = length(subject_lvl_task_measures) + 2;
-writecell(t, save_to + "task_comparisons.xlsx", "Range", ...
-    upperAlphabet(cell_for_anova) + "1", "Sheet", type + "_task_comparisons");
+writecell(t, file_name, "Range", ...
+    upperAlphabet(cell_for_anova) + "1", "Sheet", sheet_name);
     
 [c, m, h, gnames] = multcompare(stats, 'CType', 'tukey-kramer');
 
@@ -63,13 +66,13 @@ post_hoc_tbl = array2table(c,"VariableNames", ...
 post_hoc_tbl.("Group") = gnames(post_hoc_tbl.("Group"));
 post_hoc_tbl.("Control Group") = gnames(post_hoc_tbl.("Control Group"));
 
-writetable(post_hoc_tbl,  save_to + "task_comparisons.xlsx", "Range", ...
-    upperAlphabet(cell_for_anova) + "10", "Sheet", type + "_task_comparisons");
+writetable(post_hoc_tbl,  file_name, "Range", ...
+    upperAlphabet(cell_for_anova) + "10", "Sheet", sheet_name);
 
 code_info = ["test: one-way anova"; "post-hoc: tukey-kramer"; ...
     "produced by: comparison_btwn_tasks.m"; "db: load('" + base_db + "')"];
-writematrix(code_info, save_to + "task_comparisons.xlsx", "Range", ...
-    upperAlphabet(cell_for_anova+8) + "1", "Sheet", type + "_task_comparisons");
+writematrix(code_info, file_name, "Range", ...
+    upperAlphabet(cell_for_anova+8) + "1", "Sheet", sheet_name);
 
 tbl = array2table(m,"RowNames",gnames, ...
     "VariableNames",["Mean","Standard Error"]);

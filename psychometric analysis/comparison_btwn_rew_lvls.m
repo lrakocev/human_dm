@@ -1,20 +1,25 @@
-function [total_subjects] = comparison_btwn_rew_lvls(lvl_data, all_story_types, wanted_tasks, type, rew_or_cost, save_to, base_db)
+function [total_subjects, subject_lvl_rs] = comparison_btwn_rew_lvls(lvl_data, all_story_types, wanted_tasks, type, rew_or_cost, save_to, base_db)
 
-story_idx = find(contains(all_story_types,wanted_tasks));
-
-all_data_together = [];
-for j = 1:length(lvl_data)
-    if ismember(j, story_idx)
-        all_data_together = [all_data_together; lvl_data{j}];
+if ~isempty(all_story_types)
+    story_idx = find(contains(all_story_types,wanted_tasks));
+    all_data_together = [];
+    for j = 1:length(lvl_data)
+        if ismember(j, story_idx)
+            all_data_together = [all_data_together; lvl_data{j}];
+        end
     end
+else
+    all_data_together = lvl_data;
 end
+
+num_lvls = max(all_data_together.(rew_or_cost));
 
 subject_lvl_rs = {};
 subjects = [];
 
 unique_subjects = unique(all_data_together.subjectidnumber);
 
-for r = 1:4
+for r = 1:num_lvls
     curr_rew_lvl = all_data_together(all_data_together.(rew_or_cost) == r, :);
 
     rew_lvl_measures = [];
@@ -33,18 +38,25 @@ for r = 1:4
 subject_lvl_rs{r} = rew_lvl_measures;
 end
 
-writematrix(["subject level observations"], save_to + rew_or_cost + ...
-    "_lvl_comparisons.xlsx", "Range", "A2", "Sheet", type + "_" + rew_or_cost + "_comparisons");
+sheet_name = type + "_" + rew_or_cost;
+file_name = save_to + rew_or_cost + "_lvl_comparisons.xlsx";
+
+if length(char(sheet_name)) > 31
+    sheet_name = extractBefore(sheet_name,31);
+end
+
+writematrix(["subject level observations"], file_name, "Range", "A2", "Sheet", sheet_name);
 
 anova_rs = [];
 anova_measures = [];
 upperAlphabet = 'B':'Z';
-for l = 1:4
+for l = 1:num_lvls
     curr_rew_lvl_measure = subject_lvl_rs{l};
 
     lvl_data = ["level: " + string(l); curr_rew_lvl_measure];
     col_num = upperAlphabet(l) +  "1";
-    writematrix(lvl_data, save_to + rew_or_cost + "_lvl_comparisons.xlsx", "Range", col_num, "Sheet", type + "_" + rew_or_cost + "_comparisons");
+    writematrix(lvl_data, file_name, ...
+        "Range", col_num, "Sheet", sheet_name);
     
     rew_lvl_name = repelem(l, length(curr_rew_lvl_measure), 1);
     anova_rs = [anova_rs; rew_lvl_name];
@@ -55,8 +67,8 @@ total_subjects = unique(subjects);
 [p,t,stats,terms] =  anovan(anova_measures, {anova_rs});
 
 cell_for_anova = 6;
-writecell(t, save_to + rew_or_cost + "_lvl_comparisons.xlsx", "Range", ...
-    upperAlphabet(cell_for_anova) + "1", "Sheet", type + "_" + rew_or_cost + "_comparisons")
+writecell(t, file_name, "Range", ...
+    upperAlphabet(cell_for_anova) + "1", "Sheet", sheet_name )
     
     
 [c, m, h, gnames] = multcompare(stats, 'CType', 'tukey-kramer');
@@ -66,13 +78,13 @@ post_hoc_tbl = array2table(c,"VariableNames", ...
 post_hoc_tbl.("Group") = gnames(post_hoc_tbl.("Group"));
 post_hoc_tbl.("Control Group") = gnames(post_hoc_tbl.("Control Group"));
 
-writetable(post_hoc_tbl,  save_to + rew_or_cost + "_lvl_comparisons.xlsx", "Range", ...
-    upperAlphabet(cell_for_anova) + "10", "Sheet", type + "_" + rew_or_cost + "_comparisons");
+writetable(post_hoc_tbl,  file_name, "Range", ...
+    upperAlphabet(cell_for_anova) + "10", "Sheet", sheet_name);
 
 code_info = ["test: one-way anova"; "post-hoc: tukey-kramer"; ...
     "produced by: comparison_btwn_rew_lvls.m"; "db: load('" + base_db + "')"];
-writematrix(code_info,save_to + rew_or_cost + "_lvl_comparisons.xlsx", "Range", ...
-    upperAlphabet(cell_for_anova+8) + "1", "Sheet", type + "_" + rew_or_cost + "_comparisons");
+writematrix(code_info, file_name, "Range", ...
+    upperAlphabet(cell_for_anova+8) + "1", "Sheet", sheet_name);
 
 
 tbl = array2table(m,"RowNames",gnames, ...
@@ -98,7 +110,7 @@ end
 groups = c(:,1:2);
 cell_groups = num2cell(groups,2);
 sigstar(cell_groups, c(:,end));
-xticklabels(1:4)
+xticklabels(1:num_lvls)
 title(rew_or_cost + " lvl diffs in " + type + " with n = " + length(total_subjects) + " unique subjs across all tasks")
 ylabel(type)
 subtitle("1 way anova across " + rew_or_cost + ", p-value: " + p)

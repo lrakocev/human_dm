@@ -40,7 +40,7 @@ load("C:\Users\lrako\OneDrive\Documents\human_dm\outside_data\mt_sinai_trial_tab
 
 %% fitting sigmoids to the imt data
 
-want_plot = 0;
+want_plot = 1;
 unique_ids = unique(imt_formatted.id);
 mt_sinai_trial_table = [];
 for j = 1:length(unique_ids)

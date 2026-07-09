@@ -14,7 +14,7 @@ for lvl = 1:4
         else
             xlabel_str = "cost";
         end
-        if isequal(type, "approach rate")
+        if isequal(type, "approach_rate")
             ylabel_str = "Mean Appr.";
         else
             ylabel_str = "timing";
@@ -35,7 +35,7 @@ for lvl = 1:4
                 curr_table = get_curr_table(appr_table, lvl, constant);
                 num_trials = num_trials + height(appr_table);
                 lvl_len = lvl_len + height(curr_table);
-                if isequal(type, "approach rate")
+                if isequal(type, "approach_rate")
                     appr_rate = curr_table.approach_rate;
                     if length(appr_rate) < 4
                         continue

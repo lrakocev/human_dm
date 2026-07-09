@@ -67,8 +67,11 @@ end
 num_m = length(unique(all_male_subjects));
 num_f = length(unique(all_female_subjects));
 
-writematrix(["subject level observations"],save_to + "sex_comparisons.xlsx", ...
-    "Range", "A2", "Sheet",  type + "_sex_comparisons");
+file_name = save_to + "sex_comparisons.xlsx";
+sheet_name = type + "_sex_comparisons";
+
+writematrix(["subject level observations"],file_name, ...
+    "Range", "A2", "Sheet",  sheet_name);
 
 
 upperAlphabet = 'B':'Z';
@@ -86,8 +89,8 @@ for l = 1:length(female_subject_lvl_task_measures)
 
     curr_data = ["female+" + story_type ; curr_task_appr];
     col_num = upperAlphabet(l) +  "1";
-    writematrix(curr_data, save_to + "sex_comparisons.xlsx", ...
-        "Range", col_num, "Sheet", type + "_sex_comparisons");
+    writematrix(curr_data, file_name, ...
+        "Range", col_num, "Sheet", sheet_name);
    
     task_name = repelem(story_type, length(curr_task_appr), 1);
     anvova_tasks = [anvova_tasks; task_name];
@@ -106,8 +109,8 @@ for l = 1:length(male_subject_lvl_task_measures)
     curr_data = ["male+" + story_type ; curr_task_appr];
     alphabet_ind = l + length(female_subject_lvl_task_measures);
     col_num = upperAlphabet(alphabet_ind) +  "1";
-    writematrix(curr_data, save_to + "sex_comparisons.xlsx", ...
-        "Range", col_num, "Sheet", type + "_sex_comparisons");
+    writematrix(curr_data,file_name, ...
+        "Range", col_num, "Sheet",sheet_name);
     
     task_name = repelem(story_type, length(curr_task_appr), 1);
     anvova_tasks = [anvova_tasks; task_name];
@@ -118,13 +121,13 @@ end
 [h,p] =  ttest(female_subject_lvl_task_measures{:}, male_subject_lvl_task_measures{:});
 
 cell_for_anova = length(female_subject_lvl_task_measures) + length(male_subject_lvl_task_measures) + 2;
-writematrix(["p-value: " + string(p)], save_to + "sex_comparisons.xlsx", "Range", ...
-    upperAlphabet(cell_for_anova) + "1", "Sheet", type + "_sex_comparisons")
+writematrix(["p-value: " + string(p)], file_name, "Range", ...
+    upperAlphabet(cell_for_anova) + "1", "Sheet", sheet_name)
     
 code_info = ["test: t-test"; ...
     "produced by: comparison_btwn_sexes.m"; "db: load('" + base_db + "')"];
-writematrix(code_info,save_to + "sex_comparisons.xlsx", "Range", ...
-    upperAlphabet(cell_for_anova+2) + "1", "Sheet", type + "_sex_comparisons");
+writematrix(code_info, file_name, "Range", ...
+    upperAlphabet(cell_for_anova+2) + "1", "Sheet", sheet_name);
 
 figure
 boxplot(anova_measures,anova_sexes)

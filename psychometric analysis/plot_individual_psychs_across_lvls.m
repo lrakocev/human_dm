@@ -30,7 +30,7 @@ function plot_individual_psychs_across_lvls(approach_data, constant, story_type,
         
     end
 
-dynamicName = path_to_save + "individual_overlays\" + story_type + "\";
+dynamicName = path_to_save + "\individual_overlays\" + story_type + "\";
 mkdir(dynamicName)
     
 N = length(approach_data);

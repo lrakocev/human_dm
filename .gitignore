@@ -3,7 +3,7 @@
 *.zip
 *.png
 *.mat
-hmms/*/*.png
+hmms*/*.png
 /test_run/*
 /test_run/*.zip
 hmms/autoenc*mat
